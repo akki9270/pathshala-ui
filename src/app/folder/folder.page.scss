@@ -1,0 +1,214 @@
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+ion-content {
+  margin-top: 1px;
+}
+.content-container {
+  background: #fff;
+  height: 100%;
+}
+
+input {
+  pointer-events: none;
+}
+.student-details {
+  min-height: 100px;
+  background-color: #e8ff69;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: #434343;
+
+  .st-image {
+    min-height: 180px;
+  }
+}
+
+.attendence-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  background-color: #d9f5fc;
+  color: #434343;
+  .at-box {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #434343;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    span {
+      line-height: 16px;
+    }
+  }
+}
+
+.progress-details {
+  background-color: #e8ff69;
+  padding: 10px 20px;
+  color: #434343;
+  display: flex;
+  justify-content: space-between;
+  .gatha-details {
+  }
+  .days-till-now {
+    align-self: flex-end;
+    margin-bottom: 20px;
+    .dtn-box {
+      border: 1px solid #434343;
+      padding: 5px 8px;
+    }
+  }
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    ion-button {
+      display: block;
+    }
+  }
+}
+
+.form-group .fields input {
+  border: none;
+  border-bottom: 1px solid #434343;
+  background: none;
+  border-radius: 0;
+  width: 100%;
+  height: 30px;
+  color: #030304;
+  padding: 0 16px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  /* transition: box-shadow 150ms ease-out; */
+  /* -webkit-transition: box-shadow 150ms ease-out; */
+  box-shadow: inset 0 60px 0px transparent;
+}
+
+.form-group .fields label {
+  position: absolute;
+  top: 17px;
+  left: 0px;
+  background: transparent;
+  display: inline-block;
+  transition: 0.25s ease-out;
+  color: #808080;
+  padding: 0 8px 0 2px;
+  font-size: 15px;
+  line-height: 24px;
+  transform: translate3d(0 0 0);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.form-group .fields input:not(:placeholder-shown) + label {
+  top: -15px;
+  font-size: 12px;
+}
+
+.form-group .fields label {
+  top: 0px;
+}
+
+@media only screen and (min-width: 375px) and (max-width: 768px) {
+  .student-details {
+    #details {
+      width: 70%;
+    }
+    .profile-image-container {
+      width: 25%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 300px;
+      }
+    }
+  }
+  .attendence-details {
+    justify-content: space-evenly;
+    min-height: 130px;
+    .at-box {
+      width: 80px;
+      height: 80px;
+      font-size: 22px;
+      &.present {
+        background: linear-gradient(
+          45deg,
+          rgba(64, 120, 255, 0.8099614845938375) 30%,
+          rgba(255, 255, 255, 0.5018382352941176) 50%,
+          rgba(64, 120, 255, 0.8407738095238095) 70%
+        );
+      }
+      &.absent {
+        background: rgb(176, 36, 255);
+        background: linear-gradient(
+          45deg,
+          rgba(176, 36, 255, 0.6446953781512605) 30%,
+          rgba(255, 255, 255, 0.5018382352941176) 50%,
+          rgba(176, 36, 255, 0.6587009803921569) 70%
+        );
+      }
+      &.holiday {
+      }
+
+      span {
+        line-height: 24px;
+      }
+    }
+  }
+  .progress-details {
+    .gatha-details {
+      width: 40%;
+    }
+    .days-till-now {
+      width: 30%;
+      .dtn-box {
+        width: 100px;
+      }
+    }
+    .action-buttons {
+      justify-content: space-evenly;
+      ion-button {
+        min-width: 150px;
+        &.continue {
+          --background: #00ff00;
+        }
+        &.finish {
+          --background: #ff6900;
+        }
+        &.details {
+          --background: #162f49;
+        }
+      }
+    }
+  }
+  .next-action {
+    height: 100px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    ion-button {
+      height: 60px;
+      margin: 0 15px;
+      min-width: 150px;
+      font-size: 18px;
+      &.new-scan {
+        --background: #00ff00;
+        color: #434343;
+      }
+      &.back-to-home {
+        --background: #162f49;
+      }
+    }
+  }
+}

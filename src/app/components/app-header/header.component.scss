@@ -1,0 +1,14 @@
+.custom-header {
+    background-color: #7DFFCC;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    ion-toolbar {
+        --background: transparent;
+        --border-color: transparent;
+        height: 60px;
+        display: flex;
+        background-color: #7DFFCC;
+        color: #434343;
+    }
+}
