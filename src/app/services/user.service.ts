@@ -51,4 +51,11 @@ export class UserService {
                 tap(() => console.log('userNextGatha'))
             )
     }
+
+    updateUserSutra(data: {sutraId, gathaCount, teacherId, studentId}) {
+        return this.http.post(this.URL + '/updateUserSutra', data)
+            .pipe(
+                tap(() => console.log('updateUserSutra'))
+            );
+    }
 }

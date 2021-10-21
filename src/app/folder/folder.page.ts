@@ -5,6 +5,7 @@ import { IonContent, Platform } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
 import { UserService } from '../services/user.service';
 import * as moment from 'moment';
+import { SutraService } from '../services/sutra.service';
 
 
 @Component({
@@ -21,16 +22,20 @@ export class FolderPage implements OnInit {
   availableDevices: MediaDeviceInfo[];
   currentDevice: MediaDeviceInfo;
   attendence = [];
+  selectedSutra: any;
+  currentGathaCount: any;
   // imageUrlPrefix = "http://hiteshvidhikar.com/pathshala/images/";
   // imageUrlSuffix = ".jpg";
   @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
   @ViewChild(IonContent, { static: true }) ionContent;
-  userGathaDetails: any;
+  userGathaDetails:any;
+  allSutra: any;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
     private qrScanner: QRScanner,
     private userService: UserService,
+    private sutraSerice: SutraService,
     private cdRef: ChangeDetectorRef,
     private router: Router,
     public platform: Platform
@@ -44,7 +49,10 @@ export class FolderPage implements OnInit {
       if (this.platform.is('capacitor')) {
         this.startCamera();
       } else {
-        this.webScanner();
+       this.webScanner();
+      //  this.getUserData(1001);
+      //  this.getUserData(3);
+       this.getAllSutra();
       }
     //   if (this.mobileAndTabletCheck()) {
     //   } else {
@@ -52,6 +60,24 @@ export class FolderPage implements OnInit {
     },100);
   }
 
+
+  getAllSutra() {
+    this.sutraSerice.getAllSutra()
+    .subscribe( res => {
+      console.log(' getAll Sutra ', res);
+      this.allSutra = res['data'];
+    })
+  }
+
+  getGathaCount() {
+    let result = [];
+    if (this.selectedSutra) {
+      for(let i = 1; i <= this.selectedSutra.gatha_count; i++) {
+        result.push(i)
+      }
+    }
+    return result;
+  }
   getAttendenceArray() {
     let today = new Date();
     for (let i = 7; i > 0; i--) {
@@ -222,6 +248,21 @@ export class FolderPage implements OnInit {
         this.userGathaDetails = res;
         this.cdRef.detectChanges();
       });
+  }
+
+  updateUserSutra() {
+    if (this.selectedSutra && this.currentGathaCount) {
+      let data = {
+        sutraId: this.selectedSutra.id,
+        gathaCount: this.currentGathaCount,
+        studentId: this.studentData.id,
+        teacherId: this.teacherData.id
+      }
+      this.userService.updateUserSutra(data)
+        .subscribe(res => {
+          this.getUserData(this.studentData.id);
+        });
+    }
   }
 
   mobileAndTabletCheck = function() {

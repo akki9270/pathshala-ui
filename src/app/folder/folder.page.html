@@ -71,10 +71,10 @@
       </ng-container>
     </div>
   
-    <div class="progress-details" *ngIf="!!userGathaDetails">
+    <div class="progress-details">
       <div class="gatha-details">
         <div class="form-group mb-4 mt-4">
-          <div class="fields">
+          <div class="fields" *ngIf="userGathaDetails && userGathaDetails.Sutra.name; else sutraDropDown">
             <input
               type="text"
               placeholder="Sutra"
@@ -82,8 +82,15 @@
             />
             <label>Sutra</label>
           </div>
+          <ng-template #sutraDropDown>
+            <div class="fields">
+              <select class="form-control form-control-lg" [(ngModel)]="selectedSutra">
+                <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
+              </select>
+            </div>
+          </ng-template>
         </div>
-        <div class="form-group mb-4 mt-4">
+        <div class="form-group mb-4 mt-4" *ngIf="userGathaDetails else sutraGathaCount">
           <div class="fields">
             <input
               type="text"
@@ -93,7 +100,15 @@
             <label>Gatha</label>
           </div>
         </div>
-        <div class="form-group mb-4 mt-4">
+        <ng-template #sutraGathaCount>
+          <ng-container>
+            <select class="form-control form-control-lg" [(ngModel)]="currentGathaCount">
+              <option *ngFor="let i of getGathaCount()" [ngValue]="i"> {{i}} </option>
+            </select>
+          </ng-container>
+        </ng-template>
+        
+        <div class="form-group mb-4 mt-4" *ngIf="userGathaDetails">
           <div class="fields">
             <input
               type="text"
@@ -104,15 +119,18 @@
           </div>
         </div>
       </div>
-      <div class="days-till-now">
+      <div class="days-till-now" *ngIf="userGathaDetails">
         <div class="dtn-box" [innerHTML]="getCurrentDayOfGatha"></div>
       </div>
-      <div class="action-buttons">
+      <div class="action-buttons" *ngIf="userGathaDetails">
         <!-- <div> -->
           <ion-button class="continue" *ngIf="userGathaDetails.current_gatha_count < userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Continue</ion-button>
           <ion-button class="finish" *ngIf="userGathaDetails.current_gatha_count == userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Finish</ion-button>
           <ion-button class="details">Details</ion-button>
         <!-- </div> -->
+      </div>
+      <div class="action-buttons" *ngIf="!userGathaDetails">
+        <ion-button class="continue" [disabled]="!selectedSutra || !sutraGathaCount" (click)="updateUserSutra()">Update Sutra</ion-button>
       </div>
     </div>
 
