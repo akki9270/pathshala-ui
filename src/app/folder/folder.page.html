@@ -1,5 +1,14 @@
 <ion-content [fullscreen]="true">
   <div class="p-3 text-uppercase bg-white text-dark" *ngIf="teacherData.display_name">{{teacherData?.display_name}}</div>
+  <div *ngIf="teacherData && teacherData.id" class="custom-id">
+    <div class="form-group my-2">
+      <div class="fields">
+        <input class="active id-input" type="number" placeholder="Student Id" #idInput />
+        <label>Student Id</label>
+      </div>
+    </div>
+    <button class=" btn px-4 bg-success text-white  p-1 ml-4" (click)="getUserData(idInput.value)">Go</button>
+  </div>
   <!-- <div *ngIf="isScannig && !platform.is('capacitor')"> -->
     <qr-scanner
     #qrScanner
@@ -56,7 +65,7 @@
         </div>
         <div class="form-group mb-4">
           <div class="fields">
-            <input type="text" #nameInput placeholder="Points" />
+            <input type="text" #nameInput placeholder="Points" [value]="studentData.score" />
             <label>Points</label>
           </div>
         </div>
@@ -79,7 +88,7 @@
     <div class="progress-details">
       <div class="gatha-details">
         <div class="form-group mb-4 mt-4">
-          <div class="fields" *ngIf="userGathaDetails && userGathaDetails.Sutra.name; else sutraDropDown">
+          <div class="fields" *ngIf="userGathaDetails && userGathaDetails?.Sutra?.name; else sutraDropDown">
             <input
               type="text"
               placeholder="Sutra"
@@ -89,14 +98,14 @@
           </div>
           <ng-template #sutraDropDown>
             <div class="fields">
-              <select class="form-control form-control-lg" [(ngModel)]="selectedSutra">
+              <select class="form-control form-control-lg" [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
                 <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
               </select>
               <label>Sutra</label>
             </div>
           </ng-template>
         </div>
-        <div class="form-group mb-4 mt-4" *ngIf="userGathaDetails else sutraGathaCount">
+        <div class="form-group mb-4 mt-4" *ngIf="userGathaDetails && userGathaDetails.Sutra else sutraGathaCount">
           <div class="fields">
             <input
               type="text"
@@ -111,7 +120,7 @@
             <div class="form-group mb-4 mt-5">
               <div class="fields">
                 <select class="form-control form-control-lg" [(ngModel)]="currentGathaCount">
-                  <option *ngFor="let i of getGathaCount(); let id = index" [selected]="id == 0" [ngValue]="i"> {{i}} </option>
+                  <option *ngFor="let i of (totalGathaCount); let id = index" [ngValue]="i"> {{i}} </option>
                 </select>
                 <label>Current Gatha</label>
               </div>

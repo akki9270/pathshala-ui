@@ -27,7 +27,36 @@ ion-content {
 
 input {
   pointer-events: none;
+  &.active {
+    pointer-events: all;
+  }
 }
+.custom-id {
+  display: flex;
+  align-items: center;
+  background: darkgrey;
+  height: 80px;
+  .form-group {
+    .fields {
+      input {
+        &:not(:placeholder-shown) + label {
+          top: -22px;
+          color: white;
+        }
+      }
+      label {
+        left: 20px;
+      }
+    }
+  }
+  .id-input {
+    margin-left: 10px;
+    background: white !important;
+    border-radius: 10px !important;
+    padding-left: 10px !important;
+  }
+}
+
 .student-details {
   min-height: 100px;
   background-color: #e8ff69;

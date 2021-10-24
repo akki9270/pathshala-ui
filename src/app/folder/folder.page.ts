@@ -30,6 +30,8 @@ export class FolderPage implements OnInit {
   @ViewChild(IonContent, { static: true }) ionContent;
   userGathaDetails:any;
   allSutra: any;
+  totalGathaCount = [];
+  
   attendenceFields = [
     {
       label: 'Present',
@@ -86,6 +88,8 @@ export class FolderPage implements OnInit {
         result.push(i)
       }
     }
+    this.totalGathaCount = result;
+    this.cdRef.detectChanges();
     return result;
   }
   getAttendenceArray() {
@@ -316,6 +320,7 @@ export class FolderPage implements OnInit {
       teacherId: this.teacherData.id
     }).subscribe((res: any) => {
       this.userGathaDetails = res.data;
+      this.getUserData(this.studentData.id);
       this.cdRef.detectChanges();
     }, (error) => {
       console.log(' error ', error);
