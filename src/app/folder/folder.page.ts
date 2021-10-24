@@ -30,6 +30,16 @@ export class FolderPage implements OnInit {
   @ViewChild(IonContent, { static: true }) ionContent;
   userGathaDetails:any;
   allSutra: any;
+  attendenceFields = [
+    {
+      label: 'Present',
+      class: 'present'
+    },
+    {
+      label: 'Absent',
+      class: 'absent'
+    }
+  ]
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -45,6 +55,7 @@ export class FolderPage implements OnInit {
     // this.title = this.activatedRoute.snapshot.paramMap.get('id');
     // this.getUserData(3);
     this.getAttendenceArray();
+    this.getAllSutra();
     setTimeout(() => {
       if (this.platform.is('capacitor')) {
         this.startCamera();
@@ -52,7 +63,6 @@ export class FolderPage implements OnInit {
        this.webScanner();
       //  this.getUserData(1001);
       //  this.getUserData(3);
-       this.getAllSutra();
       }
     //   if (this.mobileAndTabletCheck()) {
     //   } else {
@@ -226,17 +236,20 @@ export class FolderPage implements OnInit {
   getAttendanceDetails(studentId) {
     this.userService.getAttendence(studentId)
       .subscribe((res: any) => {
-        console.log(' attendance ', res);
-        this.attendence.forEach(item => {
+       // console.log(' attendance ', res);
+        this.attendence = this.attendence.map(item => {
           let found = res.find(i => i.attendence_date == item.date_format);
           if (found) {
             item = {
               ...item,
               ...found
             }
+            // console.log(' found Item ', item);
           }
+          return item;
         });
-        this.cdRef.detectChanges();
+        //console.log(' this.attendence ', this.attendence);
+        // this.cdRef.detectChanges();
       }, (error) => console.error()
       )
   }
@@ -244,7 +257,7 @@ export class FolderPage implements OnInit {
   getGathaDetails(studentId){
     this.userService.getGathaDetails(studentId)
       .subscribe(res => {
-        console.log(' userGathaDetails ', res);
+       // console.log(' userGathaDetails ', res);
         this.userGathaDetails = res;
         this.cdRef.detectChanges();
       });
@@ -312,6 +325,8 @@ export class FolderPage implements OnInit {
   newScan() {
     this.studentData = null;
     this.isScannig = true;
+    this.selectedSutra = null;
+    this.currentGathaCount = null;
     if (this.platform.is('capacitor')) {
       this.startCamera();
     } else {

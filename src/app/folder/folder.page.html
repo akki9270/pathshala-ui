@@ -70,6 +70,11 @@
         </div>
       </ng-container>
     </div>
+    <div class="d-flex text-dark justify-content-center attendence-fields">
+      <ng-container *ngFor="let i of attendenceFields">
+        <div> <span [class]="i.class"></span> {{i.label}}</div>
+      </ng-container>
+    </div>
   
     <div class="progress-details">
       <div class="gatha-details">
@@ -87,6 +92,7 @@
               <select class="form-control form-control-lg" [(ngModel)]="selectedSutra">
                 <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
               </select>
+              <label>Sutra</label>
             </div>
           </ng-template>
         </div>
@@ -102,9 +108,14 @@
         </div>
         <ng-template #sutraGathaCount>
           <ng-container>
-            <select class="form-control form-control-lg" [(ngModel)]="currentGathaCount">
-              <option *ngFor="let i of getGathaCount()" [ngValue]="i"> {{i}} </option>
-            </select>
+            <div class="form-group mb-4 mt-5">
+              <div class="fields">
+                <select class="form-control form-control-lg" [(ngModel)]="currentGathaCount">
+                  <option *ngFor="let i of getGathaCount(); let id = index" [selected]="id == 0" [ngValue]="i"> {{i}} </option>
+                </select>
+                <label>Current Gatha</label>
+              </div>
+            </div>
           </ng-container>
         </ng-template>
         
