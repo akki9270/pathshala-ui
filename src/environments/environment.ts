@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  server_url: 'http://localhost:8075/api'
+  server_url: 'http://ec2-18-217-73-128.us-east-2.compute.amazonaws.com:8075/api'
+  // server_url: 'http://localhost:8075/api'
 };
 
 /*

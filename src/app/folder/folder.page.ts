@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { IonContent, Platform } from '@ionic/angular';
@@ -24,10 +24,19 @@ export class FolderPage implements OnInit {
   attendence = [];
   selectedSutra: any;
   currentGathaCount: any;
+  isEditing = false;
+  studentsDataArray = [
+    { title: 'Id', prop: 'id'},
+    { title: 'Name', prop: 'display_name'},
+    { title: 'Age', prop: '', value: 'getAge'},
+    { title: 'Present Days', prop: '', value: ''},
+    { title: 'Points', prop: 'score', value: ''},
+  ]
   // imageUrlPrefix = "http://hiteshvidhikar.com/pathshala/images/";
   // imageUrlSuffix = ".jpg";
   @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
   @ViewChild(IonContent, { static: true }) ionContent;
+  @ViewChild('idInput', { static: false } ) studentIdInput: ElementRef<HTMLInputElement>;
   userGathaDetails:any;
   allSutra: any;
   totalGathaCount = [];
@@ -53,9 +62,21 @@ export class FolderPage implements OnInit {
     public platform: Platform
     ) { }
 
+  ionViewWillEnter() {
+    this.studentData = null;
+    this.userGathaDetails = null; 
+    this.isScannig = true;
+    this.attendence = [];
+    this.initPage();
+  };
+
   ngOnInit() {
     // this.title = this.activatedRoute.snapshot.paramMap.get('id');
     // this.getUserData(3);
+    this.initPage();
+  }
+
+  initPage() {
     this.getAttendenceArray();
     this.getAllSutra();
     setTimeout(() => {
@@ -63,7 +84,7 @@ export class FolderPage implements OnInit {
         this.startCamera();
       } else {
        this.webScanner();
-      //  this.getUserData(1001);
+       this.getUserData(1001);
       //  this.getUserData(3);
       }
     //   if (this.mobileAndTabletCheck()) {
@@ -71,7 +92,6 @@ export class FolderPage implements OnInit {
     //   }
     },100);
   }
-
 
   getAllSutra() {
     this.sutraSerice.getAllSutra()
@@ -332,6 +352,7 @@ export class FolderPage implements OnInit {
     this.isScannig = true;
     this.selectedSutra = null;
     this.currentGathaCount = null;
+    this.clearInput();
     if (this.platform.is('capacitor')) {
       this.startCamera();
     } else {
@@ -344,6 +365,13 @@ export class FolderPage implements OnInit {
   }
 
   backToHome() {
+    this.clearInput();
     this.router.navigate(['folder']);
+  }
+
+  clearInput() {
+    if(this.studentIdInput) {
+      this.studentIdInput.nativeElement.value = '';
+    }
   }
 }
