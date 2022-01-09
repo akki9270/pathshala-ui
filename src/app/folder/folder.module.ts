@@ -10,18 +10,22 @@ import { FolderPage } from './folder.page';
 import { AppHeaderComponent } from '../components';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { LandingComponent } from './landing/landing.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { AttendanceDetailsComponent } from './student-details/attendance-details/attendance-details.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule.forRoot(),
     FolderPageRoutingModule,
     NgQrScannerModule
   ],
   declarations: [
     FolderPage,
-    LandingComponent
+    LandingComponent,
+    StudentDetailsComponent,
+    AttendanceDetailsComponent
   ],
   providers: []
 })

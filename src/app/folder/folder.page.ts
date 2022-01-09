@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { IonContent, LoadingController, Platform } from '@ionic/angular';
+import { IonContent, LoadingController, Platform, ModalController } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
 import { UserService } from '../services/user.service';
 import * as moment from 'moment';
 import { SutraService } from '../services/sutra.service';
 import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 
 
 @Component({
@@ -65,7 +66,8 @@ export class FolderPage implements OnInit {
     private cdRef: ChangeDetectorRef,
     private router: Router,
     public platform: Platform,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public modalController: ModalController
     ) { }
 
   ionViewWillEnter() {
@@ -412,6 +414,15 @@ export class FolderPage implements OnInit {
     if(this.studentIdInput) {
       this.studentIdInput.nativeElement.value = '';
     }
+  }
+
+  async onDetailsClick() {
+    const modal = await this.modalController.create({
+      component: StudentDetailsComponent,
+      cssClass: 'modal-fullscreen',
+      componentProps: { studentId: this.studentData.id }
+    });
+    await modal.present();
   }
 
   imageLoadError(event) {

@@ -1,0 +1,17 @@
+ion-content {
+    --background: white;
+    --color: #434343;
+
+    ion-button {
+        &.close-btn {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        &.action-btn {
+            height: 20vh;
+            width: 20vw;
+            font-size: x-large;
+            margin: 15px;
+        }
+    }
+}
