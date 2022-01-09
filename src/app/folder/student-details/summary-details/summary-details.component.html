@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-center">
+  <table class="table">
+    <thead>
+      <th>Date</th>
+      <th>Present</th>
+      <th>Sutra</th>
+      <th>Gatha</th>
+      <th>Teacher</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of summaryDetails">
+        <td>{{i.dates| date:'d-MM-YYYY'}}</td>
+        <td [class.bg-danger]="!i.isPresent">{{i.isPresent}}</td>
+        <td>{{i.name || '-'}}</td>
+        <td>{{i.current_gatha_count || '-'}}</td>
+        <td>{{i.teacher || '-'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

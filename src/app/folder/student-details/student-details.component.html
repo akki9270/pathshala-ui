@@ -27,7 +27,9 @@
       </ion-button>
     </div>
     <ng-container>
-      <app-attendance-details [studentId]="studentId" [selectedYear]="selectedYear" ></app-attendance-details>
+      <app-attendance-details *ngIf="selectedReport == SUMMARY_REPORTS.ATTENDANCE" [studentId]="studentId" [selectedYear]="selectedYear" ></app-attendance-details>
+      <app-sutra-details *ngIf="selectedReport == SUMMARY_REPORTS.SUTRA" [studentId]="studentId" [selectedYear]="selectedYear" ></app-sutra-details>
+      <app-summary-details *ngIf="selectedReport == SUMMARY_REPORTS.SUMMARY" [studentId]="studentId" [selectedYear]="selectedYear" ></app-summary-details>
     </ng-container>
   </ng-container>
 </ion-content>

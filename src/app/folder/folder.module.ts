@@ -12,6 +12,8 @@ import { NgQrScannerModule } from 'angular2-qrscanner';
 import { LandingComponent } from './landing/landing.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import { AttendanceDetailsComponent } from './student-details/attendance-details/attendance-details.component';
+import { SutraDetailsComponent } from './student-details/sutra-details/sutra-details.component';
+import { SummaryDetailsComponent } from './student-details/summary-details/summary-details.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { AttendanceDetailsComponent } from './student-details/attendance-details
     FolderPage,
     LandingComponent,
     StudentDetailsComponent,
-    AttendanceDetailsComponent
+    AttendanceDetailsComponent,
+    SutraDetailsComponent,
+    SummaryDetailsComponent
   ],
   providers: []
 })

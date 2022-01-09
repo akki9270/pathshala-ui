@@ -42,7 +42,7 @@ export class AttendanceDetailsComponent implements OnInit {
     }
     this.summaryService.getAttandanceSummary(data).subscribe(
       (res: any) => {
-        console.log(' getAttandanceSummary ', res);
+        // console.log(' getAttandanceSummary ', res);
         let data = res;
         data.forEach(i => {
           let found = this.monthsArray.findIndex(it => it.month == i.month);
@@ -54,7 +54,7 @@ export class AttendanceDetailsComponent implements OnInit {
             this.monthsArray[found]['isDataAvailable'] = true;
           }
         });
-        console.log(' this.monthsArray ', this.monthsArray);
+        // console.log(' this.monthsArray ', this.monthsArray);
       }
     )
   }

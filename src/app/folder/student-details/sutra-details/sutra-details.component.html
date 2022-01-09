@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-center">
+<table class="table">
+    <thead>
+      <th>Sutra Name</th>
+      <th>Sutra Gatha</th>
+      <th>Days</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of sutraDetailSummary">
+        <td>{{i.sutraName}}</td>
+        <td class="text-center">{{i.sutraGatha}}</td>
+        <td>{{i.completed == 'true' ? i.days : 'In Progress'}}</td>
+        <td>{{i.sutraStartDate | date:'d-MM-YYYY'}}</td>
+        <td>{{i.sutraEndDate | date:'d-MM-YYYY'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -20,4 +20,20 @@ export class SummaryService {
         tap(() => console.log('getAttendanceSummary'))
       )
   }
+
+  // params: id: studentId, year: year
+  getSutraSummary(params) {
+    return this.http.get(this.URL + '/getSutraSummary', { params })
+      .pipe(
+        tap(() => console.log('getSutraSummary'))
+      )
+  }
+
+  // params: id: studentId, year: year
+  getUserSutraSummary(params) {
+    return this.http.get(this.URL + '/getUserSutraSummary', { params })
+      .pipe(
+        tap(() => console.log('getUserSutraSummary'))
+      )
+  }
 }
