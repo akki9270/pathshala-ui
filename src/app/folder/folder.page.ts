@@ -256,19 +256,22 @@ export class FolderPage implements OnInit {
             localStorage.setItem('teacher', JSON.stringify(this.teacherData));
             this.newScan();
             return;
-          } else if (this.teacherData.id ) {
+          } else {
             this.studentData = (response['data'])[0];
             this.studentData['presentDays'] = response['presentDays']
             // console.log(' student Data ', this.studentData);
             this.clearInput();
-            this.checkAttendence(id);
+            if (this.teacherData && this.teacherData.id) {
+              this.checkAttendence(id);
+            }
             this.getAttendanceDetails(id);
             this.getGathaDetails(id);
             this.isScannig = false;
             this.cdRef.detectChanges();
-          } else {
-            this.router.navigate(['']);
-          }
+          } 
+          // else {
+          //   this.router.navigate(['']);
+          // }
           // this.studentData['imageUrl'] = this.imageUrlPrefix + this.studentData.id + this.imageUrlSuffix;
         }
       },

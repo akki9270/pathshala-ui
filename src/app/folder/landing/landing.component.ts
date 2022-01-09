@@ -16,8 +16,16 @@ export class LandingComponent implements OnInit {
   password: string = '';
   USER_EMAIL = 'admin@pathshala.com';
   USER_PASSWORD = 'Admin@123';
+  isTeacherLoggedIn = false;
 
-  ngOnInit() { }
+  ngOnInit() { 
+    let data = localStorage.getItem('teacher');
+    if(data) {
+      this.isTeacherLoggedIn = true;
+    } else {
+      this.onPathshalaClick();
+    }
+  }
 
   onPathshalaClick() {
     this.router.navigate(['Pathshala'], { relativeTo: this.activatedRoute });
