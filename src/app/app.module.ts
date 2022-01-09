@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP } from '@ionic-native/http/ngx';
-
+import { AdminModule } from './admin/admin.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,8 @@ import { HTTP } from '@ionic-native/http/ngx';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    AdminModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

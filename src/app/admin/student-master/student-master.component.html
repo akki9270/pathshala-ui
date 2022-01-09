@@ -1,0 +1,217 @@
+<div class="bg-light">
+  <div class="d-flex justify-content-start p-4">
+    <button class="btn btn-primary px-4" (click)="goBack()">
+      Back
+    </button>
+  </div>
+</div>
+<ion-content>
+  <div class="row justify-content-between align-items-center px-3 mt-3">
+    <div class="form-group mb-0 col-4">
+      <div class="fields">
+        <input id="studentId" type="number" [(ngModel)]="studentId" />
+      </div>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-outline-success" (click)="getUserData()">Go</button>
+    </div>
+    <div class="col-4">
+      <button class="btn btn-primary" *ngIf="!isNewStudent" (click)="addNewStudent()">Add New Student</button>
+    </div>
+  </div>
+  <div><button (click)="getImagePicker()">Photo</button></div>
+  <div><input type="file" (change)="onFileUpload($event)"></div>
+  <div *ngIf="studentForm.getRawValue().user_id || isNewStudent" class=" d-flex flex-column align-items-start pl-4">
+    <form [formGroup]="studentForm">
+      <div class="form-group mb-4 mt-4">
+        <div class="fields">
+          <input 
+            type="text" 
+            formControlName="user_id" 
+            placeholder="Id"
+            />
+          <label>Id</label>
+        </div>
+      </div>
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="text" 
+          formControlName="firstName" 
+          placeholder="First Name" 
+          />
+        <label>First Name*</label>
+      </div>
+    </div> <!-- First Name -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="text" 
+          formControlName="middleName" 
+          placeholder="Middle Name" 
+          />
+        <label>Middle Name*</label>
+      </div>
+    </div> <!-- Middle Name -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="text" 
+          formControlName="lastName" 
+          placeholder="Last Name" 
+          />
+        <label>Last Name*</label>
+      </div>
+    </div> <!-- Last Name -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="text" 
+          formControlName="motherName" 
+          placeholder="Mother Name" 
+          />
+        <label>Mother Name <small>(optional)</small></label>
+      </div>
+    </div> <!-- Mother Name -->
+    <div class="form-group mt-4">
+      <div class="fieldss">
+        <label>
+          <input type="radio" name="gender" formControlName="gender" value="male" /> Male
+        </label>
+        <label>
+          <input class="ml-3" type="radio" name="gender" formControlName="gender" value="female"/> Female
+        </label>
+      </div>
+    </div>
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="date" 
+          formControlName="dob" 
+          placeholder="Date of Birth" 
+          bsDatepicker
+          />
+          <label>Date Of Birth*</label>
+      </div>
+    </div> <!-- Date of Birth  -->
+    <div class="form-group mb-4 mt-4">
+      <fieldset>
+        <legend> Address </legend>
+        <div class="fields">
+          <input 
+            type="text"
+            class="form-control mt-3"
+            formControlName="house_number" 
+            />
+          <label>House Number</label>
+        </div>
+        <div class="fields">
+          <input 
+            type="text"
+            class="form-control my-3"
+            formControlName="street" 
+            />
+          <label>Street</label>
+        </div>
+        <div class="fields">
+          <input 
+            type="text"
+            class="form-control my-3"
+            formControlName="area_code" 
+            />
+          <label>zipcode</label>
+        </div>
+        <div class="fields">
+          <input 
+            type="text"
+            class="form-control my-3"
+            formControlName="city" 
+            />
+          <label>City</label>
+        </div>
+      </fieldset>
+    </div> <!-- Address -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="tel" 
+          formControlName="contact1" 
+          placeholder="Contact 1" 
+          />
+        <label>Contact 1*</label>
+      </div>
+    </div> <!-- Contact 1 -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="tel" 
+          formControlName="contact2" 
+          placeholder="Contact 2" 
+          />
+        <label>Contact 2</label>
+      </div>
+    </div> <!-- Contact 2 -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <input 
+          type="text" 
+          formControlName="email" 
+          placeholder="email" 
+          />
+        <label>email</label>
+      </div>
+    </div> <!-- Email -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+        <ion-item>
+          <ion-label>Sutra Category</ion-label>
+          <ion-select class="form-control form-control-lg" formControlName="selectedSutraCategory" placeholder="Select Category">
+            <ion-select-option *ngFor="let cat of allSutraCategory" [value]="cat">{{cat.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+
+        <!-- <select placeholder="Select Sutra" class="form-control form-control-lg" formControlName="selectedSutraCategory" >
+          <option *ngFor="let cat of allSutraCategory" [ngValue]="cat">{{cat.name}}</option>
+        </select>
+        <label>Sutra Category*</label> -->
+      </div>
+    </div> <!-- Sutra Category -->
+    <div class="form-group mb-4 mt-4">
+      <div class="fields">
+
+        <ion-item>
+          <ion-label>Select Sutra</ion-label>
+          <ion-select class="form-control form-control-lg sutra-select" formControlName="selectedSutra" placeholder="Select Sutra">
+            <ion-select-option *ngFor="let op of allSutra" [value]="op">{{op.name}}</ion-select-option>
+            <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
+          </ion-select>
+        </ion-item>
+        <!-- <select placeholder="Select Sutra" class="form-control form-control-lg" formControlName="selectedSutra">
+          <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
+        </select>
+        <label>Sutra*</label> -->
+      </div>
+    </div> <!-- Sutra -->
+    <div class="form-group mb-4 mt-5">
+      <div class="fields">
+        <ion-item>
+          <ion-label>Current Gatha*</ion-label>
+          <ion-select class="form-control form-control-lg" formControlName="currentGathaCount">
+            <ion-select-option *ngFor="let i of (totalGathaCount); let id = index" [value]="i"> {{i}}</ion-select-option>
+            <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
+          </ion-select>
+        </ion-item>
+        <!-- <select class="form-control form-control-lg" formControlName="currentGathaCount">
+          <option *ngFor="let i of (totalGathaCount); let id = index" [ngValue]="i"> {{i}} </option>
+        </select>
+        <label>Current Gatha*</label> -->
+      </div>
+    </div> <!-- Gatha Count -->
+  </form>
+    <div class="mb-4">
+      <button class="btn btn-success px-5" (keyup.enter)="saveData()" (click)="saveData()">Save</button>
+      <button class="btn btn-light px-5" (click)="closeForm()">Cancel</button>
+    </div>
+  </div>
+</ion-content>

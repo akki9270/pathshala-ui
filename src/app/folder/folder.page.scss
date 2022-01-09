@@ -14,7 +14,9 @@ $linear-absent: linear-gradient(
 );
 
 $bg-orange: #ff6900;
-
+.bg-darkgrey {
+  background: darkgrey;
+}
 
 @mixin shadow {
     -moz-box-shadow:    inset 0 0 10px #000000;
@@ -301,5 +303,14 @@ input {
         --background: #162f49;
       }
     }
+  }
+  ion-item::part(native) {
+    background-color: white;
+    color: #434343;
+  }
+  ion-item::part(native).item-inner {
+    --border-color: white;
+    border-color: transparent;
+    border: none;
   }
 }

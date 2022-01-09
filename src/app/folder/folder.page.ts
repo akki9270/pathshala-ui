@@ -1,11 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { IonContent, Platform } from '@ionic/angular';
+import { IonContent, LoadingController, Platform } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
 import { UserService } from '../services/user.service';
 import * as moment from 'moment';
 import { SutraService } from '../services/sutra.service';
+import { delay } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -29,9 +31,11 @@ export class FolderPage implements OnInit {
     { title: 'Id', prop: 'id'},
     { title: 'Name', prop: 'display_name'},
     { title: 'Age', prop: '', value: 'getAge'},
-    { title: 'Present Days', prop: '', value: ''},
+    { title: 'Present Days', prop: 'presentDays', value: ''},
+    { title: 'Contact No', prop: 'mobile'},
     { title: 'Points', prop: 'score', value: ''},
   ]
+  PLACEHOLDER_IMAGE_URL = 'https://via.placeholder.com/300';
   // imageUrlPrefix = "http://hiteshvidhikar.com/pathshala/images/";
   // imageUrlSuffix = ".jpg";
   @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
@@ -51,6 +55,7 @@ export class FolderPage implements OnInit {
       class: 'absent'
     }
   ]
+  loading: HTMLIonLoadingElement;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -59,7 +64,8 @@ export class FolderPage implements OnInit {
     private sutraSerice: SutraService,
     private cdRef: ChangeDetectorRef,
     private router: Router,
-    public platform: Platform
+    public platform: Platform,
+    public loadingController: LoadingController
     ) { }
 
   ionViewWillEnter() {
@@ -67,24 +73,41 @@ export class FolderPage implements OnInit {
     this.userGathaDetails = null; 
     this.isScannig = true;
     this.attendence = [];
+    let teacherData = localStorage.getItem('teacher');
+    if(teacherData) {
+      this.teacherData = JSON.parse(teacherData);
+    }
     this.initPage();
   };
+
+  @HostListener('keyup',['$event'])
+    onKeyUp($event) {
+      console.log(' keyUp ', $event);
+        if($event.keyCode === 13) {
+          let value = this.studentIdInput.nativeElement.value;
+          if (value) {
+            this.getUserData(value);
+          }
+        }
+    }
 
   ngOnInit() {
     // this.title = this.activatedRoute.snapshot.paramMap.get('id');
     // this.getUserData(3);
-    this.initPage();
+    // this.initPage();
   }
 
   initPage() {
     this.getAttendenceArray();
-    this.getAllSutra();
+    this.getAllSutra(1);
     setTimeout(() => {
       if (this.platform.is('capacitor')) {
         this.startCamera();
       } else {
        this.webScanner();
-       this.getUserData(1001);
+      //  if (!this.teacherData) {
+      //    this.getUserData(1001);
+      //  }
       //  this.getUserData(3);
       }
     //   if (this.mobileAndTabletCheck()) {
@@ -93,8 +116,8 @@ export class FolderPage implements OnInit {
     },100);
   }
 
-  getAllSutra() {
-    this.sutraSerice.getAllSutra()
+  getAllSutra(id) {
+    this.sutraSerice.getAllSutra(id)
     .subscribe( res => {
       console.log(' getAll Sutra ', res);
       this.allSutra = res['data'];
@@ -114,12 +137,12 @@ export class FolderPage implements OnInit {
   }
   getAttendenceArray() {
     let today = new Date();
-    for (let i = 7; i > 0; i--) {
+    for (let i = 6; i >= 0; i--) {
       let date = moment().subtract(i,'days')
       this.attendence.push({
         date: date.format('D'),
         month: date.format('MMM'),
-        date_format: date.format('MMM') + '-' + date.format('D')
+        date_format: date.format('MMM') + '-' + date.format('DD')
         // isPresent: this.getRandomInit(2)
       })
     }
@@ -153,6 +176,7 @@ export class FolderPage implements OnInit {
             let scanSub = this.qrScanner.scan().subscribe((text: string) => {
               console.log('Scanned something', text);
               // this.isScannig = false;
+              this.clearInput();
               this.getUserData(text);
 
               ele.style.background = '#FFF';
@@ -206,6 +230,7 @@ export class FolderPage implements OnInit {
 
     this.qrScannerComponent.capturedQr.subscribe(result => {
       console.log(result);
+      this.clearInput();
       this.qrScannerComponent.canvasHeight = 0;
       this.qrScannerComponent.canvasWidth = 0;
       this.getUserData(result);
@@ -219,18 +244,23 @@ export class FolderPage implements OnInit {
   }
 
   getUserData(id) {
+    this.presentLoading();
     this.userService.getUserData({id}).subscribe(
       (response) => {
+        this.dismisLoading();
         if (response && response['data'] && response['data'].length) {
 
           // this.studentData = JSON.parse(response['data']).data[0];
           if (response['data'][0].role == 'Teacher') {
             this.teacherData = response['data'][0];
+            localStorage.setItem('teacher', JSON.stringify(this.teacherData));
             this.newScan();
             return;
           } else if (this.teacherData.id ) {
             this.studentData = (response['data'])[0];
-            console.log(' student Data ', this.studentData);
+            this.studentData['presentDays'] = response['presentDays']
+            // console.log(' student Data ', this.studentData);
+            this.clearInput();
             this.checkAttendence(id);
             this.getAttendanceDetails(id);
             this.getGathaDetails(id);
@@ -247,12 +277,14 @@ export class FolderPage implements OnInit {
   }
 
   checkAttendence(studentId) {
-    let data = {
-      studentId,
-      teacherId: this.teacherData.id
-    }
+    let data = { studentId, teacherId: this.teacherData.id };
+
     this.userService.checkAttendence(data).subscribe(
-      res => console.log(' checkAttendence ', res),
+      (res) => {
+        // console.log(' checkAttendence ', res);
+        // this.getUserData(studentId);
+        this.getAttendanceDetails(studentId);
+      },
       error => {}
     );
   }
@@ -272,7 +304,7 @@ export class FolderPage implements OnInit {
           }
           return item;
         });
-        //console.log(' this.attendence ', this.attendence);
+        // console.log(' this.attendence ', this.attendence);
         // this.cdRef.detectChanges();
       }, (error) => console.error()
       )
@@ -288,6 +320,7 @@ export class FolderPage implements OnInit {
   }
 
   updateUserSutra() {
+    this.presentLoading();
     if (this.selectedSutra && this.currentGathaCount) {
       let data = {
         sutraId: this.selectedSutra.id,
@@ -297,6 +330,7 @@ export class FolderPage implements OnInit {
       }
       this.userService.updateUserSutra(data)
         .subscribe(res => {
+          this.dismisLoading();
           this.getUserData(this.studentData.id);
         });
     }
@@ -335,10 +369,12 @@ export class FolderPage implements OnInit {
   }
 
   getNextGatha() {
+    this.presentLoading();
     this.userService.userNextGatha({
       studentId: this.studentData.id,
       teacherId: this.teacherData.id
     }).subscribe((res: any) => {
+      // this.dismisLoading();
       this.userGathaDetails = res.data;
       this.getUserData(this.studentData.id);
       this.cdRef.detectChanges();
@@ -373,5 +409,33 @@ export class FolderPage implements OnInit {
     if(this.studentIdInput) {
       this.studentIdInput.nativeElement.value = '';
     }
+  }
+
+  imageLoadError(event) {
+    // console.log(' data ', data);
+    // this.studentData.profile_image = this.PLACEHOLDER_IMAGE_URL;
+    event.target.src = this.PLACEHOLDER_IMAGE_URL;
+  }
+
+  async presentLoading() {
+    if(this.loading) {
+      return;
+    }
+     this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      // duration: 2000
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
+  dismisLoading() {
+    of([]).pipe(delay(2000)).subscribe(() => {
+      this.loading.dismiss();
+      this.loading = null;
+    })
   }
 }

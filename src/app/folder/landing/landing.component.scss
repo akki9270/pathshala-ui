@@ -1,11 +1,49 @@
+ion-content {
+  --background: floralwhite;
+  ion-input {
+    --background: gray;
+    --color: white;
+    --padding-start: 10px;
+    border-radius: 10px;
+    font-size: 26px;
+  }
+}
 .button-container {
+  display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // flex-direction: column;
+  justify-content: space-around;
+  padding: 15px;
+  background: floralwhite;
+  flex-wrap: wrap;
+  ion-button {
+    button {
+      padding: 26px;
+    }
+    font-size: 26px;
+    min-width: 200px;
+    // min-height: 100px;
+    margin-top: 15px;
+    &.login-button {
+      min-height: 50px;
+    }
+  }
+}
+.button-image-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 20px;
+  cursor: pointer;
+  img {
+    width: 200px;
+    height: 200px;
+  }
   ion-button {
-    min-width: 150px;
-    min-height: 100px;
-    margin-top: 15px;
+    // button {
+      width: 100%;
+    // }
   }
 }

@@ -1,13 +1,17 @@
 <ion-content [fullscreen]="true">
   <div class="p-3 text-uppercase bg-white text-dark" *ngIf="teacherData.display_name">{{teacherData?.display_name}}</div>
-  <div *ngIf="teacherData && teacherData.id" class="custom-id">
-    <div class="form-group my-2">
-      <div class="fields">
-        <input class="active id-input" type="number" placeholder="Student Id" #idInput />
-        <label>Student Id</label>
+
+  <div class="d-flex justify-content-between align-items-center pr-4 bg-darkgrey">
+    <div *ngIf="teacherData && teacherData.id" class="custom-id">
+      <div class="form-group my-2">
+        <div class="fields">
+          <input class="active id-input" autofocus type="number" placeholder="Student Id" #idInput />
+          <label>Student Id</label>
+        </div>
       </div>
+      <button class=" btn px-4 bg-success text-white  p-1 ml-4" (click)="getUserData(idInput.value)">Go</button>
     </div>
-    <button class=" btn px-4 bg-success text-white  p-1 ml-4" (click)="getUserData(idInput.value)">Go</button>
+    <ion-button class="back-to-home" (click)="backToHome()">Back To Home</ion-button>
   </div>
   <!-- <div *ngIf="isScannig && !platform.is('capacitor')"> -->
     <qr-scanner
@@ -23,6 +27,7 @@
       <div class="profile-image-container">
         <img
           [src]="studentData.profile_image"
+          (error)="imageLoadError($event)"
           class="img-thumbnail st-image mt-2"
           height="200"
           width="100"
@@ -67,7 +72,7 @@
         </div>
         <div class="form-group mb-4">
           <div class="fields">
-            <input type="text" #nameInput placeholder="Present Days" />
+            <input type="text" #nameInput placeholder="Present Days" [(ngModel)]="studentData.presentDays" />
             <label>Present Days</label>
           </div>
         </div>
@@ -116,10 +121,19 @@
           </div>
           <ng-template #sutraDropDown>
             <div class="fields">
-              <select class="form-control form-control-lg" [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
+              <ion-item>
+                <ion-label>Sutra</ion-label>
+                <ion-select placeholder="Select Sutra"
+                [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
+                  <ion-select-option *ngFor="let op of allSutra" [value]="op">{{op.name}}</ion-select-option>
+                  <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
+                </ion-select>
+              </ion-item>
+
+              <!-- <select class="form-control form-control-lg" [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
                 <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
               </select>
-              <label>Sutra</label>
+              <label>Sutra</label> -->
             </div>
           </ng-template>
         </div>
@@ -137,10 +151,17 @@
           <ng-container>
             <div class="form-group mb-4 mt-5">
               <div class="fields">
-                <select class="form-control form-control-lg" [(ngModel)]="currentGathaCount">
+                <ion-item>
+                  <ion-label>Current Gatha</ion-label>
+                  <ion-select placeholder="Current Gatha" [(ngModel)]="currentGathaCount">
+                    <ion-select-option *ngFor="let i of (totalGathaCount); let id = index" [value]="i">{{i}}</ion-select-option>
+                    <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
+                  </ion-select>
+                </ion-item>
+                <!-- <select class="form-control form-control-lg" [(ngModel)]="currentGathaCount">
                   <option *ngFor="let i of (totalGathaCount); let id = index" [ngValue]="i"> {{i}} </option>
                 </select>
-                <label>Current Gatha</label>
+                <label>Current Gatha</label> -->
               </div>
             </div>
           </ng-container>

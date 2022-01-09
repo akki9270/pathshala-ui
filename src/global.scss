@@ -114,4 +114,7 @@
     outline: none;
     -webkit-box-shadow: none;
     box-shadow: none;
+    ~ label {
+      top: -15px;
+    }
   }

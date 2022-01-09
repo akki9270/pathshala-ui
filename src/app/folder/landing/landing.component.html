@@ -1,14 +1,39 @@
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true">
   <div class="button-container">
-    <ion-button (click)="onPathshalaClick()">
-      Pathshala
-    </ion-button>
-    <ion-button>
-      Events
-    </ion-button>
-    <ion-button>
-      Reports
-    </ion-button>
+    <ng-container *ngIf="!openLogin">
+      <div class="button-image-container" (click)="onPathshalaClick()">
+        <img src="assets/images/pathshala.jpeg" />
+        <ion-button> Pathshala </ion-button>
+      </div>
+      <div class="button-image-container">
+        <img src="assets/images/events.jpeg" alt="Events" />
+        <ion-button> Events </ion-button>
+      </div>
+      <div class="button-image-container">
+        <img src="assets/images/reports.jpeg" alt="Reports">
+        <ion-button> Reports </ion-button>
+      </div>
+      <div class="button-image-container" (click)="onAdminClick()">
+        <img src="assets/images/admin.jpeg" alt="Admin">
+        <ion-button > Admin </ion-button>
+      </div>
+    </ng-container>
+    <div *ngIf="openLogin">
+      <ion-col>
+        <ion-input type="text" placeholder="Email" [(ngModel)]="email"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input type="password" placeholder="Password" [(ngModel)]="password" ></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="onLogin()" class="login-button">
+          Login
+        </ion-button>
+        <ion-button (click)="goBack()" class="login-button">
+          Back
+        </ion-button>
+      </ion-col>
+    </div>
   </div>
 </ion-content>

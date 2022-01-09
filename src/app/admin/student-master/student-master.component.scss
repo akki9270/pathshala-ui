@@ -1,0 +1,137 @@
+:host {
+    justify-content: start;
+    button {
+        font-size: 24px;
+    }
+    ion-content {
+        --ion-background-color: white;
+        --color: #434343;
+        // background: white;
+        input:not([type="radio"]) {
+            min-width: 400px;
+            font-size: 24px;
+            &#studentId {
+                min-width: 300px;
+            }
+            &.ng-touched {
+                &.ng-invalid {
+                    border:1px solid red;
+                }
+            }
+        }
+        input[type="radio"] {
+            appearance: none;
+            border: 1px solid black;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            outline: 1px solid lightgrey;
+            font-size: 24px;
+            &.ng-touched {
+                &.ng-invalid {
+                    outline-color: red;
+                }
+            }
+            &:checked {
+                border-width: 5px;
+                border-color: white;
+                background-color: #007bff;
+                outline: 1px solid #007bff;
+            }
+        }
+        select {
+            min-width: 400px;
+            height: 64px;
+            font-size: 24px;
+            &.ng-touched {
+                &.ng-invalid {
+                    border:1px solid red;
+                }
+            }
+        }
+        // textarea {
+        //     min-width: 400px;
+        //     ~ label {
+        //         top: -15px;
+        //     }
+        //     &.ng-touched {
+        //         &.ng-invalid {
+        //             border:1px solid red;
+        //         }
+        //     }
+        //     // background: transparent;
+        //     // color: white;
+        // }
+        fieldset {
+            border: 1px solid lightgray;
+            padding: 5px;
+            margin: 5px;
+            legend {
+                display: inline-block;
+                width: auto;
+                padding: 10px; 
+                color: #808080;
+                text-transform: uppercase;
+                font-size: 15px;
+                line-height: 24px;
+            }
+        }
+        button {
+            font-size: 24px;
+        }
+    }
+}
+.form-group .fields select:not(:placeholder-shown) ~ label {
+    top: -15px;
+  }
+  .form-group .fields select ~ label {
+    top: 0px;
+  }
+
+  ion-item {
+      &.ion-touched {
+          &.ion-invalid {
+            border:1px solid red;
+          }
+      }
+  }
+  ::ng-deep ion-alert {
+      .alert-wrapper {
+          &.ion-overlay-wrapper {
+            //   --m-width: 60vw;
+              .alert-radio-group {
+                  max-height: 60vh;
+              }
+          }
+      }
+  }
+  ion-select {
+    //   background-color: lightgreen;
+    border: none;
+    font-size: 24px;
+    width: 100%;
+    justify-content: center;
+    &::part(icon) {
+        opacity: 0;
+    }
+  }
+  ion-item {
+    --border-style: hidden;
+      ion-label {
+        font-size: 24px;
+      }
+  }
+  ion-item::part(native) {
+    background-color: white;
+    color: #434343;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    .item-inner {
+        border: none;    
+    }
+  }
+  ion-item::part(native).item-inner {
+    --border-color: white;
+    border-color: transparent;
+    border: none;
+  }

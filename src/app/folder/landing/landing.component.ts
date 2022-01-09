@@ -11,6 +11,11 @@ export class LandingComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) { }
+  openLogin = false;
+  email: string = '';
+  password: string = '';
+  USER_EMAIL = 'admin@pathshala.com';
+  USER_PASSWORD = 'Admin@123';
 
   ngOnInit() { }
 
@@ -18,4 +23,24 @@ export class LandingComponent implements OnInit {
     this.router.navigate(['Pathshala'], { relativeTo: this.activatedRoute });
   }
 
+  onLogin() {
+    if(this.email === this.USER_EMAIL && this.password === this.USER_PASSWORD) {
+      this.router.navigate(['admin']);
+    }
+  }
+  goBack() {
+    this.openLogin = false;
+  }
+
+  onAdminClick() {
+    this.openLogin = true;
+    let teacher = localStorage.getItem('teacher');
+    if (teacher) {
+      teacher = JSON.parse(teacher);
+      if(teacher['id'] == 1001) {
+        this.email = this.USER_EMAIL;
+        this.password = this.USER_PASSWORD;
+      }
+    }
+  }
 }

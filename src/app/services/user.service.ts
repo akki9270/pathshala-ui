@@ -58,4 +58,11 @@ export class UserService {
                 tap(() => console.log('updateUserSutra'))
             );
     }
+
+    saveUserAndGatha(data) {
+        return this.http.post(this.URL + '/saveUserAndGatha', data)
+        .pipe(
+            tap(() => console.log('saveUserAndGatha'))
+        );   
+    }
 }

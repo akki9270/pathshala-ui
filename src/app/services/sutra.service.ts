@@ -11,10 +11,24 @@ export class SutraService {
     private env = environment;
     private URL = this.env.server_url;
 
-    getAllSutra() {
-        return this.http.get(this.URL + '/getAllSutra')
+    getAllSutra(id) {
+        return this.http.get(this.URL + '/getAllSutra', { params: {id} })
         .pipe(
             tap(() => console.log('getAllSutra'))
         )
+    }
+
+    getAllCategory() {
+        return this.http.get(this.URL + '/getSutraCategory')
+        .pipe(
+            tap(() => console.log('getSutraCategory'))
+        )
+    }
+
+    saveCatSutra(data) {
+    return this.http.post(this.URL + '/saveCatSutra', data)
+            .pipe(
+                tap(() => console.log('saveCatSutra'))
+            );
     }
 }

@@ -1,0 +1,74 @@
+<ion-content>
+<div class="bg-light">
+  <div class="d-flex justify-content-start p-4">
+    <button class="btn btn-primary px-4" (click)="goBack()">
+      Back
+    </button>
+  </div>
+</div>
+
+
+  <div class=" row justify-content-start flex-column align-items-sm-start px-3 mt-3">
+    <form [formGroup]="categoryForm" class="pl-4">
+      <div class="form-group mb-4 mt-4">
+        <div class="fields">
+          <ion-item>
+            <ion-label>Select Sutra</ion-label>
+            <ion-select class="form-control form-control-lg" formControlName="selectedSutraCategory" placeholder="Select Sutra">
+              <ion-select-option *ngFor="let cat of allSutraCategory" [value]="cat">{{cat.name}}</ion-select-option>
+              <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
+            </ion-select>
+          </ion-item>
+          <!-- <select placeholder="Select Sutra" class="form-control form-control-lg" formControlName="selectedSutraCategory" >
+            <option *ngFor="let cat of allSutraCategory" [ngValue]="cat">{{cat.name}}</option>
+          </select>
+          <label>Sutra Category</label> -->
+        </div>
+      </div> <!-- Sutra Category -->
+      <div class="form-group mb-4 mt-4">
+        <div class="fields">
+          <input 
+            type="text" 
+            formControlName="name" 
+            placeholder="Name" 
+            />
+          <label>Name <small>(Gujarati)</small></label>
+        </div>
+      </div> <!-- Name -->
+      <div class="form-group mb-4 mt-4">
+        <div class="fields">
+          <input 
+            type="text" 
+            formControlName="name_english" 
+            placeholder="Name English" 
+            />
+          <label>Name <small>(English)</small></label>
+        </div>
+      </div> <!-- English Name -->
+      <div class="form-group mb-4 mt-4">
+        <div class="fields">
+          <input 
+            type="number" 
+            formControlName="gatha_count" 
+            placeholder="Gatha Count" 
+            />
+          <label>Gatha Count</label>
+        </div>
+      </div> <!-- First Name -->
+      <!-- <div class="form-group mb-4 mt-4">
+        <div class="fields">
+          <input 
+            type="number" 
+            formControlName="queue_number" 
+            placeholder="Queue Number" 
+            />
+          <label>Queue Number</label>
+        </div>
+      </div> -->
+    </form>
+    <div class="mb-4 pl-4">
+      <button class="btn btn-success px-5" (keyup.enter)="saveData()" (click)="saveData()">Save</button>
+      <button class="btn btn-light px-5 ml-4" (click)="closeForm()">Cancel</button>
+    </div>
+  </div>
+</ion-content>
