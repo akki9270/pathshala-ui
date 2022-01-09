@@ -19,8 +19,7 @@
       <button class="btn btn-primary" *ngIf="!isNewStudent" (click)="addNewStudent()">Add New Student</button>
     </div>
   </div>
-  <div><button (click)="getImagePicker()">Photo</button></div>
-  <div><input type="file" (change)="onFileUpload($event)"></div>
+  <!-- <div><button (click)="getImagePicker()">Photo</button></div> -->
   <div *ngIf="studentForm.getRawValue().user_id || isNewStudent" class=" d-flex flex-column align-items-start pl-4">
     <form [formGroup]="studentForm">
       <div class="form-group mb-4 mt-4">
