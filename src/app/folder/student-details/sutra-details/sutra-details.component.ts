@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { SummaryService } from 'src/app/services/summary-service.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { SummaryService } from 'src/app/services/summary-service.service';
 export class SutraDetailsComponent implements OnInit {
 
   constructor(
-    public summaryService: SummaryService
+    public summaryService: SummaryService,
+    public loadingController: LoadingController
   ) { }
   @Input() studentId;
   @Input() selectedYear;
@@ -18,12 +20,15 @@ export class SutraDetailsComponent implements OnInit {
     this.getSutraSummary();
   }
 
-  getSutraSummary() {
+  async getSutraSummary() {
+    let loading = await this.loadingController.create({ message: 'Please wait...'});
+    await loading.present();
     let data = { id: this.studentId, year: this.selectedYear }
     this.summaryService.getSutraSummary(data).subscribe(
-      (res: any) => {
+      async (res: any) => {
         // console.log(' getSutraSummary ', res);
         this.sutraDetailSummary = res;
+        await loading.dismiss();
       }
     )
 

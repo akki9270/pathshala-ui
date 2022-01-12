@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { SharedService } from './services/shared.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -7,10 +8,12 @@ import { Platform } from '@ionic/angular';
 })
 export class AppComponent {
   constructor(
-    public platform: Platform
+    public platform: Platform,
+    public sharedService: SharedService
   ) {
     this.platform.pause.subscribe(() => {
-      localStorage.clear();
+      // localStorage.clear();
+      this.sharedService.setTeacher({});
     })
   }
 }

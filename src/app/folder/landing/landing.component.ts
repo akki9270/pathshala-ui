@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-landing',
@@ -9,7 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LandingComponent implements OnInit {
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sharedService: SharedService
   ) { }
   openLogin = false;
   email: string = '';
@@ -17,14 +19,18 @@ export class LandingComponent implements OnInit {
   USER_EMAIL = 'admin@pathshala.com';
   USER_PASSWORD = 'Admin@123';
   isTeacherLoggedIn = false;
+  teacherData = {}
 
   ngOnInit() { 
-    let data = localStorage.getItem('teacher');
-    if(data) {
-      this.isTeacherLoggedIn = true;
-    } else {
-      this.onPathshalaClick();
-    }
+    this.sharedService.getTeacher.subscribe( (data: any) => {
+      if(data && data.hasOwnProperty('id')) {
+        this.teacherData = this.teacherData;
+        this.isTeacherLoggedIn = true;
+      } else {
+        this.onPathshalaClick();
+      }
+    })
+    // let data = localStorage.getItem('teacher');
   }
 
   onPathshalaClick() {
@@ -41,11 +47,11 @@ export class LandingComponent implements OnInit {
   }
 
   onAdminClick() {
-    this.openLogin = true;
-    let teacher = localStorage.getItem('teacher');
-    if (teacher) {
-      teacher = JSON.parse(teacher);
-      if(teacher['id'] == 1001) {
+    // this.openLogin = true;
+    // let teacher = localStorage.getItem('teacher');
+    if (this.isTeacherLoggedIn) {
+      // teacher = JSON.parse(teacher);
+      if(this.teacherData['id'] == 1001) {
         this.email = this.USER_EMAIL;
         this.password = this.USER_PASSWORD;
       }

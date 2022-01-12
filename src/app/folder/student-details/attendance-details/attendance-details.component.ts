@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { SummaryService } from 'src/app/services/summary-service.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { SummaryService } from 'src/app/services/summary-service.service';
 export class AttendanceDetailsComponent implements OnInit {
 
   constructor(
-    public summaryService: SummaryService
+    public summaryService: SummaryService,
+    public loadingController: LoadingController
   ) { }
 
   @Input() studentId;
@@ -35,13 +37,17 @@ export class AttendanceDetailsComponent implements OnInit {
     this.getAttandanceSummary();  
   }
 
-  getAttandanceSummary() {
+  async getAttandanceSummary() {
+    let loading = await this.loadingController.create({
+      message: 'Please wait...'
+    });
+    await loading.present();
     let data = {
       id: this.studentId,
       year: this.selectedYear
     }
     this.summaryService.getAttandanceSummary(data).subscribe(
-      (res: any) => {
+     async (res: any) => {
         // console.log(' getAttandanceSummary ', res);
         let data = res;
         data.forEach(i => {
@@ -54,6 +60,7 @@ export class AttendanceDetailsComponent implements OnInit {
             this.monthsArray[found]['isDataAvailable'] = true;
           }
         });
+        await loading.dismiss();
         // console.log(' this.monthsArray ', this.monthsArray);
       }
     )

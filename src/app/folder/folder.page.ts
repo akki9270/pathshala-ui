@@ -9,6 +9,7 @@ import { SutraService } from '../services/sutra.service';
 import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { StudentDetailsComponent } from './student-details/student-details.component';
+import { SharedService } from '../services/shared.service';
 
 
 @Component({
@@ -67,7 +68,8 @@ export class FolderPage implements OnInit {
     private router: Router,
     public platform: Platform,
     public loadingController: LoadingController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public sharedService: SharedService
     ) { }
 
   ionViewWillEnter() {
@@ -75,10 +77,10 @@ export class FolderPage implements OnInit {
     this.userGathaDetails = null; 
     this.isScannig = true;
     this.attendence = [];
-    let teacherData = localStorage.getItem('teacher');
-    if(teacherData) {
-      this.teacherData = JSON.parse(teacherData);
-    }
+    // let teacherData = localStorage.getItem('teacher');
+    // if(teacherData) {
+    //   this.teacherData = JSON.parse(teacherData);
+    // }
     this.initPage();
   };
 
@@ -94,6 +96,9 @@ export class FolderPage implements OnInit {
     }
 
   ngOnInit() {
+    this.sharedService.getTeacher.subscribe(data => {
+      this.teacherData = data;
+    })
     // this.title = this.activatedRoute.snapshot.paramMap.get('id');
     // this.getUserData(3);
     // this.initPage();
@@ -255,7 +260,8 @@ export class FolderPage implements OnInit {
           // this.studentData = JSON.parse(response['data']).data[0];
           if (response['data'][0].role == 'Teacher') {
             this.teacherData = response['data'][0];
-            localStorage.setItem('teacher', JSON.stringify(this.teacherData));
+            // localStorage.setItem('teacher', JSON.stringify(this.teacherData));
+            this.sharedService.setTeacher(this.teacherData);
             this.newScan();
             return;
           } else {
