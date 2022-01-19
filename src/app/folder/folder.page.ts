@@ -301,6 +301,8 @@ export class FolderPage implements OnInit {
   }
 
   getAttendanceDetails(studentId) {
+    this.attendence = [];
+    this.getAttendenceArray();
     this.userService.getAttendence(studentId)
       .subscribe((res: any) => {
        // console.log(' attendance ', res);
