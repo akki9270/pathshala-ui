@@ -24,7 +24,7 @@ export class LandingComponent implements OnInit {
   ngOnInit() { 
     this.sharedService.getTeacher.subscribe( (data: any) => {
       if(data && data.hasOwnProperty('id')) {
-        this.teacherData = this.teacherData;
+        this.teacherData = data;
         this.isTeacherLoggedIn = true;
       } else {
         this.onPathshalaClick();
@@ -47,7 +47,7 @@ export class LandingComponent implements OnInit {
   }
 
   onAdminClick() {
-    // this.openLogin = true;
+    this.openLogin = true;
     // let teacher = localStorage.getItem('teacher');
     if (this.isTeacherLoggedIn) {
       // teacher = JSON.parse(teacher);

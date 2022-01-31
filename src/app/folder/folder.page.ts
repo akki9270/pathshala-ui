@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { IonContent, LoadingController, Platform, ModalController } from '@ionic/angular';
+import { IonContent, LoadingController, Platform, ModalController, AlertController } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
 import { UserService } from '../services/user.service';
 import * as moment from 'moment';
@@ -58,6 +58,7 @@ export class FolderPage implements OnInit {
     }
   ]
   loading: HTMLIonLoadingElement;
+  isDataLoadding = true;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -69,7 +70,8 @@ export class FolderPage implements OnInit {
     public platform: Platform,
     public loadingController: LoadingController,
     public modalController: ModalController,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    public alertController: AlertController
     ) { }
 
   ionViewWillEnter() {
@@ -113,7 +115,8 @@ export class FolderPage implements OnInit {
       } else {
        this.webScanner();
       //  if (!this.teacherData) {
-      //    this.getUserData(1001);
+        //  this.getUserData(1001);
+        //  this.getUserData(153);
       //  }
       //  this.getUserData(3);
       }
@@ -281,6 +284,9 @@ export class FolderPage implements OnInit {
           //   this.router.navigate(['']);
           // }
           // this.studentData['imageUrl'] = this.imageUrlPrefix + this.studentData.id + this.imageUrlSuffix;
+        } else {
+          this.showMessage('No user for the given id')
+          this.newScan();
         }
       },
       (error) => {}
@@ -301,6 +307,7 @@ export class FolderPage implements OnInit {
   }
 
   getAttendanceDetails(studentId) {
+    this.isDataLoadding = true;
     this.attendence = [];
     this.getAttendenceArray();
     this.userService.getAttendence(studentId)
@@ -319,6 +326,7 @@ export class FolderPage implements OnInit {
         });
         // console.log(' this.attendence ', this.attendence);
         // this.cdRef.detectChanges();
+        this.isDataLoadding = false;
       }, (error) => console.error()
       )
   }
@@ -345,7 +353,7 @@ export class FolderPage implements OnInit {
         .subscribe(res => {
           this.dismisLoading();
           this.getUserData(this.studentData.id);
-        });
+        }, () => { this.dismisLoading() });
     }
   }
 
@@ -459,5 +467,13 @@ export class FolderPage implements OnInit {
       this.loading.dismiss();
       this.loading = null;
     })
+  }
+
+  async showMessage(message: string) {
+    let toast = await this.alertController.create({
+      message,
+      buttons: ['OK']
+    });
+   await toast.present();
   }
 }

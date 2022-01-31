@@ -1,9 +1,9 @@
-<div class="d-flex justify-content-center">
+<div class="sutra-summary-container">
 <table class="table">
     <thead>
       <th>Sutra Name</th>
       <th>Sutra Gatha</th>
-      <th>Days</th>
+      <th>status / Days</th>
       <th>Start Date</th>
       <th>End Date</th>
     </thead>
@@ -11,9 +11,14 @@
       <tr *ngFor="let i of sutraDetailSummary">
         <td>{{i.sutraName}}</td>
         <td class="text-center">{{i.sutraGatha}}</td>
-        <td>{{i.completed == 'true' ? i.days : 'In Progress'}}</td>
+        <td class="days-column d-flex justify-content-around">
+          <!-- {{i.completed == 'true' ? i.days : ('In Progress ('+ i.pendingDays +')')}} -->
+          <i class="icon-ic-clock text-warning" *ngIf="i.completed != 'true'"></i>
+          <i class="icon-circle-tick text-success" *ngIf="i.completed == 'true'"></i>
+          <span>{{ '(' + (i.completed == 'true' ? i.days : i.pendingDays) + ')' }} </span>
+        </td>
         <td>{{i.sutraStartDate | date:'d-MM-YYYY'}}</td>
-        <td>{{i.sutraEndDate | date:'d-MM-YYYY'}}</td>
+        <td>{{ i.completed == 'true' ? (i.sutraEndDate | date:'d-MM-YYYY') : '-'}}</td>
       </tr>
     </tbody>
   </table>

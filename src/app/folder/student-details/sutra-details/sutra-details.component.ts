@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { SummaryService } from 'src/app/services/summary-service.service';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-sutra-details',
   templateUrl: './sutra-details.component.html',
@@ -28,6 +28,11 @@ export class SutraDetailsComponent implements OnInit {
       async (res: any) => {
         // console.log(' getSutraSummary ', res);
         this.sutraDetailSummary = res;
+        this.sutraDetailSummary.forEach(i => {
+          if (i.completed != 'true') {
+            i['pendingDays'] = moment().diff(moment(i.sutraStartDate), 'days');
+          }
+        })
         await loading.dismiss();
       }
     )

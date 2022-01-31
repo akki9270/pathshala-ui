@@ -1,20 +1,32 @@
-<div class="d-flex justify-content-center">
-  <table class="table">
-    <thead>
-      <th>Date</th>
-      <th>Present</th>
-      <th>Sutra</th>
-      <th>Gatha</th>
-      <th>Teacher</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let i of summaryDetails">
-        <td>{{i.dates| date:'d-MM-YYYY'}}</td>
-        <td [class.bg-danger]="!i.isPresent">{{i.isPresent}}</td>
-        <td>{{i.name || '-'}}</td>
-        <td>{{i.current_gatha_count || '-'}}</td>
-        <td>{{i.teacher || '-'}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<ion-content>
+  <div class="summary-table-container">
+    <table class="table scroll" scrollX="true">
+      <thead>
+        <th>Date</th>
+        <th>Present</th>
+        <th>Attendance By</th>
+        <th>Sutra</th>
+        <th>Gatha</th>
+        <th>Teacher</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of summaryDetails">
+          <td>{{ i.displayDate || i.dates | date:'d-MM-YYYY'}}</td>
+          <td>
+            <i class="icon-tick-white text-success" *ngIf="i.isPresent"></i>
+            <i class="icon-cross text-danger" *ngIf="!i.isPresent"></i>
+          </td>
+          <td>{{i.attendenceBy}}</td>
+          <td>{{ i.name || '-' }}</td>
+          <td>{{ i.current_gatha_count || '-' }}</td>
+          <td>{{ i.status !== 'inProgress' ? i.teacher : '-' }}</td>
+          <td>
+            <i class="icon-ic-clock text-warning" *ngIf="i.status == 'inProgress'"></i>
+            <i class="icon-circle-tick text-success" *ngIf="i.status == 'done'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ion-content>

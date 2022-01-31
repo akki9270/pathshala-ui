@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    <div class="attendence-details" *ngIf="!!studentData">
+    <div class="attendence-details" *ngIf="!!studentData && !isDataLoadding">
       <ng-container *ngFor="let at of attendence">
         <div class="at-box mx-1" [ngClass]="{'present': at.is_present, 'absent': !at.is_present}">
           <span class="d-block">{{at.date}} </span>
@@ -123,7 +123,7 @@
             <div class="fields">
               <ion-item>
                 <ion-label>Sutra</ion-label>
-                <ion-select placeholder="Select Sutra" [disabled]="teacherData && teacherData.id"
+                <ion-select placeholder="Select Sutra" [disabled]="teacherData && !teacherData.id"
                 [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
                   <ion-select-option *ngFor="let op of allSutra" [value]="op">{{op.name}}</ion-select-option>
                   <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
@@ -153,7 +153,7 @@
               <div class="fields">
                 <ion-item>
                   <ion-label>Current Gatha</ion-label>
-                  <ion-select placeholder="Current Gatha" [(ngModel)]="currentGathaCount" [disabled]="teacherData && teacherData.id">
+                  <ion-select placeholder="Current Gatha" [(ngModel)]="currentGathaCount" [disabled]="teacherData && !teacherData.id">
                     <ion-select-option *ngFor="let i of (totalGathaCount); let id = index" [value]="i">{{i}}</ion-select-option>
                     <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
                   </ion-select>
@@ -183,8 +183,10 @@
       </div>
       <div class="action-buttons" *ngIf="userGathaDetails">
         <!-- <div> -->
-          <ion-button class="continue" [disabled]="!teacherData || (teacherData && !teacherData.id)" *ngIf="userGathaDetails.current_gatha_count < userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Continue</ion-button>
-          <ion-button class="finish" [disabled]="!teacherData || (teacherData && teacherData.id)" *ngIf="userGathaDetails.current_gatha_count == userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Finish</ion-button>
+          <ng-container *ngIf="teacherData && teacherData.id">
+            <ion-button class="continue" *ngIf="userGathaDetails.current_gatha_count < userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Continue</ion-button>
+            <ion-button class="finish" *ngIf="userGathaDetails.current_gatha_count == userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Finish</ion-button>
+          </ng-container>
           <ion-button class="details" (click)="onDetailsClick()">Details</ion-button>
         <!-- </div> -->
       </div>
@@ -195,7 +197,7 @@
 
     <div class="next-action">
       <ion-button class="new-scan" (click)="newScan()">New Scan</ion-button>
-      <ion-button class="back-to-home" (click)="backToHome()" [disabled]="teacherData && !teacherData.id">Back To Home</ion-button>
+      <ion-button class="back-to-home" (click)="backToHome()" *ngIf="teacherData && teacherData.id">Back To Home</ion-button>
     </div>
   </div>
 

@@ -1,0 +1,15 @@
+.sutra-summary-container {
+    overflow-x: scroll;
+    table {
+        min-width: 700px;
+        tr {
+            td {
+                &.days-column {
+                    i {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

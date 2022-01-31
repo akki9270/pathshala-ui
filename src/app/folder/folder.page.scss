@@ -206,8 +206,126 @@ input {
   top: 0px;
 }
 
-@media only screen and (min-width: 375px) and (max-width: 1024px) {
+// mobile portrait mode
+@media only screen and (max-width: 766px) {
   .student-details {
+    flex-direction: column;
+    align-items: center;
+    table {
+      tr {
+        td {
+          border-top: none;
+          padding-bottom: 0px;
+          padding: 5px;
+        }
+      }
+    }
+    .student-table {
+      font-size: 1rem;
+      // font-weight: bold;
+    }
+    #details {
+      width: 100%;
+    }
+    .profile-image-container {
+      img {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  }
+  .attendence-details {
+    justify-content: space-evenly;
+    min-height: 130px;
+    .at-box {
+      width: 8vh;
+      height: 8vh;
+      font-size: 1rem;
+      &.present {
+        // background: $linear-present;
+        @include shadow();
+      }
+      &.absent {
+       // background: rgb(176, 36, 255);
+       // background: $linear-absent;
+       background-color: $bg-orange;
+       @include shadow();
+      }
+      &.holiday {
+      }
+
+      span {
+        line-height: 24px;
+      }
+    }
+  }
+  .progress-details {
+    flex-direction: column;
+    align-items: center;
+    .gatha-details {
+      width: 100%;
+    }
+    .days-till-now {
+      width: 30%;
+      align-self: baseline;
+      .dtn-box {
+        width: 100px;
+      }
+    }
+    .action-buttons {
+      justify-content: space-evenly;
+      flex-direction: row;
+      ion-button {
+        min-width: 150px;
+        &.continue {
+          --background: #00ff00;
+          color: #434343;
+        }
+        &.finish {
+          --background: #ff6900;
+        }
+        &.details {
+          --background: #162f49;
+        }
+      }
+    }
+  }
+  .next-action {
+    height: 100px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    ion-button {
+      height: 60px;
+      margin: 0 15px;
+      min-width: 150px;
+      font-size: 18px;
+      &.new-scan {
+        --background: #00ff00;
+        color: #434343;
+      }
+      &.back-to-home {
+        --background: #162f49;
+      }
+    }
+  }
+  ion-item::part(native) {
+    background-color: white;
+    color: #434343;
+  }
+  ion-item::part(native).item-inner {
+    --border-color: white;
+    border-color: transparent;
+    border: none;
+  }
+}
+
+// tablet
+@media only screen and (min-width: 766px) {
+  .student-details {
+    // flex-direction: column;
+    // align-items: center;
     table {
       tr {
         td {
@@ -221,10 +339,10 @@ input {
       font-weight: bold;
     }
     #details {
-      width: 60%;
+      width: 100%;
     }
     .profile-image-container {
-      width: 35%;
+      width: 70%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -238,9 +356,9 @@ input {
     justify-content: space-evenly;
     min-height: 130px;
     .at-box {
-      width: 80px;
-      height: 80px;
-      font-size: 22px;
+      width: 8vh;
+      height: 8vh;
+      font-size: 1rem;
       &.present {
         // background: $linear-present;
         @include shadow();
@@ -313,6 +431,45 @@ input {
     --border-color: white;
     border-color: transparent;
     border: none;
+  }
+}
+
+// mobile landscape mode
+@media screen and (orientation: landscape) and (min-width: 350px) and (max-width: 1024px) {
+  .student-details {
+    flex-direction: row;
+
+    #details {
+      width: 60%;
+    }
+    .profile-image-container {
+      img {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  }
+  .attendence-details {
+    .at-box {
+      width: 20vh;
+      height: 20vh;
+    }
+  }
+  .progress-details {
+    flex-direction: row;
+    .gatha-details {
+      width: 40%;
+    }
+    .days-till-now {
+      width: 30%;
+      align-self: flex-end;
+      .dtn-box {
+        width: 100px;
+      }
+    }
+    .action-buttons {
+      flex-direction: column;
+    }
   }
 }
 
