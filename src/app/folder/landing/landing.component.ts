@@ -22,6 +22,10 @@ export class LandingComponent implements OnInit {
   teacherData = {}
 
   ngOnInit() { 
+    // let data = localStorage.getItem('teacher');
+  }
+
+  ionViewWillEnter() {
     this.sharedService.getTeacher.subscribe( (data: any) => {
       if(data && data.hasOwnProperty('id')) {
         this.teacherData = data;
@@ -30,7 +34,6 @@ export class LandingComponent implements OnInit {
         this.onPathshalaClick();
       }
     })
-    // let data = localStorage.getItem('teacher');
   }
 
   onPathshalaClick() {
