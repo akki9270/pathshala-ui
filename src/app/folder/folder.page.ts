@@ -59,6 +59,10 @@ export class FolderPage implements OnInit {
   ]
   loading: HTMLIonLoadingElement;
   isDataLoadding = true;
+  scanSub;
+  sutraCategory;
+  selectedSutraCategory;
+  terminatedSutraList = [];
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -86,9 +90,32 @@ export class FolderPage implements OnInit {
     this.initPage();
   };
 
+  ionViewWillLeave() {
+    console.log(' view leave');
+    this.closeScanner();
+  }
+
+  closeScanner() {
+    this.isScannig = false;
+    if (this.platform.is('capacitor')) {
+      let ele: any = this.ionContent.el.shadowRoot.getElementById('background-content');
+      ele.style.background = '#FFF';
+      this.cdRef.detectChanges();
+      if (this.qrScanner) {
+        this.qrScanner.hide(); // hide camera preview
+        this.scanSub.unsubscribe(); // stop scanning
+      }
+    } else {
+      if (this.qrScannerComponent) {
+        this.qrScannerComponent.canvasHeight = 0;
+        this.qrScannerComponent.canvasWidth = 0;
+      }
+    }
+  }
+
   @HostListener('keyup',['$event'])
     onKeyUp($event) {
-      console.log(' keyUp ', $event);
+      // console.log(' keyUp ', $event);
         if($event.keyCode === 13) {
           let value = this.studentIdInput.nativeElement.value;
           if (value) {
@@ -108,7 +135,8 @@ export class FolderPage implements OnInit {
 
   initPage() {
     this.getAttendenceArray();
-    this.getAllSutra(1);
+    // this.getAllSutra(1);
+    this.getSutraCategory();
     setTimeout(() => {
       if (this.platform.is('capacitor')) {
         this.startCamera();
@@ -134,6 +162,31 @@ export class FolderPage implements OnInit {
     })
   }
 
+  getSutraCategory() {
+    this.sutraSerice.getAllCategory()
+    .subscribe( res => {
+      // console.log(' getAll Sutra ', res);
+      this.sutraCategory = res['data'];
+    })
+  }
+
+  onCategoryChange() {
+    // console.log(' category ', this.selectedSutraCategory);
+    this.getAllSutra(this.selectedSutraCategory.id);
+    if (!this.terminatedSutraList.length) {
+      this.getAllTerminated();
+    }
+  }
+
+  getAllTerminated() {
+    this.sutraSerice.getAllTerminatedSutra(this.studentData.id)
+    .subscribe(res => {
+      if (res && res['data']) {
+        this.terminatedSutraList = res['data'];
+      }
+    })
+  }
+
   getGathaCount() {
     let result = [];
     if (this.selectedSutra) {
@@ -142,6 +195,12 @@ export class FolderPage implements OnInit {
       }
     }
     this.totalGathaCount = result;
+    if (this.terminatedSutraList.length) {
+      const foundTerminatedSutra = this.terminatedSutraList.find( i => i.sutra_id == this.selectedSutra.id);
+      if (foundTerminatedSutra) {
+        this.currentGathaCount = foundTerminatedSutra.current_gatha_count;
+      }
+    }
     this.cdRef.detectChanges();
     return result;
   }
@@ -183,16 +242,13 @@ export class FolderPage implements OnInit {
             console.log(' show qrscanner ');
             ele.style.background = 'transparent';
             this.cdRef.detectChanges();
-            let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
               console.log('Scanned something', text);
               // this.isScannig = false;
               this.clearInput();
               this.getUserData(text);
 
-              ele.style.background = '#FFF';
-              this.cdRef.detectChanges();
-              this.qrScanner.hide(); // hide camera preview
-              scanSub.unsubscribe(); // stop scanning              
+              this.closeScanner()              
             });
           });
 
@@ -214,7 +270,7 @@ export class FolderPage implements OnInit {
 
   webScanner() {
     this.qrScannerComponent.getMediaDevices().then(devices => {
-      console.log(devices);
+      // console.log(devices);
       const videoDevices: MediaDeviceInfo[] = [];
       for (const device of devices) {
         if (device.kind.toString() === 'videoinput') {
@@ -241,8 +297,7 @@ export class FolderPage implements OnInit {
     this.qrScannerComponent.capturedQr.subscribe(result => {
       console.log(result);
       this.clearInput();
-      this.qrScannerComponent.canvasHeight = 0;
-      this.qrScannerComponent.canvasWidth = 0;
+      this.closeScanner();
       this.getUserData(result);
       // this.checkAttendence(result);
       // this.getAttendanceDetails(result);
@@ -300,6 +355,9 @@ export class FolderPage implements OnInit {
       (res) => {
         // console.log(' checkAttendence ', res);
         // this.getUserData(studentId);
+        if (res && res['data']) {
+          this.studentData.score = res['data'].score;
+        }
         this.getAttendanceDetails(studentId);
       },
       error => {}
@@ -353,6 +411,9 @@ export class FolderPage implements OnInit {
         .subscribe(res => {
           this.dismisLoading();
           this.getUserData(this.studentData.id);
+          this.selectedSutraCategory = '';
+          this.selectedSutra = '';
+          this.currentGathaCount = '';
         }, () => { this.dismisLoading() });
     }
   }
@@ -393,13 +454,16 @@ export class FolderPage implements OnInit {
     this.presentLoading();
     this.userService.userNextGatha({
       studentId: this.studentData.id,
-      teacherId: this.teacherData.id
+      teacherId: this.teacherData.id,
+      currentGathaCount: this.userGathaDetails.current_gatha_count,
+      sutraId: this.userGathaDetails.Sutra.id
     }).subscribe((res: any) => {
       // this.dismisLoading();
       this.userGathaDetails = res.data;
       this.getUserData(this.studentData.id);
       this.cdRef.detectChanges();
     }, (error) => {
+      this.dismisLoading();
       console.log(' error ', error);
     })
   }

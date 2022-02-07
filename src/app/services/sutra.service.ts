@@ -25,6 +25,13 @@ export class SutraService {
         )
     }
 
+    getAllTerminatedSutra(userId) {
+        return this.http.get(this.URL + '/getAllTerminatedSutra/' + userId)
+        .pipe(
+            tap(() => console.log('getSutraCategory'))
+        )
+    }
+
     saveCatSutra(data) {
     return this.http.post(this.URL + '/saveCatSutra', data)
             .pipe(

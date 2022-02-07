@@ -76,6 +76,7 @@ export class StudentMasterComponent implements OnInit {
     this.getAllCategory();
     this.studentForm.get('selectedSutra').valueChanges.subscribe(value => {
       this.getGathaCount(value);
+      this.studentForm.patchValue({ currentGathaCount: '' }, { emitEvent: false });
     })
     this.studentForm.get('selectedSutraCategory').valueChanges.subscribe(value => {
       this.allSutra = [];
