@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,11 +14,15 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { AttendanceDetailsComponent } from './student-details/attendance-details/attendance-details.component';
 import { SutraDetailsComponent } from './student-details/sutra-details/sutra-details.component';
 import { SummaryDetailsComponent } from './student-details/summary-details/summary-details.component';
+import { EventsComponent } from './events/events.component';
+import { EventListComponent } from './event-list/event-list.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(),
     FolderPageRoutingModule,
     NgQrScannerModule
@@ -29,7 +33,9 @@ import { SummaryDetailsComponent } from './student-details/summary-details/summa
     StudentDetailsComponent,
     AttendanceDetailsComponent,
     SutraDetailsComponent,
-    SummaryDetailsComponent
+    SummaryDetailsComponent,
+    EventsComponent,
+    EventListComponent
   ],
   providers: []
 })

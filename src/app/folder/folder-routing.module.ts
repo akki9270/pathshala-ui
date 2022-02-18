@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FolderPage } from './folder.page';
 import { LandingComponent } from './landing/landing.component';
+import { EventsComponent } from './events/events.component';
+import { EventListComponent } from './event-list/event-list.component';
 
 const routes: Routes = [
   {
@@ -12,6 +14,18 @@ const routes: Routes = [
   {
     path: 'Pathshala',
     component: FolderPage
+  },
+  {
+    path: 'Event/Edit/:id',
+    component: EventsComponent
+  },
+  {
+    path: 'Event/Add',
+    component: EventsComponent
+  },
+  {
+    path: 'EventList',
+    component: EventListComponent
   }
 ];
 
