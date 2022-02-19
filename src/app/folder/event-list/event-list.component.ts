@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { EventListService } from './event-list.service'
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventListService } from './event-list.service';
+import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,26 +12,40 @@ import { EventListService } from './event-list.service'
 })
 export class EventListComponent implements OnInit {
 
+  moment = moment;
+  subParams: Subscription;
+
   constructor(
-    public eventService: EventListService, 
-    private router: Router, 
+    public eventService: EventListService,
+    private router: Router,
+    private activeRoute: ActivatedRoute,
   ) { }
 
   allEventsList;
 
   ngOnInit() {
-    this.getAllCategory()
+    this.subParams = this.activeRoute.params.subscribe(params => {
+      this.getAllCategory()
+    });
   }
 
   getAllCategory() {
     this.eventService.getAllEvents()
-    .subscribe(res => {
-      this.allEventsList = res;
-    })
+      .subscribe(res => {
+        this.allEventsList = res.data;
+      })
   }
 
   onEdit(id) {
     this.router.navigate(['folder/Event/Edit/' + id]);
+  }
+
+  iconDisabled(date) {
+    return moment(moment(date)).isBefore(moment());
+  }
+
+  ngOnDestroy() {
+    this.subParams.unsubscribe();
   }
 
 }

@@ -7,6 +7,8 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from './events.service';
+import { formatDate } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-events',
@@ -18,7 +20,9 @@ export class EventsComponent implements OnInit {
   eventForm: FormGroup;
   submitted: Boolean = false;
   eventId;
-  editBtn: Boolean
+  editBtn: Boolean;
+  tommorow : Date = moment().add(1,'days').toDate();
+  minDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
 
     constructor(
       private formBuilder: FormBuilder,
@@ -41,11 +45,12 @@ export class EventsComponent implements OnInit {
     }
 
     this.eventForm = this.formBuilder.group({
-      date: new FormControl("", Validators.required),
+      id: new FormControl(),
+      event_date: new FormControl(Date, Validators.required),
       description: new FormControl("", Validators.required),
-      benner: new FormControl("", Validators.required),
-      point: new FormControl("", Validators.required),
-      name: new FormControl("", [
+      banner_url: new FormControl("", Validators.required),
+      points: new FormControl("", Validators.required),
+      event_name: new FormControl("", [
         Validators.required,
         // Validators.pattern("[A-Za-z ]+"),
       ]),
@@ -56,10 +61,12 @@ export class EventsComponent implements OnInit {
   onSave(){
     this.submitted = true;
     if(this.eventForm.valid) {
-      console.log('onSave :: ', this.eventForm.value)
-      this.submitted = false;
-      this.eventForm.reset()
-      this.router.navigate(['/folder/EventList'])
+      this.eventsService.saveEvent(this.eventForm.value)
+      .subscribe(res => {
+        this.submitted = false;
+        this.eventForm.reset()
+        this.router.navigate(['/folder/EventList'])
+      })
     }
   }
 
@@ -67,11 +74,12 @@ export class EventsComponent implements OnInit {
     this.eventsService.getEvent(eventId)
     .subscribe(res => {
       let event = {
-        date: '',
-        description: res.description,
-        banner: '',
-        point: res.price,
-        name: res.title
+        id: res.data.id,
+        event_date: formatDate(res.data.event_date, 'yyyy-MM-dd', 'en'),
+        description: res.data.description,
+        banner_url: res.data.banner_url,
+        points: res.data.points,
+        event_name: res.data.event_name
       }
       this.eventForm.patchValue(event)
     })
