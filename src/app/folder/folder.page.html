@@ -103,12 +103,14 @@
       </ng-container>
     </div>
     <div class="d-flex text-dark justify-content-center attendence-fields">
-      <ng-container *ngFor="let i of attendenceFields">
-        <div> <span [class]="i.class"></span> {{i.label}}</div>
+      <ng-container *ngIf="!!studentData">
+        <ng-container *ngFor="let i of attendenceFields">
+          <div> <span [class]="i.class"></span> {{i.label}}</div>
+        </ng-container>
       </ng-container>
     </div>
   
-    <div class="progress-details">
+    <div class="progress-details" *ngIf="!!studentData">
       <div class="gatha-details" *ngIf="!userGathaDetails && (!teacherData || !teacherData.id)">
         <div class="form-group my-4">
           <ng-container *ngIf="!userGathaDetails">
@@ -211,7 +213,7 @@
     </div>
 
     <div class="next-action">
-      <ion-button class="new-scan" (click)="newScan()">New Scan</ion-button>
+      <ion-button class="new-scan" (click)="newScan()">{{ !!studentData ? 'New Scan' : 'Start Scan'}}</ion-button>
       <ion-button class="back-to-home" (click)="backToHome()" *ngIf="teacherData && teacherData.id">Back To Home</ion-button>
     </div>
   </div>

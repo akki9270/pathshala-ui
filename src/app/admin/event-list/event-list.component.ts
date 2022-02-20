@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventListService } from './event-list.service';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-event-list',
@@ -19,6 +19,7 @@ export class EventListComponent implements OnInit {
     public eventService: EventListService,
     private router: Router,
     private activeRoute: ActivatedRoute,
+    public _location: Location,
   ) { }
 
   allEventsList;
@@ -46,6 +47,10 @@ export class EventListComponent implements OnInit {
 
   ngOnDestroy() {
     this.subParams.unsubscribe();
+  }
+
+  goBack() {
+    this._location.back();
   }
 
 }

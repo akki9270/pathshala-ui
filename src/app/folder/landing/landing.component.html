@@ -6,7 +6,7 @@
         <img src="assets/images/pathshala.jpeg" />
         <ion-button> Pathshala </ion-button>
       </div>
-      <div class="button-image-container" *ngIf="isTeacherLoggedIn">
+      <div class="button-image-container" (click)="onEventClick()" *ngIf="isTeacherLoggedIn">
         <img src="assets/images/events.jpeg" alt="Events" />
         <ion-button> Events </ion-button>
       </div>

@@ -28,7 +28,7 @@ export class EventsComponent implements OnInit {
       private formBuilder: FormBuilder,
       private activeRoute: ActivatedRoute,
       private eventsService: EventsService,
-      private router: Router, 
+      private router: Router,
       ) { }
 
   ngOnInit() {

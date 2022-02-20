@@ -1,0 +1,36 @@
+<div class="bg-light">
+  <div class="d-flex justify-content-start p-4">
+    <button class="btn btn-primary px-4" (click)="goBack()">
+      Back
+    </button>
+  </div>
+</div>
+<ion-content>
+  <div class="container mt-4">
+    <div class="row">
+    </div>
+    <h2 *ngIf="eventDetails" class="text-center h2">{{eventDetails.event_name}}</h2>
+    <div class="row">
+       <div class="col-md-12">
+         <div class="table-responsive mt-4">
+           <table class="table table-bordered" id="editableTable">
+             <thead>
+               <tr>
+                 <th class="text-center">Sr.No</th>
+                 <th class="text-center">Student Name</th>
+                 <th class="text-center">Attendance By</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr class="text-center" *ngFor="let at of attendanceList; let i = index;">
+                 <td data-field=" ">{{i+1}}</td>
+                 <td data-field=" ">{{at.student.display_name}}</td>
+                 <td data-field=" ">{{at.teacher.display_name}}</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>
+</ion-content>

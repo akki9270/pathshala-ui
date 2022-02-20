@@ -61,7 +61,7 @@ export class LandingComponent implements OnInit {
     }
   }
 
-  // onEventClick() {
-  //   this.router.navigate(['folder/EventList'])
-  // }
+  onEventClick() {
+    this.router.navigate(['folder/Events'])
+  }
 }
