@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+// import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { IonContent, LoadingController, Platform, ModalController, AlertController } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
 import { UserService } from '../services/user.service';
@@ -10,6 +10,7 @@ import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import { SharedService } from '../services/shared.service';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 
 
 @Component({
@@ -66,7 +67,7 @@ export class FolderPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute, 
-    private qrScanner: QRScanner,
+    // private qrScanner: QRScanner,
     private userService: UserService,
     private sutraSerice: SutraService,
     private cdRef: ChangeDetectorRef,
@@ -75,7 +76,8 @@ export class FolderPage implements OnInit {
     public loadingController: LoadingController,
     public modalController: ModalController,
     public sharedService: SharedService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public barcodeScanner: BarcodeScanner
     ) { }
 
   ionViewWillEnter() {
@@ -87,6 +89,9 @@ export class FolderPage implements OnInit {
     // if(teacherData) {
     //   this.teacherData = JSON.parse(teacherData);
     // }
+    this.sharedService.getTeacher.subscribe(data => {
+      this.teacherData = data;
+    });
     this.initPage();
   };
 
@@ -98,13 +103,7 @@ export class FolderPage implements OnInit {
   closeScanner() {
     this.isScannig = false;
     if (this.platform.is('capacitor')) {
-      let ele: any = this.ionContent.el.shadowRoot.getElementById('background-content');
-      ele.style.background = '#FFF';
-      this.cdRef.detectChanges();
-      if (this.qrScanner) {
-        this.qrScanner.hide(); // hide camera preview
-        this.scanSub.unsubscribe(); // stop scanning
-      }
+      //
     } else {
       if (this.qrScannerComponent) {
         this.qrScannerComponent.canvasHeight = 0;
@@ -127,7 +126,7 @@ export class FolderPage implements OnInit {
   ngOnInit() {
     this.sharedService.getTeacher.subscribe(data => {
       this.teacherData = data;
-    })
+    });
     // this.title = this.activatedRoute.snapshot.paramMap.get('id');
     // this.getUserData(3);
     // this.initPage();
@@ -139,7 +138,7 @@ export class FolderPage implements OnInit {
     this.getSutraCategory();
     setTimeout(() => {
       if (this.platform.is('capacitor')) {
-        this.startCamera();
+        this.barcodeScan();
       } else {
        this.webScanner();
       //  if (!this.teacherData) {
@@ -152,6 +151,22 @@ export class FolderPage implements OnInit {
     //   } else {
     //   }
     },100);
+  }
+
+  barcodeScan() {
+    this.isScannig = true;
+    this.barcodeScanner.scan().then(data => {
+      console.log(' barcode ', data);
+      if (data && data.text) {
+        this.getUserData(data.text);
+      } else if (data.cancelled) {
+        
+      }
+      this.isScannig = false;
+    }).catch(e => {
+      console.log(' barcode error ', e);
+      this.isScannig = false;
+    })
   }
 
   getAllSutra(id) {
@@ -226,46 +241,6 @@ export class FolderPage implements OnInit {
 
   getRandomInit(max) {
     return Math.floor(Math.random() * max);
-  }
-
-  startCamera() {
-    let ele: any = this.ionContent.el.shadowRoot.getElementById('background-content');
-    this.isScannig = true;
-    console.log(' start camera' + this.qrScanner);
-    this.qrScanner.prepare()
-      .then((status: QRScannerStatus) => {
-        if (status.authorized) {
-          // camera permission was granted
-          console.log('Scanned something then ');
-          // start scanning
-          this.qrScanner.show().then(() => {
-            console.log(' show qrscanner ');
-            ele.style.background = 'transparent';
-            this.cdRef.detectChanges();
-            this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
-              console.log('Scanned something', text);
-              // this.isScannig = false;
-              this.clearInput();
-              this.getUserData(text);
-
-              this.closeScanner()              
-            });
-          });
-
-        } else if (status.denied) {
-          // camera permission was permanently de
-          this.backToHome()
-          // you must use QRScanner.openSettings() method to guide the user to the settings page
-          // then they can grant the permission from there
-        } else {
-          this.backToHome();
-          // permission was denied, but not permanently. You can ask for permission again at a later time.
-        }
-      })
-      .catch((e: any) => {
-        console.log('Error is', e);
-        this.isScannig = false;
-      });
   }
 
   webScanner() {
@@ -475,7 +450,7 @@ export class FolderPage implements OnInit {
     this.currentGathaCount = null;
     this.clearInput();
     if (this.platform.is('capacitor')) {
-      this.startCamera();
+      this.barcodeScan();
     } else {
       setTimeout(() => {
         this.qrScannerComponent.canvasHeight = 500;

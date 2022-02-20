@@ -14,8 +14,6 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { AttendanceDetailsComponent } from './student-details/attendance-details/attendance-details.component';
 import { SutraDetailsComponent } from './student-details/sutra-details/sutra-details.component';
 import { SummaryDetailsComponent } from './student-details/summary-details/summary-details.component';
-import { EventsComponent } from './events/events.component';
-import { EventListComponent } from './event-list/event-list.component';
 
 
 @NgModule({
@@ -33,9 +31,7 @@ import { EventListComponent } from './event-list/event-list.component';
     StudentDetailsComponent,
     AttendanceDetailsComponent,
     SutraDetailsComponent,
-    SummaryDetailsComponent,
-    EventsComponent,
-    EventListComponent
+    SummaryDetailsComponent
   ],
   providers: []
 })

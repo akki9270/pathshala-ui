@@ -9,12 +9,16 @@ import { StudentMasterComponent } from './student-master/student-master.componen
 import { SutraMasterComponent } from './sutra-master/sutra-master.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { EventsComponent } from './events/events.component';
+import { EventListComponent } from './event-list/event-list.component';
 
 @NgModule({
     declarations: [
         AdminDashboardComponent,
         StudentMasterComponent,
-        SutraMasterComponent
+        SutraMasterComponent,
+        EventsComponent,
+        EventListComponent
     ],
     imports: [
         BrowserModule,

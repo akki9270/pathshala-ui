@@ -109,7 +109,7 @@
     </div>
   
     <div class="progress-details">
-      <div class="gatha-details">
+      <div class="gatha-details" *ngIf="!userGathaDetails && (!teacherData || !teacherData.id)">
         <div class="form-group my-4">
           <ng-container *ngIf="!userGathaDetails">
             <div class="fields">
@@ -205,7 +205,7 @@
         <!-- </div> -->
       </div>
       <div class="action-buttons" *ngIf="!userGathaDetails">
-        <ion-button class="continue" [disabled]="!selectedSutra || !sutraGathaCount || (teacherData && !teacherData.id)" (click)="updateUserSutra()">Update Sutra</ion-button>
+        <ion-button class="continue" [disabled]="!selectedSutra || (teacherData && !teacherData.id)" (click)="updateUserSutra()">Update Sutra</ion-button>
         <ion-button class="details" (click)="onDetailsClick()">Details</ion-button>
       </div>
     </div>

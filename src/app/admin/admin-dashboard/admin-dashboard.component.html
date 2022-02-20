@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" scrollY="auto">
   <div class="bg-light">
     <div class="d-flex justify-content-start p-4">
       <button class="btn btn-primary px-4" (click)="navigate('/')">
@@ -15,6 +15,10 @@
     </div>
     <div class="button-image-container" (click)="navigate('/sutraMaster')">
       <img src="assets/images/sutraMaster.jpeg">
+      <ion-button> Sutra Master </ion-button>
+    </div>
+    <div class="button-image-container" (click)="navigate('/EventList')">
+      <img src="assets/images/events.jpeg">
       <ion-button> Sutra Master </ion-button>
     </div>
   </div>

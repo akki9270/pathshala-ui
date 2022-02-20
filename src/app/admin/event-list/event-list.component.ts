@@ -37,7 +37,7 @@ export class EventListComponent implements OnInit {
   }
 
   onEdit(id) {
-    this.router.navigate(['folder/Event/Edit/' + id]);
+    this.router.navigate(['/Event/Edit/' + id]);
   }
 
   iconDisabled(date) {

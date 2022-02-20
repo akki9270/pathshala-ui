@@ -65,7 +65,7 @@ export class EventsComponent implements OnInit {
       .subscribe(res => {
         this.submitted = false;
         this.eventForm.reset()
-        this.router.navigate(['/folder/EventList'])
+        this.router.navigate(['/EventList'])
       })
     }
   }
