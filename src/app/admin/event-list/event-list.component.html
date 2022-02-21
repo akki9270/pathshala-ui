@@ -31,7 +31,7 @@
                  <td data-field=" ">{{moment(event.event_date).format('ll')}}</td>
                  <td class="text-center">
                   <i class=" icons icon-pencil text-primary" (click)="onEdit(event.id)" [class.icon-disabled]="iconDisabled(event.event_date)"></i>
-                  <i class=" icons icon-bin text-danger ml-3"></i>
+                  <i class=" icons icon-bin text-danger ml-3" [class.icon-disabled]="iconDisabled(event.event_date)"></i>
                  </td>
                </tr>
              </tbody>

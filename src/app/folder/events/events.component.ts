@@ -26,6 +26,7 @@ export class EventsComponent implements OnInit {
   moment = moment;
   allEventsList: any = [];
   teacherData;
+  DATE_FORMAT = 'YYYY-MM-DD';
 
   ngOnInit() {
     this.getAllEvents();
@@ -37,6 +38,12 @@ export class EventsComponent implements OnInit {
   getAllEvents() {
     this.eventService.getAllEvents().subscribe(events => {
       this.allEventsList = events.data;
+      this.allEventsList.forEach(i => {
+        let eventDate = moment(i.event_date).format(this.DATE_FORMAT)
+        let today = moment().format(this.DATE_FORMAT)
+        i['disableScan'] = !(moment(today).isSame(eventDate))
+        i['disableAttendance'] = !(moment(today).isSameOrAfter(eventDate))
+      })
     });
   }
 
