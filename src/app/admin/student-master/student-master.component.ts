@@ -1,13 +1,12 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonInput } from '@ionic/angular';
 import { ImagePickerOptions, ImagePicker } from '@ionic-native/image-picker/ngx';
 import { SutraService } from 'src/app/services/sutra.service';
 import { UserService } from 'src/app/services/user.service';
-import { Camera, CameraResultType } from '@capacitor/camera';
 import { UploadService } from 'src/app/services/upload-service.service';
-import { File, FileEntry, IFile } from '@ionic-native/file/ngx'
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-student-master',
@@ -24,8 +23,7 @@ export class StudentMasterComponent implements OnInit {
     public userService: UserService,
     public alertController: AlertController,
     public imagePicker: ImagePicker,
-    public uploadService: UploadService,
-    public file: File 
+    public uploadService: UploadService
      ) { }
   studentForm: FormGroup;
 
@@ -36,12 +34,13 @@ export class StudentMasterComponent implements OnInit {
   studentId;
   fethedSelectedSutra;
   fetchedGathaCount;
+  profile_image;
   imagePickerOptions: ImagePickerOptions = {
     maximumImagesCount: 1,
     quality: 50
   }
   imageElement:any = {};
-
+  PLACEHOLDER_IMAGE_URL = 'https://via.placeholder.com/300';
   @HostListener('keyup',['$event'])
     onKeyUp(event) {
       if (event.keyCode === 13) {
@@ -91,82 +90,8 @@ export class StudentMasterComponent implements OnInit {
     });
   }
 
-  async getImagePicker() {
-    // let imageElement: any = {}
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-  
-    // image.webPath will contain a path that can be set as an image src.
-    // You can access the original file using image.path, which can be
-    // passed to the Filesystem API to read the raw data of the image,
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    var imageUrl = image.webPath;
-  
-    // Can be set to the src of an image now
-    this.imageElement.src = imageUrl;
-    this.imageElement.filePath = image.path;
-    console.log('imageElement ', image);
-    this.startUpload(this.imageElement);
-    // this.uploadImage(this.imageElement.filePath);
-
-    // this.imagePicker.getPictures(this.imagePickerOptions).then(
-    //   (results) => {
-    //     for (var i = 0; i < results.length; i++) {
-    //       this.imgRes.push('data:image/jpeg;base64,' + results[i]);
-    //     }
-    //   }, (error) => {
-    //     alert(error);
-    //   });
-  }
-
-  startUpload(imgEntry) {
-    console.log('imageEntry ', imgEntry)
-    this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
-        .then(entry => {
-            ( < FileEntry > entry).file(file => this.readFile(file))
-            // ( < FileEntry > entry).file(file => this.uploadImage(file))
-        })
-        .catch(err => {
-           // this.presentToast('Error while reading file.');
-           this.showMessage('Error Reading file');
-        });
-}
-
-  readFile(file: any) {
-    const reader = this.getFileReader();
-    reader.onload = () => {
-        const formData = new FormData();
-        const imgBlob = new Blob([reader.result], {
-            type: file.type
-        });
-        formData.append('WebAppImg', imgBlob, file.name);
-        this.uploadImage(formData);
-    };
-    reader.onerror = () => {
-      this.showMessage(' Erorr Reading with FileReader');
-    }
-    reader.readAsArrayBuffer(file);
-}
-
-  onFileUpload(event) {
-    console.log(' files ', event.target.files);
-  }
-  // uploadImage(data: FormData) {
-  uploadImage(data) {
-    let fd = new FormData();
-    fd.append('WebAppImg', data);
-    this.uploadService.uploadImage(fd, 10002).subscribe(
-      (res) => {
-        console.log('res', res);
-        this.showMessage('res ' + res['upload_path']);
-      }, (err) => {
-        console.log('err', err);
-        this.showMessage('err ');
-      }
-    );
+  onSelectSource() {
+    this.uploadService.selectImageSource();
   }
 
   getAllCategory() {
@@ -247,6 +172,8 @@ export class StudentMasterComponent implements OnInit {
       this.studentId = '';
       if (res && res['data'] && res['data'].length) {
         let data = res['data'][0];
+        this.profile_image = data.profile_image
+        this.uploadService.setParam({studentID: data.id})
         // console.log(data);
         this.arrangeFormData({data, gatha: res['gatha']});
       } {
@@ -333,9 +260,10 @@ export class StudentMasterComponent implements OnInit {
     toast.present();
   }
 
-  getFileReader(): FileReader {
-    const fileReader = new FileReader();
-    const zoneOriginalInstance = (fileReader as any)["__zone_symbol__originalInstance"];
-    return zoneOriginalInstance || fileReader;
-}
+  imageLoadError(event) {
+    // console.log(' data ', data);
+    // this.studentData.profile_image = this.PLACEHOLDER_IMAGE_URL;
+    event.target.src = this.PLACEHOLDER_IMAGE_URL;
+  }
+
 }

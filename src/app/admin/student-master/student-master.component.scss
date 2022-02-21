@@ -135,3 +135,13 @@
     border-color: transparent;
     border: none;
   }
+  .profile-image-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+    font-size: 26px;
+    .icons {
+        cursor: pointer;
+        margin-left: 15px;
+    }
+  }
