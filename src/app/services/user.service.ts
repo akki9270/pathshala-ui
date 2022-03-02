@@ -65,4 +65,11 @@ export class UserService {
             tap(() => console.log('saveUserAndGatha'))
         );   
     }
+
+    updateUser(user) {
+        return this.http.post(this.URL + '/updateUser', user)
+        .pipe(
+            tap(() => console.log('updateUser'))
+        )
+    }
 }

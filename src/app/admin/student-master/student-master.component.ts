@@ -23,7 +23,8 @@ export class StudentMasterComponent implements OnInit {
     public userService: UserService,
     public alertController: AlertController,
     public imagePicker: ImagePicker,
-    public uploadService: UploadService
+    public uploadService: UploadService,
+    public CdRef: ChangeDetectorRef
      ) { }
   studentForm: FormGroup;
 
@@ -88,6 +89,18 @@ export class StudentMasterComponent implements OnInit {
         this.getAllSutra(value);
       }
     });
+    this.uploadService.imageUploaded.subscribe( res => {
+      if (res && res.status) {
+        let imagePath = res['Uploaded_Path'];
+        this.profile_image = imagePath;
+        this.cdRef.detectChanges();
+        let data = {
+          profile_image: imagePath,
+          id: this.studentForm.get('user_id').value
+        }
+        this.userService.updateUser(data).subscribe();
+      }
+    })
   }
 
   onSelectSource() {
@@ -173,7 +186,7 @@ export class StudentMasterComponent implements OnInit {
       if (res && res['data'] && res['data'].length) {
         let data = res['data'][0];
         this.profile_image = data.profile_image
-        this.uploadService.setParam({studentID: data.id})
+        this.uploadService.setParam({StudentID: data.id})
         // console.log(data);
         this.arrangeFormData({data, gatha: res['gatha']});
       } {

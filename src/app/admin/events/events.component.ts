@@ -21,7 +21,7 @@ export class EventsComponent implements OnInit {
   submitted: Boolean = false;
   eventId;
   editBtn: Boolean;
-  tommorow : Date = moment().add(1,'days').toDate();
+  tommorow : Date = moment().toDate();
   minDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
 
     constructor(

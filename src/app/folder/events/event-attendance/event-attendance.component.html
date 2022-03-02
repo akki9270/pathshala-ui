@@ -18,6 +18,7 @@
                <tr>
                  <th class="text-center">Sr.No</th>
                  <th class="text-center">Student Name</th>
+                 <th class="text-center">Student Id</th>
                  <th class="text-center">Attendance By</th>
                </tr>
              </thead>
@@ -25,6 +26,7 @@
                <tr class="text-center" *ngFor="let at of attendanceList; let i = index;">
                  <td data-field=" ">{{i+1}}</td>
                  <td data-field=" ">{{at.student.display_name}}</td>
+                 <td data-field=" ">{{at.student.id}}</td>
                  <td data-field=" ">{{at.teacher.display_name}}</td>
                </tr>
              </tbody>

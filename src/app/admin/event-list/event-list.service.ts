@@ -23,4 +23,11 @@ export class EventListService {
             tap((res) => console.log('getAllEvents'))
         )
     }
+
+    deleteEvent(id) {
+        return this.http.delete(this.URL + '/deleteEvent', { params: { id }})
+        .pipe(
+            tap(() => console.log('deleteEvent'))
+        )
+    }
 }

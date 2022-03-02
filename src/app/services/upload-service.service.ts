@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ActionSheetController, Platform } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -17,10 +18,12 @@ export interface ApiImage {
 })
 export class UploadService {
   private URL = environment.image_upload_url || 'http://hiteshvidhikar.com/pathshala/ImageUpload.php';
+  private imageUploadeder$ = new BehaviorSubject(null);
+  imageUploaded = this.imageUploadeder$.asObservable();
   // private URL = 'https://maunank.com/API/ImageUpload.php?AuthKey=WebApp@Pathshala*99&StudentID={studentID}';
   PARAMS = {
     AuthKey:'WebApp@Pathshala*99',
-    studentID: ''
+    StudentID: ''
   }
   fileInput;
   constructor(
@@ -105,8 +108,12 @@ export class UploadService {
     const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
     const imageName = 'Give me a name';
 
-    this.uploadImage(blobData, imageName, image.format).subscribe((newImage: ApiImage) => {
+    this.uploadImage(blobData, imageName, image.format).subscribe((res) => {
       // this.images.push(newImage);
+      console.log('  image upload res ', res);
+      if (res['status']) {
+        this.imageUploadeder$.next(res);
+      }
     });
   }
 

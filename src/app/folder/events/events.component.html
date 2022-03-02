@@ -18,6 +18,7 @@
                  <th class="text-center">Sr.No</th>
                  <th class="text-center">Event Name</th>
                  <th class="text-center">Date</th>
+                 <th class="text-center">Attendance</th>
                  <th class="text-center">points</th>
                  <th class="text-center">Scan</th>
                </tr>
@@ -27,6 +28,7 @@
                  <td data-field=" ">{{i+1}}</td>
                  <td data-field=" ">{{event.event_name}}</td>
                  <td data-field=" ">{{moment(event.event_date).format('ll')}}</td>
+                 <td data-field=" ">{{event.attendance}}</td>
                  <td>{{event.points}}</td>
                  <td class="text-center">
                   <button class="btn btn-primary" [disabled]="event.disableScan" (click)="startScan(event.id)">Scan</button>
