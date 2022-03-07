@@ -11,8 +11,8 @@ export class SutraService {
     private env = environment;
     private URL = this.env.server_url;
 
-    getAllSutra(id) {
-        return this.http.get(this.URL + '/getAllSutra', { params: {id} })
+    getAllSutra(params) {
+        return this.http.get(this.URL + '/getAllSutra', { params })
         .pipe(
             tap(() => console.log('getAllSutra'))
         )

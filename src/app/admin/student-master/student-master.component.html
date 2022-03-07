@@ -204,13 +204,14 @@
     </div> <!-- Sutra -->
     <div class="form-group mb-4 mt-5">
       <div class="fields">
-        <ion-item>
+        <input type="number" placeholder="Current Gatha Count" formControlName="currentGathaCount" [attr.disabled]="true"/>
+        <label>Current Gatha Count</label>
+        <!-- <ion-item>
           <ion-label>Current Gatha*</ion-label>
-          <ion-select class="form-control form-control-lg" formControlName="currentGathaCount">
+          <ion-select class="form-control form-control-lg" formControlName="currentGathaCount" [attr.disabled]="true">
             <ion-select-option *ngFor="let i of (totalGathaCount); let id = index" [value]="i"> {{i}}</ion-select-option>
-            <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
           </ion-select>
-        </ion-item>
+        </ion-item> -->
         <!-- <select class="form-control form-control-lg" formControlName="currentGathaCount">
           <option *ngFor="let i of (totalGathaCount); let id = index" [ngValue]="i"> {{i}} </option>
         </select>

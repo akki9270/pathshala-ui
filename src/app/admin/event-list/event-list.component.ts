@@ -78,23 +78,13 @@ export class EventListComponent implements OnInit {
   }
 
   deleteEvent(id) {
-    this.eventService.deleteEvent(id).subscribe(() => {
-      this.presentToast({
+    this.eventService.deleteEvent(id).subscribe(async () => {
+     let alert = await this.alertController.create({
         message: 'Event deleted successfully',
-        cssClass: 'success text-white',
-        position: 'top',
+        buttons:['OK']
       });
+      alert.present();
       this.getAllCategory();
     });
-  }
-
-  async presentToast({message, cssClass = '', position}) {
-    let toast = await this.toastrCtrl.create({
-      message: message,
-      cssClass: cssClass,
-      position: position,
-      duration: 3000
-    });
-    toast.present();
   }
 }

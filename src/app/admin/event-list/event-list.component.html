@@ -32,11 +32,11 @@
                  <td data-field=" ">{{event.event_name}}</td>
                  <td data-field=" ">{{event.points}}</td>
                  <td data-field=" ">{{moment(event.event_date).format('ll')}}</td>
-                 <td class="text-center" (click)="onEdit(event.id)">
-                  <i class=" icons icon-pencil text-primary"  [class.icon-disabled]="iconDisabled(event.event_date)"></i>
+                 <td class="text-center" (click)="onEdit(event.id)" [class.icon-disabled]="iconDisabled(event.event_date)">
+                  <i class=" icons icon-pencil text-primary"  ></i>
                 </td>
-                <td class="text-center" (click)="onDelete(event)">
-                  <i class=" icons icon-bin text-danger ml-3" [class.icon-disabled]="iconDisabled(event.event_date)"></i>
+                <td class="text-center" (click)="onDelete(event)" [class.icon-disabled]="iconDisabled(event.event_date)">
+                  <i class=" icons icon-bin text-danger ml-3" ></i>
                 </td>
                </tr>
              </tbody>

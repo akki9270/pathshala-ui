@@ -33,7 +33,7 @@ export class StudentMasterComponent implements OnInit {
   totalGathaCount;
   isNewStudent = false;
   studentId;
-  fethedSelectedSutra;
+  fetchedSelectedSutra;
   fetchedGathaCount;
   profile_image;
   imagePickerOptions: ImagePickerOptions = {
@@ -69,14 +69,16 @@ export class StudentMasterComponent implements OnInit {
       email: new FormControl('', [Validators.email]),
       selectedSutraCategory: new FormControl('', [Validators.required]),
       selectedSutra: new FormControl('', [Validators.required]),
-      currentGathaCount: new FormControl('', [Validators.required]),
+      currentGathaCount: new FormControl({ value: '' }, [Validators.required]),
   
     });
     // this.getAllSutra();
     this.getAllCategory();
     this.studentForm.get('selectedSutra').valueChanges.subscribe(value => {
-      this.getGathaCount(value);
-      this.studentForm.patchValue({ currentGathaCount: '' }, { emitEvent: false });
+      if (value) {
+        let currentGathaCount = value.current_gatha_count || 1;
+        this.studentForm.patchValue({ currentGathaCount: currentGathaCount }, { emitEvent: false });
+      }
     })
     this.studentForm.get('selectedSutraCategory').valueChanges.subscribe(value => {
       this.allSutra = [];
@@ -118,12 +120,12 @@ export class StudentMasterComponent implements OnInit {
   }
 
   getAllSutra(data) {
-    this.sutraSerice.getAllSutra(data.id)
+    this.sutraSerice.getAllSutra({ categoryId: data.id, studentId: this.studentForm.getRawValue().user_id })
     .subscribe( res => {
       // console.log(' getAll Sutra ', res);
       this.allSutra = res['data'];
-      if (this.fethedSelectedSutra) {
-        let sutra = this.allSutra.find(i => i.id === this.fethedSelectedSutra.id);
+      if (this.fetchedSelectedSutra) {
+        let sutra = this.allSutra.find(i => i.id === this.fetchedSelectedSutra.id);
         this.studentForm.patchValue({
           selectedSutra: sutra,
           currentGathaCount: this.fetchedGathaCount
@@ -146,8 +148,7 @@ export class StudentMasterComponent implements OnInit {
       }
     }
     this.totalGathaCount = result;
-    this.cdRef.detectChanges();
-    return result;
+    return result[0];
   }
 
   saveData() {
@@ -228,7 +229,7 @@ export class StudentMasterComponent implements OnInit {
       let category = gatha.Sutra.SutraCategory;
       let cat = this.allSutraCategory.find(i => i.id = category.id);
       studentData['selectedSutraCategory']= cat;
-      this.fethedSelectedSutra = gatha.Sutra;
+      this.fetchedSelectedSutra = gatha.Sutra;
       this.fetchedGathaCount = gatha.current_gatha_count;
     }
     // this.isNewStudent = true;
