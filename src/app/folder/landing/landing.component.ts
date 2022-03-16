@@ -21,7 +21,7 @@ export class LandingComponent implements OnInit {
   isTeacherLoggedIn = false;
   teacherData = {}
 
-  ngOnInit() { 
+  ngOnInit() {
     // let data = localStorage.getItem('teacher');
   }
 
@@ -63,5 +63,8 @@ export class LandingComponent implements OnInit {
 
   onEventClick() {
     this.router.navigate(['folder/Events'])
+  }
+  onReportClick() {
+    this.router.navigate(['folder/reports'])
   }
 }

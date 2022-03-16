@@ -16,7 +16,8 @@ import { SutraDetailsComponent } from './student-details/sutra-details/sutra-det
 import { SummaryDetailsComponent } from './student-details/summary-details/summary-details.component';
 import { EventsComponent } from './events/events.component';
 import { EventAttendanceComponent } from './events/event-attendance/event-attendance.component';
-
+import { ReportsComponent } from './reports/reports.component';
+import { DateWiseComponent } from './reports/date-wise/date-wise.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { EventAttendanceComponent } from './events/event-attendance/event-attend
     ReactiveFormsModule,
     IonicModule.forRoot(),
     FolderPageRoutingModule,
-    NgQrScannerModule
+    NgQrScannerModule,
   ],
   declarations: [
     FolderPage,
@@ -35,8 +36,10 @@ import { EventAttendanceComponent } from './events/event-attendance/event-attend
     SutraDetailsComponent,
     SummaryDetailsComponent,
     EventsComponent,
-    EventAttendanceComponent
+    EventAttendanceComponent,
+    ReportsComponent,
+    DateWiseComponent,
   ],
-  providers: []
+  providers: [],
 })
 export class FolderPageModule {}

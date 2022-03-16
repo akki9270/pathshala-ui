@@ -1,0 +1,22 @@
+.report-block-wrapper{
+
+    align-items: center;
+
+    .report-block {
+        text-align: center;
+        height: 150px;
+        width: 100%;
+        box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 30px;
+
+        h3 {
+          font-size: 20px;
+          line-height: 1;
+          font-weight: 600;
+          margin: 0;
+        }
+    }
+}

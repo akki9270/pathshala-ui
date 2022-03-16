@@ -47,7 +47,7 @@ export class FolderPage implements OnInit {
   userGathaDetails:any;
   allSutra: any;
   totalGathaCount = [];
-  
+
   attendenceFields = [
     {
       label: 'Present',
@@ -66,7 +66,7 @@ export class FolderPage implements OnInit {
   terminatedSutraList = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute, 
+    private activatedRoute: ActivatedRoute,
     // private qrScanner: QRScanner,
     private userService: UserService,
     private sutraSerice: SutraService,
@@ -82,7 +82,7 @@ export class FolderPage implements OnInit {
 
   ionViewWillEnter() {
     this.studentData = null;
-    this.userGathaDetails = null; 
+    this.userGathaDetails = null;
     this.isScannig = true;
     this.attendence = [];
     // let teacherData = localStorage.getItem('teacher');
@@ -137,6 +137,7 @@ export class FolderPage implements OnInit {
     // this.getAllSutra(1);
     this.getSutraCategory();
     setTimeout(() => {
+      this.getUserData(1001);
       if (this.platform.is('capacitor')) {
         this.barcodeScan();
       } else {
@@ -160,7 +161,7 @@ export class FolderPage implements OnInit {
       if (data && data.text) {
         this.getUserData(data.text);
       } else if (data.cancelled) {
-        
+
       }
       this.isScannig = false;
     }).catch(e => {
@@ -309,7 +310,7 @@ export class FolderPage implements OnInit {
             this.getGathaDetails(id);
             this.isScannig = false;
             this.cdRef.detectChanges();
-          } 
+          }
           // else {
           //   this.router.navigate(['']);
           // }
