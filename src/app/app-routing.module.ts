@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'folder',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   }
 ];
 
@@ -19,8 +19,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule],
-   declarations: [
+  declarations: [
     MyAutoFocusDirective
   ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

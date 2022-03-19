@@ -11,6 +11,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { EventsComponent } from './events/events.component';
 import { EventListComponent } from './event-list/event-list.component';
+import { SutraWiseComponent } from '../folder/reports/sutra-wise/sutra-wise.component';
+import { MonthWiseComponent } from '../folder/reports/month-wise/month-wise.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +20,9 @@ import { EventListComponent } from './event-list/event-list.component';
         StudentMasterComponent,
         SutraMasterComponent,
         EventsComponent,
-        EventListComponent
+        EventListComponent,
+        SutraWiseComponent,
+        MonthWiseComponent
     ],
     imports: [
         BrowserModule,

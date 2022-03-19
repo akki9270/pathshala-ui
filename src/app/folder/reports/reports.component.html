@@ -1,14 +1,20 @@
 <ion-content>
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-start ml-4">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container-fluid">
     <div class="row report-block-wrapper">
       <div class="col-lg" *ngFor="let report of reports">
         <div class="report-block" routerLink="{{ report.routerLink }}">
-          <img
-            [src]="report.imagePath"
-            alt="{{ report.name }}"
-            class="img-responsive"
-            style="max-height: 100px"
-          />
+          <img [src]="report.imagePath" alt="{{ report.name }}" class="img-responsive report-img" />
           <h3>{{ report.title }}</h3>
         </div>
       </div>
@@ -17,49 +23,29 @@
 
   <div class="button-container">
     <ng-container *ngIf="!openLogin">
-      <div class="button-image-container" (click)="onPathshalaClick()">
+      <!-- <div class="button-image-container" (click)="onPathshalaClick()">
         <img src="assets/images/pathshala.jpeg" />
         <ion-button> Pathshala </ion-button>
-      </div>
-      <div
-        class="button-image-container"
-        (click)="onEventClick()"
-        *ngIf="isTeacherLoggedIn"
-      >
+      </div>    -->
+      <div class="button-image-container" (click)="onEventClick()" *ngIf="isTeacherLoggedIn">
         <img src="assets/images/events.jpeg" alt="Events" />
         <ion-button> Events </ion-button>
       </div>
-      <div
-        class="button-image-container"
-        (click)="onReportClick()"
-        *ngIf="isTeacherLoggedIn"
-      >
+      <div class="button-image-container" (click)="onReportClick()" *ngIf="isTeacherLoggedIn">
         <img src="assets/images/reports.jpeg" alt="Reports" />
         <ion-button> Reports </ion-button>
       </div>
-      <div
-        class="button-image-container"
-        (click)="onAdminClick()"
-        *ngIf="isTeacherLoggedIn"
-      >
+      <div class="button-image-container" (click)="onAdminClick()" *ngIf="isTeacherLoggedIn">
         <img src="assets/images/admin.jpeg" alt="Admin" />
         <ion-button> Admin </ion-button>
       </div>
     </ng-container>
     <div *ngIf="openLogin">
       <ion-col>
-        <ion-input
-          type="text"
-          placeholder="Email"
-          [(ngModel)]="email"
-        ></ion-input>
+        <ion-input type="text" placeholder="Email" [(ngModel)]="email"></ion-input>
       </ion-col>
       <ion-col>
-        <ion-input
-          type="password"
-          placeholder="Password"
-          [(ngModel)]="password"
-        ></ion-input>
+        <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
       </ion-col>
       <ion-col>
         <ion-button (click)="onLogin()" class="login-button">

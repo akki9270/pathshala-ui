@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Location } from '@angular/common';
+
 // noinspection AngularMissingOrInvalidDeclarationInModule
 @Component({
   selector: 'app-reports',
@@ -14,59 +16,53 @@ export class ReportsComponent implements OnInit {
   password;
   name;
 
-  constructor(public router: Router) {}
+  constructor
+    (
+      public router: Router,
+      private _location: Location
+    ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  backClicked() {
+    this._location.back();
+  }
 
   title: string = 'Reports';
 
   reports: report[] = [
     {
-      imagePath: 'assets/images/reports.jpeg',
+      imagePath: 'assets/images/dates.jpg',
       title: 'Date Wise',
       routerLink: 'datewise',
       name: 'test',
     },
     {
-      imagePath: 'assets/images/reports.jpeg',
+      imagePath: 'assets/images/months.jpg',
       title: 'Month Wise',
       routerLink: 'monthwise',
       name: 'test',
     },
     {
-      imagePath: 'assets/images/reports.jpeg',
+      imagePath: 'assets/images/sutra.jpeg',
       title: 'Sutra Wise',
       routerLink: 'sutrawise',
       name: 'test',
     },
     {
-      imagePath: 'assets/images/reports.jpeg',
+      imagePath: 'assets/images/teacher.png',
       title: "Teacher's Wise",
       routerLink: 'teacherwise',
       name: 'test',
     },
     {
-      imagePath: 'assets/images/reports.jpeg',
+      imagePath: 'assets/images/students.png',
       title: "Student's Wise",
       routerLink: 'studentwise',
       name: 'test',
     },
   ];
 
-  onPathshalaClick() {
-    console.log('onPathshalaClick');
-  }
-  onEventClick() {
-    console.log('onEventClick');
-  }
-  onReportClick() {
-    console.log('onReportClick');
-  }
-  onAdminClick() {
-    console.log('onAdminClick');
-  }
-  onLogin() {}
-  goBack() {}
 }
 
 class report {

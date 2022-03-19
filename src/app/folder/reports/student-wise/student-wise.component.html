@@ -1,41 +1,52 @@
-<div class="container table-responsive py-5">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label>ID No</label>
-      <input type="text" class="form-control" />
+<ion-content>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+            Back
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label>Student Name</label>
-      <input type="text" class="form-control" />
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label>ID No</label>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-md-4 mb-3">
+        <label>Student Name</label>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-md-4 mb-3">
+        <label>Points</label>
+        <input type="text" class="form-control" />
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label>Points</label>
-      <input type="text" class="form-control" />
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-color">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-color">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+</ion-content>

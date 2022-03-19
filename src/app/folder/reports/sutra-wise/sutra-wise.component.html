@@ -1,83 +1,89 @@
-<div class="container table-responsive py-5">
-  <div class="row">
-    <div class="col-12">
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Category</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Select</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Status</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-6 mt-4">
-          <div class="form-group">
-            <button type="button" class="btn btn-outline-info btn-lg">
-              Search
-            </button>
-          </div>
+<ion-content>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+            Back
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-color">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Student</th>
-            <th scope="col">Days</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Mark</td>
-            <td>Mark</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Jacob</td>
-            <td>Jacob</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="sutraWise">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Category</label>
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="category">
+                  <option *ngFor="let cat of allSutraCategory" [ngValue]="cat">{{cat.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Sutra</label>
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="sutra">
+                  <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
+
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Status</label>
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="status">
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                  <option>Both</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-6 mt-4">
+              <div class="form-group">
+                <button type="button" class="btn btn-outline-info btn-lg" (click)="onSearch()">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-color">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Student</th>
+              <th scope="col">Days</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Mark</td>
+              <td>Mark</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Jacob</td>
+              <td>Jacob</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
+</ion-content>

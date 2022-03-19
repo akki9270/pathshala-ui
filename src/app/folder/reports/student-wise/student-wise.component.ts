@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {Location} from '@angular/common';
+
 @Component({
   selector: 'app-student-wise',
   templateUrl: './student-wise.component.html',
@@ -7,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentWiseComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _location: Location) { }
 
   ngOnInit() {}
+
+  backClicked() {
+    this._location.back();
+  }
 
 }

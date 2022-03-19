@@ -12,8 +12,8 @@ export class AppComponent implements OnDestroy {
     public platform: Platform,
     public sharedService: SharedService
   ) {
-    CapacitorApp.addListener('backButton', ({canGoBack}) => {
-      if(!canGoBack){
+    CapacitorApp.addListener('backButton', ({ canGoBack }) => {
+      if (!canGoBack) {
         CapacitorApp.exitApp();
       } else {
         window.history.back();
@@ -26,6 +26,6 @@ export class AppComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.sharedService.setTeacher({});
+    this.sharedService.setTeacher({});
   }
 }

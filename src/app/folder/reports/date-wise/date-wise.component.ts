@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-date-wise',
   templateUrl: './date-wise.component.html',
   styleUrls: ['./date-wise.component.scss'],
 })
 export class DateWiseComponent implements OnInit {
+
   tableData;
-  constructor() {}
+
+  constructor
+    (
+      private _location: Location
+    ) { }
 
   ngOnInit() {
     this.tableData = [
@@ -87,5 +94,9 @@ export class DateWiseComponent implements OnInit {
         time: '123',
       },
     ];
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }

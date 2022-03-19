@@ -137,6 +137,7 @@ export class FolderPage implements OnInit {
     // this.getAllSutra(1);
     this.getSutraCategory();
     setTimeout(() => {
+      this.getUserData(1001);
       if (this.platform.is('capacitor')) {
         this.barcodeScan();
       } else {

@@ -1,71 +1,75 @@
-<div class="container table-responsive py-5">
-  <div class="row">
-    <div class="col-12 col-sm-4">
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">Year</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
+<ion-content>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+            Back
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-12 col-sm-4">
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">Month</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
+    <div class="row">
+      <div class="col-12 col-sm-4">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Year</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option *ngFor="let data of years">{{ data.id }}</option>
+
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Month</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option selected value='1' *ngFor="let data of monthData"> {{data.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4 mt-4">
+        <div class="form-group">
+          <button type="button" class="btn btn-outline-info btn-lg">
+            Search
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-12 col-sm-4 mt-4">
-      <div class="form-group">
-        <button type="button" class="btn btn-outline-info btn-lg">
-          Search
-        </button>
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-color">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="tr-top-border">
+              <th scope="row">Averege :</th>
+              <td>123</td>
+            </tr>
+            <tr>
+              <th scope="row">Max :</th>
+              <td>123</td>
+            </tr>
+            <tr>
+              <th scope="row">Min :</th>
+              <td>123</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-color">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr class="tr">
-            <th scope="row">Averege :</th>
-            <td>123</td>
-          </tr>
-          <tr>
-            <th scope="row">Max :</th>
-            <td>123</td>
-          </tr>
-          <tr>
-            <th scope="row">Min :</th>
-            <td>123</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+</ion-content>
