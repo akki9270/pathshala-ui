@@ -7,6 +7,7 @@ import { SutraService } from 'src/app/services/sutra.service';
 import { UserService } from 'src/app/services/user.service';
 import { UploadService } from 'src/app/services/upload-service.service';
 import { environment } from '../../../environments/environment';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-student-master',
@@ -17,14 +18,13 @@ export class StudentMasterComponent implements OnInit {
 
   constructor(
     public _location: Location,
-    public sutraSerice: SutraService,
     public cdRef: ChangeDetectorRef,
     public sutraService: SutraService,
     public userService: UserService,
     public alertController: AlertController,
     public imagePicker: ImagePicker,
     public uploadService: UploadService,
-    public CdRef: ChangeDetectorRef
+    public sharedService: SharedService
      ) { }
   studentForm: FormGroup;
 
@@ -42,6 +42,8 @@ export class StudentMasterComponent implements OnInit {
   }
   imageElement:any = {};
   PLACEHOLDER_IMAGE_URL = 'https://via.placeholder.com/300';
+  teacherData;
+
   @HostListener('keyup',['$event'])
     onKeyUp(event) {
       if (event.keyCode === 13) {
@@ -70,7 +72,7 @@ export class StudentMasterComponent implements OnInit {
       selectedSutraCategory: new FormControl('', [Validators.required]),
       selectedSutra: new FormControl('', [Validators.required]),
       currentGathaCount: new FormControl({ value: '' }, [Validators.required]),
-  
+      revisionMode: new FormControl(false,[])
     });
     // this.getAllSutra();
     this.getAllCategory();
@@ -78,6 +80,7 @@ export class StudentMasterComponent implements OnInit {
       if (value) {
         let currentGathaCount = value.current_gatha_count || 1;
         this.studentForm.patchValue({ currentGathaCount: currentGathaCount }, { emitEvent: false });
+        this.getGathaCount(value);
       }
     })
     this.studentForm.get('selectedSutraCategory').valueChanges.subscribe(value => {
@@ -86,7 +89,7 @@ export class StudentMasterComponent implements OnInit {
       this.studentForm.patchValue({
         selectedSutra: '',
         currentGathaCount: ''
-      })
+      }, { emitEvent: false });
       if(value) {
         this.getAllSutra(value);
       }
@@ -102,7 +105,10 @@ export class StudentMasterComponent implements OnInit {
         }
         this.userService.updateUser(data).subscribe();
       }
-    })
+    });
+    this.sharedService.getTeacher.subscribe(data => {
+      this.teacherData = data;
+    });
   }
 
   onSelectSource() {
@@ -110,7 +116,7 @@ export class StudentMasterComponent implements OnInit {
   }
 
   getAllCategory() {
-    this.sutraSerice.getAllCategory()
+    this.sutraService.getAllCategory()
     .subscribe(res => {
       // console.log('res ', res);
       if (res['data']) {
@@ -120,7 +126,7 @@ export class StudentMasterComponent implements OnInit {
   }
 
   getAllSutra(data) {
-    this.sutraSerice.getAllSutra({ categoryId: data.id, studentId: this.studentForm.getRawValue().user_id })
+    this.sutraService.getAllSutra({ categoryId: data.id, studentId: this.studentForm.getRawValue().user_id })
     .subscribe( res => {
       // console.log(' getAll Sutra ', res);
       this.allSutra = res['data'];
@@ -159,7 +165,10 @@ export class StudentMasterComponent implements OnInit {
     }
     let data = this.studentForm.getRawValue();
     data['isNew'] = this.isNewStudent;
-    data['teacherId'] = 10001 // temporary, will be removed soon
+    // data['teacherId'] = 10001 
+    data['teacherId'] = this.teacherData.id;
+    // data[]
+    // temporary, will be removed soon
     // console.log(' student Data ', data);
     // return;
     this.userService.saveUserAndGatha(data).subscribe(
@@ -212,6 +221,7 @@ export class StudentMasterComponent implements OnInit {
     studentData.street = data.street;
     studentData.area_code = data.area_code;
     studentData.city = data.city;
+    studentData.revisionMode = gatha.revision_mode;
     if (data.gender) {
       studentData.gender = data.gender.toLowerCase();
     }

@@ -145,3 +145,11 @@
         margin-left: 15px;
     }
   }
+.form-group {
+    &.form-check {
+        input[type="checkbox"] {
+            min-width: 20px;
+            height: 20px;
+        }
+    }
+}
