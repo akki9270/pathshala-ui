@@ -237,7 +237,7 @@ export class StudentMasterComponent implements OnInit {
 
     if (gatha) {
       let category = gatha.Sutra.SutraCategory;
-      let cat = this.allSutraCategory.find(i => i.id = category.id);
+      let cat = this.allSutraCategory.find(i => i.id == category.id);
       studentData['selectedSutraCategory']= cat;
       this.fetchedSelectedSutra = gatha.Sutra;
       this.fetchedGathaCount = gatha.current_gatha_count;
@@ -245,8 +245,8 @@ export class StudentMasterComponent implements OnInit {
     // this.isNewStudent = true;
     // console.log('studentData ', studentData);
     
-    this.studentForm.patchValue(studentData);
     setTimeout(() => {
+      this.studentForm.patchValue(studentData);
       if(!this.isNewStudent) {
         this.studentForm.get('user_id').disable();
       }
