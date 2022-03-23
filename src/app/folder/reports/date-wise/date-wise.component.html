@@ -9,18 +9,20 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 col-sm-6">
-        <div class="form-group">
-          <input class="form-control" type="date" />
+    <form [formGroup]="datesearch">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <input class="form-control" type="date" formControlName="date" />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <button type="button" class="btn btn-outline-info" (click)="dateSearch()">Search</button>
+          </div>
         </div>
       </div>
-      <div class="col-12 col-sm-6">
-        <div class="form-group">
-          <button type="button" class="btn btn-outline-info">Search</button>
-        </div>
-      </div>
-    </div>
+    </form>
     <div class="row">
       <div class="col-12 table-responsive">
         <table class="table table-bordered table-hover">

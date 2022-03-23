@@ -58,7 +58,7 @@ export class SutraWiseComponent implements OnInit {
       })
   }
 
-  onSearch() {
+  sutraSearch() {
     if (this.sutraWise.valid) {
       console.log('SeARCh :: ', this.sutraWise.value)
     }

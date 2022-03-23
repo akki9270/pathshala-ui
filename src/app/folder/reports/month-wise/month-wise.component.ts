@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Location } from '@angular/common';
+import { MonthWiseService } from './month-wise.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -11,10 +13,20 @@ import { Location } from '@angular/common';
 export class MonthWiseComponent implements OnInit {
   years = [];
   monthData;
+  monthsearch: FormGroup;
 
-  constructor(private _location: Location) { }
+  constructor(
+    private _location: Location,
+    private monthWiseService: MonthWiseService
+  ) { }
 
   ngOnInit() {
+
+    this.monthsearch = new FormGroup({
+      year: new FormControl(''),
+      month: new FormControl('')
+    });
+
     this.monthData = [
       {
         id: 1,
@@ -73,6 +85,10 @@ export class MonthWiseComponent implements OnInit {
 
   backClicked() {
     this._location.back();
+  }
+
+  monthSearch() {
+    this.monthWiseService.monthSearch(this.monthsearch.value);
   }
 
 }

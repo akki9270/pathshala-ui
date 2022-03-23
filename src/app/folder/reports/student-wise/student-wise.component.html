@@ -9,20 +9,27 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <label>ID No</label>
-        <input type="text" class="form-control" />
+    <form [formGroup]="studentsearch">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label>ID No</label>
+          <input type="text" class="form-control" formControlName="id" />
+        </div>
+        <div class="col-md-3 mb-3">
+          <label>Student Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+        </div>
+        <div class="col-md-3 mb-3">
+          <label>Points</label>
+          <input type="text" class="form-control" formControlName="point" />
+        </div>
+        <div class="col-md-3 mt-4">
+          <div class="form-group">
+            <button type="button" class="btn btn-outline-info btn-lg" (click)="studentSearch()">Search</button>
+          </div>
+        </div>
       </div>
-      <div class="col-md-4 mb-3">
-        <label>Student Name</label>
-        <input type="text" class="form-control" />
-      </div>
-      <div class="col-md-4 mb-3">
-        <label>Points</label>
-        <input type="text" class="form-control" />
-      </div>
-    </div>
+    </form>
     <div class="row">
       <div class="col-12 table-responsive">
         <table class="table table-bordered table-hover">

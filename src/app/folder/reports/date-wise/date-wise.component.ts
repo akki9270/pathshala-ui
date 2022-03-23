@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Location } from '@angular/common';
+import { DateWiseService } from './date-wise.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-date-wise',
@@ -9,94 +11,27 @@ import { Location } from '@angular/common';
 })
 export class DateWiseComponent implements OnInit {
 
-  tableData;
+  tableData = [];
+  datesearch: FormGroup;
 
   constructor
     (
-      private _location: Location
+      private _location: Location,
+      private dateWiseService: DateWiseService
     ) { }
 
   ngOnInit() {
-    this.tableData = [
-      {
-        id: 1,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 2,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 3,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 4,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 5,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 6,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 7,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 8,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 9,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 10,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 11,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 12,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 13,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 14,
-        name: 'test',
-        time: '123',
-      },
-      {
-        id: 15,
-        name: 'test',
-        time: '123',
-      },
-    ];
+    this.tableData = this.dateWiseService.fetchTableData();
+    this.datesearch = new FormGroup({
+      date: new FormControl('')
+    });
   }
 
   backClicked() {
     this._location.back();
+  }
+
+  dateSearch() {
+    this.dateWiseService.dateSearch(this.datesearch.get('date').value);
   }
 }

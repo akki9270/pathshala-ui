@@ -13,6 +13,8 @@ import { EventsComponent } from './events/events.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { SutraWiseComponent } from '../folder/reports/sutra-wise/sutra-wise.component';
 import { MonthWiseComponent } from '../folder/reports/month-wise/month-wise.component';
+import { StudentWiseComponent } from '../folder/reports/student-wise/student-wise.component';
+import { TeacherWiseComponent } from '../folder/reports/teacher-wise/teacher-wise.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import { MonthWiseComponent } from '../folder/reports/month-wise/month-wise.comp
         EventsComponent,
         EventListComponent,
         SutraWiseComponent,
-        MonthWiseComponent
+        MonthWiseComponent,
+        StudentWiseComponent,
+        TeacherWiseComponent,
     ],
     imports: [
         BrowserModule,

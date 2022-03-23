@@ -9,32 +9,33 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 col-sm-4">
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Year</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option *ngFor="let data of years">{{ data.id }}</option>
-
-          </select>
+    <form [formGroup]="monthsearch">
+      <div class="row">
+        <div class="col-12 col-sm-4">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Year</label>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="year">
+              <option *ngFor="let data of years">{{ data.id }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Month</label>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="month">
+              <option *ngFor="let data of monthData"> {{data.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4 mt-4">
+          <div class="form-group">
+            <button type="button" class="btn btn-outline-info btn-lg" (click)="monthSearch()">
+              Search
+            </button>
+          </div>
         </div>
       </div>
-      <div class="col-12 col-sm-4">
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Month</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option selected value='1' *ngFor="let data of monthData"> {{data.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12 col-sm-4 mt-4">
-        <div class="form-group">
-          <button type="button" class="btn btn-outline-info btn-lg">
-            Search
-          </button>
-        </div>
-      </div>
-    </div>
+    </form>
     <div class="row">
       <div class="col-12 table-responsive">
         <table class="table table-bordered table-hover">

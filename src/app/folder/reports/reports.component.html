@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="row report-block-wrapper">
       <div class="col-lg" *ngFor="let report of reports">
-        <div class="report-block" routerLink="{{ report.routerLink }}">
+        <div class="report-block pointer" routerLink="{{ report.routerLink }}">
           <img [src]="report.imagePath" alt="{{ report.name }}" class="img-responsive report-img" />
           <h3>{{ report.title }}</h3>
         </div>
