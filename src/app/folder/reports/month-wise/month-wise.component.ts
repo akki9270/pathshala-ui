@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Location } from '@angular/common';
 import { MonthWiseService } from './month-wise.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -14,6 +14,7 @@ export class MonthWiseComponent implements OnInit {
   years = [];
   monthData;
   monthsearch: FormGroup;
+  submited = false;
 
   constructor(
     private _location: Location,
@@ -22,9 +23,15 @@ export class MonthWiseComponent implements OnInit {
 
   ngOnInit() {
 
+    let date = new Date();
+    let year = date.getFullYear();
+    for (var i = year - 5; i <= year; i++) {
+      this.years.push({ id: i })
+    }
+
     this.monthsearch = new FormGroup({
-      year: new FormControl(''),
-      month: new FormControl('')
+      year: new FormControl(null, [Validators.required]),
+      month: new FormControl(null, [Validators.required])
     });
 
     this.monthData = [
@@ -77,18 +84,20 @@ export class MonthWiseComponent implements OnInit {
         name: 'December'
       },
     ]
-
-    for (var i = 2000; i <= 2050; i++) {
-      this.years.push({ id: i })
-    }
   }
+  get year() { return this.monthsearch.get('year'); }
+  get month() { return this.monthsearch.get('month'); }
 
   backClicked() {
     this._location.back();
   }
 
   monthSearch() {
-    this.monthWiseService.monthSearch(this.monthsearch.value);
+    this.submited = true;
+    if (this.monthsearch.valid) {
+      this.monthWiseService.monthSearch(this.monthsearch.value);
+      this.submited = false;
+    }
   }
 
 }

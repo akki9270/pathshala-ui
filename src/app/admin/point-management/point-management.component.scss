@@ -1,0 +1,37 @@
+.button-container {
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: floralwhite;
+    ion-button {
+      button {
+        padding: 26px;
+      }
+      min-width: 150px;
+      font-size: 26px;
+      // min-height: 100px;
+      margin-top: 15px;
+      width: 35%;
+    }
+  }
+  
+  .button-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    img {
+      width: 200px;
+      height: 200px;
+    }
+    ion-button {
+      // button {
+        width: 100%;
+      // }
+    }
+  }

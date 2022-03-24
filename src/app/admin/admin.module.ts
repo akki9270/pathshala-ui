@@ -15,6 +15,7 @@ import { SutraWiseComponent } from '../folder/reports/sutra-wise/sutra-wise.comp
 import { MonthWiseComponent } from '../folder/reports/month-wise/month-wise.component';
 import { StudentWiseComponent } from '../folder/reports/student-wise/student-wise.component';
 import { TeacherWiseComponent } from '../folder/reports/teacher-wise/teacher-wise.component';
+import { BonusPointComponent } from './point-management/bonus-point/bonus-point.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { TeacherWiseComponent } from '../folder/reports/teacher-wise/teacher-wis
         MonthWiseComponent,
         StudentWiseComponent,
         TeacherWiseComponent,
+        BonusPointComponent
     ],
     imports: [
         BrowserModule,

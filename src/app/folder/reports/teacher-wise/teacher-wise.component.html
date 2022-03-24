@@ -25,6 +25,8 @@
                   <option>4</option>
                   <option>5</option>
                 </select>
+                <span *ngIf="submited && teacher.errors?.['required']" class="help-block error">Teacher is required!
+                </span>
               </div>
             </div>
           </div>

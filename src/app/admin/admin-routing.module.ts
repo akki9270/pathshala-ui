@@ -5,36 +5,63 @@ import { StudentMasterComponent } from './student-master/student-master.componen
 import { SutraMasterComponent } from './sutra-master/sutra-master.component';
 import { EventsComponent } from './events/events.component';
 import { EventListComponent } from './event-list/event-list.component';
+import { PointManagementComponent } from './point-management/point-management.component';
+import { BonusPointComponent } from './point-management/bonus-point/bonus-point.component';
+import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
+import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
 
 const routes: Route[] = [
-    {
-        path: 'admin',
-        component: AdminDashboardComponent,
-    },
-    {
-        path: 'studentMaster',
-        component: StudentMasterComponent
-    },
-    {
-        path: 'sutraMaster',
-        component: SutraMasterComponent
-    },
-    {
-        path: 'Event/Edit/:id',
-        component: EventsComponent
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+  },
+  {
+    path: 'studentMaster',
+    component: StudentMasterComponent
+  },
+  {
+    path: 'sutraMaster',
+    component: SutraMasterComponent
+  },
+  {
+    path: 'point',
+    children: [
+      {
+        path: '',
+        component: PointManagementComponent,
       },
       {
-        path: 'Event/Add',
-        component: EventsComponent
+        path: 'bonusPoint',
+        component: BonusPointComponent,
       },
       {
-        path: 'EventList',
-        component: EventListComponent
-      }
+        path: 'pointRedepmtion',
+        component: PointRedemptionComponent,
+      },
+      {
+        path: 'pointLedger',
+        component: PointLedgerComponent,
+      },
+    ],
+  },
+
+
+  {
+    path: 'Event/Edit/:id',
+    component: EventsComponent
+  },
+  {
+    path: 'Event/Add',
+    component: EventsComponent
+  },
+  {
+    path: 'EventList',
+    component: EventListComponent
+  }
 ]
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
 export class AdminRoutingModule { }

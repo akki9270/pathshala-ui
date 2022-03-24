@@ -17,6 +17,8 @@
             <select class="form-control" id="exampleFormControlSelect1" formControlName="year">
               <option *ngFor="let data of years">{{ data.id }}</option>
             </select>
+            <span *ngIf="submited && year.errors?.['required']" class="help-block error">Year is required!
+            </span>
           </div>
         </div>
         <div class="col-12 col-sm-4">
@@ -25,6 +27,8 @@
             <select class="form-control" id="exampleFormControlSelect1" formControlName="month">
               <option *ngFor="let data of monthData"> {{data.name}}</option>
             </select>
+            <span *ngIf="submited && month.errors?.['required']" class="help-block error">Month is required!
+            </span>
           </div>
         </div>
         <div class="col-12 col-sm-4 mt-4">

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SutraService } from 'src/app/services/sutra.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -26,20 +26,24 @@ export class SutraWiseComponent implements OnInit {
   allSutra = [];
   fetchedSelectedSutra;
   fetchedGathaCount;
+  submited = false;
 
   ngOnInit() {
     this.getAllCategory();
 
     this.sutraWise = new FormGroup({
-      category: new FormControl(''),
-      sutra: new FormControl(''),
-      status: new FormControl('')
+      category: new FormControl(null, [Validators.required]),
+      sutra: new FormControl(null, [Validators.required]),
+      status: new FormControl(null, [Validators.required])
     });
 
     this.sutraWise.get('category').valueChanges.subscribe(value => {
       this.getAllSutra(value);
     })
   }
+  get category() { return this.sutraWise.get('category'); }
+  get sutra() { return this.sutraWise.get('sutra'); }
+  get status() { return this.sutraWise.get('status'); }
 
 
   getAllCategory() {
@@ -59,8 +63,10 @@ export class SutraWiseComponent implements OnInit {
   }
 
   sutraSearch() {
+    this.submited = true;
     if (this.sutraWise.valid) {
-      console.log('SeARCh :: ', this.sutraWise.value)
+      console.log('SeARCh :: ', this.sutraWise.value);
+      this.submited = false;
     }
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Location } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TeacherWiseService } from './teacher-wise.service';
 
 @Component({
@@ -10,7 +10,9 @@ import { TeacherWiseService } from './teacher-wise.service';
   styleUrls: ['./teacher-wise.component.scss'],
 })
 export class TeacherWiseComponent implements OnInit {
+
   teachersearch: FormGroup;
+  submited = false;
 
   constructor(
     private _location: Location,
@@ -20,16 +22,25 @@ export class TeacherWiseComponent implements OnInit {
   ngOnInit() {
 
     this.teachersearch = new FormGroup({
-      teacher: new FormControl('')
+      teacher: new FormControl(null, [Validators.required])
     });
   }
+  get teacher() { return this.teachersearch.get('teacher'); }
 
   dateWiseSearch() {
-    this.teacherWiseService.dateWiseSearch(this.teachersearch.get('teacher').value);
+    this.submited = true;
+    if (this.teachersearch.valid) {
+      this.teacherWiseService.dateWiseSearch(this.teachersearch.get('teacher').value);
+      this.submited = false;
+    }
   }
 
   monthWiseSearch() {
-    this.teacherWiseService.monthWiseSearch(this.teachersearch.get('teacher').value);
+    this.submited = true;
+    if (this.teachersearch.valid) {
+      this.teacherWiseService.monthWiseSearch(this.teachersearch.get('teacher').value);
+      this.submited = false;
+    }
   }
 
   backClicked() {

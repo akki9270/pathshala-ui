@@ -21,6 +21,8 @@
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="category">
                   <option *ngFor="let cat of allSutraCategory" [ngValue]="cat">{{cat.name}}</option>
                 </select>
+                <span *ngIf="submited && category.errors?.['required']" class="help-block error">Category is required!
+                </span>
               </div>
             </div>
           </div>
@@ -30,8 +32,9 @@
                 <label for="exampleFormControlSelect1">Select Sutra</label>
                 <select class="form-control" id="exampleFormControlSelect1" formControlName="sutra">
                   <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
-
                 </select>
+                <span *ngIf="submited && sutra.errors?.['required']" class="help-block error">Sutra is required!
+                </span>
               </div>
             </div>
           </div>
@@ -44,6 +47,8 @@
                   <option>Completed</option>
                   <option>Both</option>
                 </select>
+                <span *ngIf="submited && status.errors?.['required']" class="help-block error">Status is required!
+                </span>
               </div>
             </div>
             <div class="col-6 mt-4">

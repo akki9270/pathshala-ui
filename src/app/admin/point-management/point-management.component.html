@@ -1,0 +1,28 @@
+<ion-content [fullscreen]="true" scrollY="auto">
+  <div class="bg-light">
+    <div class="d-flex justify-content-start p-4">
+      <button class="btn btn-primary px-4" (click)="navigate('/admin')">
+        Back To Main Menu
+      </button>
+    </div>
+  </div>
+  <div class="button-container">
+    <div class="button-image-container" (click)="navigate('point/bonusPoint')">
+      <img src="assets/images/studentMaster.jpeg" />
+      <ion-button>
+        Bonus Point
+      </ion-button>
+    </div>
+    <div class="button-image-container" (click)="navigate('point/pointRedepmtion')">
+      <img src="assets/images/studentMaster.jpeg">
+      <ion-button> Point Redemption </ion-button>
+    </div>
+    <div class="button-image-container" (click)="navigate('point/pointLedger')">
+      <img src="assets/images/studentMaster.jpeg">
+      <ion-button> Student Point Ledger </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<router-outlet>
+</router-outlet>
