@@ -31,15 +31,15 @@ const routes: Route[] = [
         component: PointManagementComponent,
       },
       {
-        path: 'bonusPoint',
+        path: 'bonus-point',
         component: BonusPointComponent,
       },
       {
-        path: 'pointRedepmtion',
+        path: 'point-redepmtion',
         component: PointRedemptionComponent,
       },
       {
-        path: 'pointLedger',
+        path: 'point-ledger',
         component: PointLedgerComponent,
       },
     ],
