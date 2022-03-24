@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <form [formGroup]="datesearch">
+    <form [formGroup]="dateSearch">
       <div class="row">
         <div class="col-12 col-sm-6">
           <div class="form-group">
@@ -20,7 +20,7 @@
         </div>
         <div class="col-12 col-sm-6">
           <div class="form-group">
-            <button type="button" class="btn btn-outline-info" (click)="dateSearch()">Search</button>
+            <button type="button" class="btn btn-outline-info" (click)="onDateSearch()">Search</button>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let data of tableData">
-              <th scope="row">{{ data.id }}</th>
+              <th scope="row">{{ data.index }}</th>
               <td>{{ data.name }}</td>
               <td>{{ data.time }}</td>
             </tr>

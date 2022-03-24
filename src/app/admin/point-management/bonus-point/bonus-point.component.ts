@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BonusPointService } from './bonus-point.service';
+import { DateWiseService } from '../../../folder/reports/date-wise/date-wise.service';
 
 @Component({
   selector: 'app-bonus-point',
@@ -10,28 +11,48 @@ import { BonusPointService } from './bonus-point.service';
 })
 export class BonusPointComponent implements OnInit {
 
-  bonussearch: FormGroup;
+  bonusSearch: FormGroup;
+  submited = false;
+  tableData = [];
+  filteredData = [];
+  stuentSearch;
 
   constructor(
     private _location: Location,
     private formBuilder: FormBuilder,
-    private bonusPointService: BonusPointService
+    private bonusPointService: BonusPointService,
+    private dateWiseService: DateWiseService
   ) { }
 
   ngOnInit() {
-    this.bonussearch = this.formBuilder.group({
-      id: new FormControl(''),
-      name: new FormControl(''),
-      point: new FormControl('')
+    this.tableData = this.dateWiseService.fetchTableData();
+    this.filteredData = this.tableData;
+    this.bonusSearch = this.formBuilder.group({
+      id: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required]),
+      point: new FormControl(null, [Validators.required])
     });
   }
+  get id() { return this.bonusSearch.get('id'); }
+  get name() { return this.bonusSearch.get('name'); }
+  get point() { return this.bonusSearch.get('point'); }
 
-  bonusSearch() {
-    this.bonusPointService.bonusSearch(this.bonussearch.value)
+  onBonusSearch() {
+    this.submited = true;
+    if (this.bonusSearch.valid) {
+      this.bonusPointService.bonusSearch(this.bonusSearch.value)
+      this.submited = false;
+    }
   }
 
   backClicked() {
     this._location.back();
+  }
+
+  filteredList(search) {
+    this.filteredData = this.tableData.filter(stuedent => {
+      return search ? stuedent.name.toLowerCase().includes(search.toLowerCase()) : this.tableData
+    })
   }
 
 }

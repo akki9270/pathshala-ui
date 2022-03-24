@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StudentWiseService } from './student-wise.service';
+import { DateWiseService } from '../date-wise/date-wise.service'
 
 @Component({
   selector: 'app-student-wise',
@@ -11,30 +12,36 @@ import { StudentWiseService } from './student-wise.service';
 })
 export class StudentWiseComponent implements OnInit {
 
-  studentsearch: FormGroup;
+  studentSearch: FormGroup;
   submited = false;
+  tableData = [];
+  filteredData = [];
 
   constructor(
     private _location: Location,
     private studentWiseService: StudentWiseService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dateWiseService: DateWiseService
   ) { }
 
   ngOnInit() {
-    this.studentsearch = this.formBuilder.group({
+    this.tableData = this.dateWiseService.fetchTableData();
+    this.filteredData = this.tableData;
+
+    this.studentSearch = this.formBuilder.group({
       id: new FormControl(null, [Validators.required]),
       name: new FormControl(null, [Validators.required]),
       point: new FormControl(null, [Validators.required])
     });
   }
-  get id() { return this.studentsearch.get('id'); }
-  get name() { return this.studentsearch.get('name'); }
-  get point() { return this.studentsearch.get('point'); }
+  get id() { return this.studentSearch.get('id'); }
+  get name() { return this.studentSearch.get('name'); }
+  get point() { return this.studentSearch.get('point'); }
 
-  studentSearch() {
+  onStudentSearch() {
     this.submited = true;
-    if (this.studentsearch.valid) {
-      this.studentWiseService.studentSearch(this.studentsearch.value);
+    if (this.studentSearch.valid) {
+      this.studentWiseService.studentSearch(this.studentSearch.value);
       this.submited = false;
     }
   }
@@ -42,5 +49,9 @@ export class StudentWiseComponent implements OnInit {
   backClicked() {
     this._location.back();
   }
-
+  filteredList(search) {
+    this.filteredData = this.tableData.filter(stuedent => {
+      return search ? stuedent.name.toLowerCase().includes(search.toLowerCase()) : this.tableData
+    })
+  }
 }

@@ -13,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class MonthWiseComponent implements OnInit {
   years = [];
   monthData;
-  monthsearch: FormGroup;
+  monthSearch: FormGroup;
   submited = false;
 
   constructor(
@@ -29,7 +29,7 @@ export class MonthWiseComponent implements OnInit {
       this.years.push({ id: i })
     }
 
-    this.monthsearch = new FormGroup({
+    this.monthSearch = new FormGroup({
       year: new FormControl(null, [Validators.required]),
       month: new FormControl(null, [Validators.required])
     });
@@ -85,17 +85,17 @@ export class MonthWiseComponent implements OnInit {
       },
     ]
   }
-  get year() { return this.monthsearch.get('year'); }
-  get month() { return this.monthsearch.get('month'); }
+  get year() { return this.monthSearch.get('year'); }
+  get month() { return this.monthSearch.get('month'); }
 
   backClicked() {
     this._location.back();
   }
 
-  monthSearch() {
+  onMonthSearch() {
     this.submited = true;
-    if (this.monthsearch.valid) {
-      this.monthWiseService.monthSearch(this.monthsearch.value);
+    if (this.monthSearch.valid) {
+      this.monthWiseService.monthSearch(this.monthSearch.value);
       this.submited = false;
     }
   }

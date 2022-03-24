@@ -9,23 +9,29 @@
         </div>
       </div>
     </div>
-    <form [formGroup]="bonussearch">
+    <form [formGroup]="bonusSearch">
       <div class="row">
         <div class="col-md-3 mb-3">
           <label>ID No</label>
           <input type="text" class="form-control" formControlName="id" />
+          <span *ngIf="submited && id.errors?.['required']" class="help-block error">Id is required!
+          </span>
         </div>
         <div class="col-md-3 mb-3">
           <label>Student Name</label>
-          <input type="text" class="form-control" formControlName="name" />
+          <input type="text" class="form-control" formControlName="name" (input)="filteredList($event.target.value)" />
+          <span *ngIf="submited && name.errors?.['required']" class="help-block error">Name is required!
+          </span>
         </div>
         <div class="col-md-3 mb-3">
           <label>Points</label>
-          <input type="text" class="form-control" formControlName="point" />
+          <input type="number" class="form-control" formControlName="point" />
+          <span *ngIf="submited && point.errors?.['required']" class="help-block error">Point is required!
+          </span>
         </div>
         <div class="col-md-3 mt-4">
           <div class="form-group">
-            <button type="button" class="btn btn-outline-info btn-lg" (click)="bonusSearch()">Search</button>
+            <button type="button" class="btn btn-outline-info btn-lg" (click)="onBonusSearch()">Search</button>
           </div>
         </div>
       </div>
@@ -41,15 +47,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
+            <tr *ngFor="let data of filteredData">
+              <th scope="row">{{ data.index }}</th>
+              <td>{{ data.name }}</td>
+              <td>{{ data.time }}</td>
             </tr>
           </tbody>
         </table>

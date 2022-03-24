@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class DateWiseComponent implements OnInit {
 
   tableData = [];
-  datesearch: FormGroup;
+  dateSearch: FormGroup;
   submited = false;
 
   constructor
@@ -24,21 +24,21 @@ export class DateWiseComponent implements OnInit {
 
   ngOnInit() {
     this.tableData = this.dateWiseService.fetchTableData();
-    this.datesearch = new FormGroup({
+    this.dateSearch = new FormGroup({
       date: new FormControl(null, [Validators.required])
     });
   }
-  get date() { return this.datesearch.get('date'); }
+  get date() { return this.dateSearch.get('date'); }
 
 
   backClicked() {
     this._location.back();
   }
 
-  dateSearch() {
+  onDateSearch() {
     this.submited = true;
-    if (this.datesearch.valid) {
-      this.dateWiseService.dateSearch(this.datesearch.get('date').value);
+    if (this.dateSearch.valid) {
+      this.dateWiseService.dateSearch(this.dateSearch.get('date').value);
       this.submited = false;
     }
   }

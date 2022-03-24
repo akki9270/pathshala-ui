@@ -11,7 +11,7 @@ import { TeacherWiseService } from './teacher-wise.service';
 })
 export class TeacherWiseComponent implements OnInit {
 
-  teachersearch: FormGroup;
+  teacherSearch: FormGroup;
   submited = false;
 
   constructor(
@@ -21,24 +21,24 @@ export class TeacherWiseComponent implements OnInit {
 
   ngOnInit() {
 
-    this.teachersearch = new FormGroup({
+    this.teacherSearch = new FormGroup({
       teacher: new FormControl(null, [Validators.required])
     });
   }
-  get teacher() { return this.teachersearch.get('teacher'); }
+  get teacher() { return this.teacherSearch.get('teacher'); }
 
-  dateWiseSearch() {
+  onDateWiseSearch() {
     this.submited = true;
-    if (this.teachersearch.valid) {
-      this.teacherWiseService.dateWiseSearch(this.teachersearch.get('teacher').value);
+    if (this.teacherSearch.valid) {
+      this.teacherWiseService.dateWiseSearch(this.teacherSearch.get('teacher').value);
       this.submited = false;
     }
   }
 
-  monthWiseSearch() {
+  onMonthWiseSearch() {
     this.submited = true;
-    if (this.teachersearch.valid) {
-      this.teacherWiseService.monthWiseSearch(this.teachersearch.get('teacher').value);
+    if (this.teacherSearch.valid) {
+      this.teacherWiseService.monthWiseSearch(this.teacherSearch.get('teacher').value);
       this.submited = false;
     }
   }
