@@ -14,8 +14,8 @@
         <div class="col-md-3 mb-3">
           <label>ID No</label>
           <input type="text" class="form-control" formControlName="id" />
-          <div class="error" *ngIf="id && id.invalid && (id.touched || id.dirty)">
-            <span *ngIf="id.errors?.['required']" class="help-block">Id is required!
+          <div class="error" *ngIf="id && id.invalid">
+            <span *ngIf="submited && id.errors?.['required']" class="help-block">Id is required!
             </span>
             <span *ngIf="id.errors?.['pattern']" class="help-block">Enter only number!
             </span>
@@ -24,8 +24,8 @@
         <div class="col-md-3 mb-3">
           <label>Student Name</label>
           <input type="text" class="form-control" formControlName="name" (input)="filteredList($event.target.value)" />
-          <div class="error" *ngIf="name && name.invalid && (name.touched || name.dirty)">
-            <span *ngIf="name.errors?.['required']" class="help-block">Name is required!
+          <div class="error" *ngIf="name && name.invalid">
+            <span *ngIf="submited && name.errors?.['required']" class="help-block">Name is required!
             </span>
             <span *ngIf="name.errors?.['pattern']" class="help-block">Enter only characters!
             </span>
@@ -34,8 +34,8 @@
         <div class="col-md-3 mb-3">
           <label>Points</label>
           <input type="taxt" class="form-control" formControlName="point" />
-          <div class="error" *ngIf="point && point.invalid && (point.touched || point.dirty)">
-            <span *ngIf="point.errors?.['required']" class="help-block">Point is required!
+          <div class="error" *ngIf="point && point.invalid">
+            <span *ngIf="submited && point.errors?.['required']" class="help-block">Point is required!
             </span>
             <span *ngIf="point.errors?.['pattern']" class="help-block">Enter only number!
             </span>
