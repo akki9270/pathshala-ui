@@ -28,9 +28,9 @@ export class BonusPointComponent implements OnInit {
     this.tableData = this.dateWiseService.fetchTableData();
     this.filteredData = this.tableData;
     this.bonusSearch = this.formBuilder.group({
-      id: new FormControl(null, [Validators.required]),
-      name: new FormControl(null, [Validators.required]),
-      point: new FormControl(null, [Validators.required])
+      id: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')]),
+      name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z]*')]),
+      point: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')])
     });
   }
   get id() { return this.bonusSearch.get('id'); }

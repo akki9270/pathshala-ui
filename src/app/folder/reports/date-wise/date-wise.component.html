@@ -37,15 +37,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let data of tableData">
-              <th scope="row">{{ data.index }}</th>
-              <td>{{ data.name }}</td>
-              <td>{{ data.time }}</td>
+              <th scope="row">{{ data.id }}</th>
+              <td>{{ data.user_id }}</td>
+              <td>{{ data.attendence_date }}</td>
             </tr>
           </tbody>
           <tbody>
             <tr class="tr">
               <th colspan="2">Present :</th>
-              <td>123</td>
+              <td>{{ totalRows }}</td>
             </tr>
           </tbody>
         </table>

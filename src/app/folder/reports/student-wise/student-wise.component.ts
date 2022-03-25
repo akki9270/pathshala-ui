@@ -29,9 +29,9 @@ export class StudentWiseComponent implements OnInit {
     this.filteredData = this.tableData;
 
     this.studentSearch = this.formBuilder.group({
-      id: new FormControl(null, [Validators.required]),
-      name: new FormControl(null, [Validators.required]),
-      point: new FormControl(null, [Validators.required])
+      id: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')]),
+      name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z]*')]),
+      point: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')])
     });
   }
   get id() { return this.studentSearch.get('id'); }

@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -6,10 +9,15 @@ import { Injectable } from '@angular/core';
 export class DateWiseService {
   tableData = [];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+  private env = environment;
+  private URL = this.env.server_url;
 
-  dateSearch(date) {
-    console.log('date search :', date);
+  dateSearch(params) {
+    return this.http.get(this.URL + '/getStudentWiseData', { params })
+      .pipe(
+        tap(() => console.log('getStudentWiseData'))
+      )
   }
   fetchTableData() {
     this.tableData = [

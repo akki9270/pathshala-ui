@@ -14,30 +14,41 @@
         <div class="col-md-3 mb-3">
           <label>ID No</label>
           <input type="text" class="form-control" formControlName="id" />
-          <span *ngIf="submited && id.errors?.['required']" class="help-block error">Id is required!
-          </span>
+          <div class="error" *ngIf="id && id.invalid && (id.touched || id.dirty)">
+            <span *ngIf="id.errors?.['required']" class="help-block">Id is required!
+            </span>
+            <span *ngIf="id.errors?.['pattern']" class="help-block">Enter only number!
+            </span>
+          </div>
         </div>
         <div class="col-md-3 mb-3">
           <label>Student Name</label>
           <input type="text" class="form-control" formControlName="name" (input)="filteredList($event.target.value)" />
-          <span *ngIf="submited && name.errors?.['required']" class="help-block error">Name is required!
-          </span>
+          <div class="error" *ngIf="name && name.invalid && (name.touched || name.dirty)">
+            <span *ngIf="name.errors?.['required']" class="help-block">Name is required!
+            </span>
+            <span *ngIf="name.errors?.['pattern']" class="help-block">Enter only characters!
+            </span>
+          </div>
         </div>
         <div class="col-md-3 mb-3">
           <label>Points</label>
-          <input type="number" class="form-control" formControlName="point" />
-          <span *ngIf="submited && point.errors?.['required']" class="help-block error">Point is required!
-          </span>
-        </div>
-        <div class="col-md-3 mt-4">
-          <div class="form-group">
-            <button type="button" class="btn btn-outline-info btn-lg" (click)="onBonusSearch()">Search</button>
+          <input type="taxt" class="form-control" formControlName="point" />
+          <div class="error" *ngIf="point && point.invalid && (point.touched || point.dirty)">
+            <span *ngIf="point.errors?.['required']" class="help-block">Point is required!
+            </span>
+            <span *ngIf="point.errors?.['pattern']" class="help-block">Enter only number!
+            </span>
           </div>
+        </div>
+        <div class="col-md-3">
+          <label class="d-inline-block invisible">Points</label>
+          <button type="button" class="btn btn-outline-info custom-btn" (click)="onBonusSearch()">Search</button>
         </div>
       </div>
     </form>
     <div class="row">
-      <div class="col-12 table-responsive">
+      <div class="col-12 table-responsive table-scroll">
         <table class="table table-bordered table-hover">
           <thead class="thead-color">
             <tr>

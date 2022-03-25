@@ -23,13 +23,11 @@ export class DateWiseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tableData = this.dateWiseService.fetchTableData();
     this.dateSearch = new FormGroup({
       date: new FormControl(null, [Validators.required])
     });
   }
   get date() { return this.dateSearch.get('date'); }
-
 
   backClicked() {
     this._location.back();
@@ -38,10 +36,18 @@ export class DateWiseComponent implements OnInit {
   onDateSearch() {
     this.submited = true;
     if (this.dateSearch.valid) {
-      this.dateWiseService.dateSearch(this.dateSearch.get('date').value);
+      let date = this.dateSearch.get('date').value
+      this.dateWiseService.dateSearch({ date })
+        .subscribe(res => {
+          this.tableData = res['data'];
+        })
       this.submited = false;
     }
   }
+  get totalRows(): number {
+    return this.tableData.length;
+  }
+
   getToday(): string {
     return new Date().toISOString().split('T')[0]
   }
