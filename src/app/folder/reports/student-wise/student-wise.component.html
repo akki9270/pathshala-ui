@@ -9,44 +9,6 @@
         </div>
       </div>
     </div>
-    <form [formGroup]="studentSearch">
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <label>ID No</label>
-          <input type="text" class="form-control" formControlName="id" />
-          <div class="error" *ngIf="id && id.invalid">
-            <span *ngIf="submited && id.errors?.['required']" class="help-block">Id is required!
-            </span>
-            <span *ngIf="id.errors?.['pattern']" class="help-block">Enter only number!
-            </span>
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label>Student Name</label>
-          <input type="text" class="form-control" formControlName="name" (input)="filteredList($event.target.value)" />
-          <div class="error" *ngIf="name && name.invalid">
-            <span *ngIf="submited && name.errors?.['required']" class="help-block">Name is required!
-            </span>
-            <span *ngIf="name.errors?.['pattern']" class="help-block">Enter only characters!
-            </span>
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label>Points</label>
-          <input type="text" class="form-control" formControlName="point" />
-          <div class="error" *ngIf="point && point.invalid">
-            <span *ngIf="submited && point.errors?.['required']" class="help-block">Point is required!
-            </span>
-            <span *ngIf="point.errors?.['pattern']" class="help-block">Enter only number!
-            </span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label class="d-inline-block invisible">Points</label>
-          <button type="button" class="btn btn-outline-info custom-btn" (click)="onStudentSearch()">Search</button>
-        </div>
-      </div>
-    </form>
     <div class="row">
       <div class="col-12 table-responsive table-scroll">
         <table class="table table-bordered table-hover">
@@ -54,13 +16,13 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <th scope="col">Time</th>
+              <th scope="col">Point</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of filteredData">
-              <th scope="row">{{ data.index }}</th>
-              <td>{{ data.name }}</td>
+            <tr *ngFor="let data of allStudents">
+              <th scope="row">{{ data.id }}</th>
+              <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
               <td>{{ data.time }}</td>
             </tr>
           </tbody>

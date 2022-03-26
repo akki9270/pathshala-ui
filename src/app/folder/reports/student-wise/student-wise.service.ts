@@ -1,13 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentWiseService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+  private env = environment;
+  private URL = this.env.server_url;
 
-  studentSearch(data) {
-    console.log('service students search :', data);
+  studentSearch() {
+    return this.http.get(this.URL + '/getAllStudent')
+      .pipe(
+        tap(() => console.log('getAllStudent'))
+      )
   }
 }

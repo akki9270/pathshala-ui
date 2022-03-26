@@ -23,7 +23,7 @@
           <div class="form-group">
             <label for="month">Month</label>
             <select class="form-control" id="month" formControlName="month">
-              <option *ngFor="let data of monthData" value="{{data.id}}"> {{data.name}}</option>
+              <option *ngFor="let data of monthData" value="{{data.id}}">{{data.name}}</option>
             </select>
           </div>
         </div>
@@ -40,32 +40,29 @@
         <table class="table table-bordered table-hover">
           <thead class="thead-color">
             <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Attendence Count</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
+            <tr *ngFor="let data of tableData">
+              <th scope="row">{{ data.Date }}</th>
+              <td>{{data.count}}</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-            </tr>
+
           </tbody>
           <tbody>
             <tr class="tr-top-border">
               <th scope="row">Averege :</th>
-              <td>123</td>
+              <td>{{averege}}</td>
             </tr>
             <tr>
               <th scope="row">Max :</th>
-              <td>123</td>
+              <td>{{max}}</td>
             </tr>
             <tr>
               <th scope="row">Min :</th>
-              <td>123</td>
+              <td>{{min}}</td>
             </tr>
           </tbody>
         </table>

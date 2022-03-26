@@ -16,6 +16,9 @@ export class MonthWiseComponent implements OnInit {
   monthData = [];
   monthSearch: FormGroup;
   tableData = [];
+  averege = 0;
+  max = 0;
+  min = 0;
 
   constructor(
     private _location: Location,
@@ -34,8 +37,6 @@ export class MonthWiseComponent implements OnInit {
       year: new FormControl(null, [Validators.required]),
       month: new FormControl(null, [Validators.required])
     });
-
-
 
     this.monthData = [
       {
@@ -106,7 +107,13 @@ export class MonthWiseComponent implements OnInit {
 
       this.monthWiseService.monthSearch(dateObj)
         .subscribe(res => {
-          this.tableData = res['data'];
+          this.tableData = res['monthData'];
+          let total = this.tableData.reduce(function (sum, current) {
+            return sum + current.count;
+          }, 0);
+          this.averege = Math.round(total / this.tableData.length);
+          this.max = Math.max.apply(Math, this.tableData.map(function (o) { return o.count; }))
+          this.min = Math.min.apply(Math, this.tableData.map(function (o) { return o.count; }))
         })
     }
   }

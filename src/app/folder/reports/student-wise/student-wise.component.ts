@@ -14,8 +14,7 @@ export class StudentWiseComponent implements OnInit {
 
   studentSearch: FormGroup;
   submited = false;
-  tableData = [];
-  filteredData = [];
+  allStudents = [];
 
   constructor(
     private _location: Location,
@@ -25,33 +24,13 @@ export class StudentWiseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tableData = this.dateWiseService.fetchTableData();
-    this.filteredData = this.tableData;
-
-    this.studentSearch = this.formBuilder.group({
-      id: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')]),
-      name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z]*')]),
-      point: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')])
-    });
-  }
-  get id() { return this.studentSearch.get('id'); }
-  get name() { return this.studentSearch.get('name'); }
-  get point() { return this.studentSearch.get('point'); }
-
-  onStudentSearch() {
-    this.submited = true;
-    if (this.studentSearch.valid) {
-      this.studentWiseService.studentSearch(this.studentSearch.value);
-      this.submited = false;
-    }
+    this.studentWiseService.studentSearch()
+      .subscribe(res => {
+        this.allStudents = res['data'];
+      })
   }
 
   backClicked() {
     this._location.back();
-  }
-  filteredList(search) {
-    this.filteredData = this.tableData.filter(stuedent => {
-      return search ? stuedent.name.toLowerCase().includes(search.toLowerCase()) : this.tableData
-    })
   }
 }

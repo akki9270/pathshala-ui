@@ -13,6 +13,8 @@ export class TeacherWiseComponent implements OnInit {
 
   teacherSearch: FormGroup;
   submited = false;
+  allTeachers = [];
+  tableData = [];
 
   constructor(
     private _location: Location,
@@ -20,9 +22,13 @@ export class TeacherWiseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.teacherWiseService.getAllTeachers()
+      .subscribe(res => {
+        this.allTeachers = res['data'];
+      })
     this.teacherSearch = new FormGroup({
-      teacher: new FormControl(null, [Validators.required])
+      teacherId: new FormControl(null, [Validators.required]),
+      date: new FormControl(null, [Validators.required])
     });
   }
   get teacher() { return this.teacherSearch.get('teacher'); }
@@ -30,7 +36,10 @@ export class TeacherWiseComponent implements OnInit {
   onDateWiseSearch() {
     this.submited = true;
     if (this.teacherSearch.valid) {
-      this.teacherWiseService.dateWiseSearch(this.teacherSearch.get('teacher').value);
+      this.teacherWiseService.dateWiseSearch(this.teacherSearch.value)
+        .subscribe(res => {
+          this.tableData = res['teacherData'];
+        })
       this.submited = false;
     }
   }
