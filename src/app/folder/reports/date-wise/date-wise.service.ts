@@ -14,9 +14,9 @@ export class DateWiseService {
   private URL = this.env.server_url;
 
   dateSearch(params) {
-    return this.http.get(this.URL + '/getStudentWiseData', { params })
+    return this.http.get(this.URL + '/getDateWiseStudentData', { params })
       .pipe(
-        tap(() => console.log('getStudentWiseData'))
+        tap(() => console.log('getDateWiseStudentData'))
       )
   }
   fetchTableData() {

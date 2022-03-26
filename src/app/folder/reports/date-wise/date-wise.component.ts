@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { DateWiseService } from './date-wise.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-date-wise',
@@ -14,6 +15,9 @@ export class DateWiseComponent implements OnInit {
   tableData = [];
   dateSearch: FormGroup;
   submited = false;
+  noData = true;
+  moment = moment;
+  attendance = 0;
 
   constructor
     (
@@ -40,12 +44,12 @@ export class DateWiseComponent implements OnInit {
       this.dateWiseService.dateSearch({ date })
         .subscribe(res => {
           this.tableData = res['data'];
+          let attendance = this.tableData.filter(student => student.is_present === 1)
+          this.attendance = attendance.length
+          this.noData = this.tableData.length ? false : true;
         })
       this.submited = false;
     }
-  }
-  get totalRows(): number {
-    return this.tableData.length;
   }
 
   getToday(): string {

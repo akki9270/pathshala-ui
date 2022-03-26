@@ -26,26 +26,31 @@
       </div>
     </form>
     <div class="row">
-      <div class="col-12 table-responsive table-scroll">
-        <table class="table table-bordered table-hover">
+      <div class="col-12 table-responsive">
+        <table class="table table-striped header-fixed">
           <thead class="thead-color">
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Time</th>
+              <th scope="col">Attendence By</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="primary-body" *ngIf="!noData">
             <tr *ngFor="let data of tableData">
-              <th scope="row">{{ data.id }}</th>
-              <td>{{ data.user_id }}</td>
-              <td>{{ data.attendence_date }}</td>
+              <td scope="row">{{ data.Student.id }}</td>
+              <td>{{ data.Student.first_name }} {{data.Student.last_name}}</td>
+              <td>{{ moment(data.attendence_date).format('lll') }}</td>
+              <td>{{data.Teacher.first_name}} {{data.Teacher.last_name}}</td>
             </tr>
           </tbody>
-          <tbody>
+          <tbody class="primary-body" *ngIf="noData">
+            <img src="https://picsum.photos/seed/picsum/1920/1080" alt="">
+          </tbody>
+          <tbody class="secondary-body">
             <tr class="tr-border">
-              <th colspan="2">Present :</th>
-              <td>{{ totalRows }}</td>
+              <td colspan="2">Present :</td>
+              <td>{{ attendance }}</td>
             </tr>
           </tbody>
         </table>

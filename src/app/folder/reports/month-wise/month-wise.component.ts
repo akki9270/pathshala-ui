@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MonthWiseService } from './month-wise.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 
 @Component({
@@ -12,9 +13,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class MonthWiseComponent implements OnInit {
   years = [];
-  monthData;
+  monthData = [];
   monthSearch: FormGroup;
-  submited = false;
+  tableData = [];
 
   constructor(
     private _location: Location,
@@ -33,6 +34,8 @@ export class MonthWiseComponent implements OnInit {
       year: new FormControl(null, [Validators.required]),
       month: new FormControl(null, [Validators.required])
     });
+
+
 
     this.monthData = [
       {
@@ -84,19 +87,27 @@ export class MonthWiseComponent implements OnInit {
         name: 'December'
       },
     ]
+
+    this.monthSearch.controls['year'].patchValue(this.years[0].id)
+    this.monthSearch.controls['month'].patchValue(this.monthData[0].id)
   }
-  get year() { return this.monthSearch.get('year'); }
-  get month() { return this.monthSearch.get('month'); }
 
   backClicked() {
     this._location.back();
   }
 
   onMonthSearch() {
-    this.submited = true;
     if (this.monthSearch.valid) {
-      this.monthWiseService.monthSearch(this.monthSearch.value);
-      this.submited = false;
+      let year = this.monthSearch.controls['year'].value;
+      let month = this.monthSearch.controls['month'].value;
+      let startDate = moment([year, month - 1]);
+      let endDate = moment(startDate).endOf('month');
+      let dateObj = { startDate: moment(startDate).format('yyyy-MM-DD'), endDate: moment(endDate).format('yyyy-MM-DD') }
+
+      this.monthWiseService.monthSearch(dateObj)
+        .subscribe(res => {
+          this.tableData = res['data'];
+        })
     }
   }
 
