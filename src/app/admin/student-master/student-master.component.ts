@@ -7,6 +7,7 @@ import { SutraService } from 'src/app/services/sutra.service';
 import { UserService } from 'src/app/services/user.service';
 import { UploadService } from 'src/app/services/upload-service.service';
 import { environment } from '../../../environments/environment';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-student-master',
@@ -24,8 +25,8 @@ export class StudentMasterComponent implements OnInit {
     public alertController: AlertController,
     public imagePicker: ImagePicker,
     public uploadService: UploadService,
-    public CdRef: ChangeDetectorRef
-  ) { }
+    public sharedService: SharedService
+     ) { }
   studentForm: FormGroup;
 
   allSutra = [];
@@ -42,16 +43,18 @@ export class StudentMasterComponent implements OnInit {
   }
   imageElement: any = {};
   PLACEHOLDER_IMAGE_URL = 'https://via.placeholder.com/300';
-  @HostListener('keyup', ['$event'])
-  onKeyUp(event) {
-    if (event.keyCode === 13) {
-      this.getUserData();
+  teacherData;
+
+  @HostListener('keyup',['$event'])
+    onKeyUp(event) {
+      if (event.keyCode === 13) {
+        this.getUserData();
+      }
     }
-  }
 
   ngOnInit() {
     this.studentForm = new FormGroup({
-      user_id: new FormControl({ value: '', disabled: this.isNewStudent }, []),
+      user_id: new FormControl({value: '', disabled: this.isNewStudent}, []),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       middleName: new FormControl('', [Validators.required]),
@@ -62,7 +65,7 @@ export class StudentMasterComponent implements OnInit {
       area_code: new FormControl('', []),
       city: new FormControl('', []),
 
-      gender: new FormControl('', [Validators.required]),
+      gender: new FormControl('',[Validators.required]),
       dob: new FormControl('', [Validators.required]),
       contact1: new FormControl('', [Validators.required]),
       contact2: new FormControl('', []),
@@ -70,7 +73,7 @@ export class StudentMasterComponent implements OnInit {
       selectedSutraCategory: new FormControl('', [Validators.required]),
       selectedSutra: new FormControl('', [Validators.required]),
       currentGathaCount: new FormControl({ value: '' }, [Validators.required]),
-
+      revisionMode: new FormControl(false,[])
     });
     // this.getAllSutra();
     this.getAllCategory();
@@ -78,6 +81,7 @@ export class StudentMasterComponent implements OnInit {
       if (value) {
         let currentGathaCount = value.current_gatha_count || 1;
         this.studentForm.patchValue({ currentGathaCount: currentGathaCount }, { emitEvent: false });
+        this.getGathaCount(value);
       }
     })
     this.studentForm.get('selectedSutraCategory').valueChanges.subscribe(value => {
@@ -86,8 +90,8 @@ export class StudentMasterComponent implements OnInit {
       this.studentForm.patchValue({
         selectedSutra: '',
         currentGathaCount: ''
-      })
-      if (value) {
+      }, { emitEvent: false });
+      if(value) {
         this.getAllSutra(value);
       }
     });
@@ -102,7 +106,10 @@ export class StudentMasterComponent implements OnInit {
         }
         this.userService.updateUser(data).subscribe();
       }
-    })
+    });
+    this.sharedService.getTeacher.subscribe(data => {
+      this.teacherData = data;
+    });
   }
 
   onSelectSource() {
@@ -110,28 +117,28 @@ export class StudentMasterComponent implements OnInit {
   }
 
   getAllCategory() {
-    this.sutraSerice.getAllCategory()
-      .subscribe(res => {
-        // console.log('res ', res);
-        if (res['data']) {
-          this.allSutraCategory = res['data'];
-        }
-      })
+    this.sutraService.getAllCategory()
+    .subscribe(res => {
+      // console.log('res ', res);
+      if (res['data']) {
+        this.allSutraCategory = res['data'];
+      }
+    })
   }
 
   getAllSutra(data) {
-    this.sutraSerice.getAllSutra({ categoryId: data.id, studentId: this.studentForm.getRawValue().user_id })
-      .subscribe(res => {
-        // console.log(' getAll Sutra ', res);
-        this.allSutra = res['data'];
-        if (this.fetchedSelectedSutra) {
-          let sutra = this.allSutra.find(i => i.id === this.fetchedSelectedSutra.id);
-          this.studentForm.patchValue({
-            selectedSutra: sutra,
-            currentGathaCount: this.fetchedGathaCount
-          })
-        }
-      })
+    this.sutraService.getAllSutra({ categoryId: data.id, studentId: this.studentForm.getRawValue().user_id })
+    .subscribe( res => {
+      // console.log(' getAll Sutra ', res);
+      this.allSutra = res['data'];
+      if (this.fetchedSelectedSutra) {
+        let sutra = this.allSutra.find(i => i.id === this.fetchedSelectedSutra.id);
+        this.studentForm.patchValue({
+          selectedSutra: sutra,
+          currentGathaCount: this.fetchedGathaCount
+        })
+      }
+    })
   }
 
   addNewStudent() {
@@ -143,7 +150,7 @@ export class StudentMasterComponent implements OnInit {
   getGathaCount(value) {
     let result = [];
     if (value) {
-      for (let i = 1; i <= value.gatha_count; i++) {
+      for(let i = 1; i <= value.gatha_count; i++) {
         result.push(i)
       }
     }
@@ -159,7 +166,10 @@ export class StudentMasterComponent implements OnInit {
     }
     let data = this.studentForm.getRawValue();
     data['isNew'] = this.isNewStudent;
-    data['teacherId'] = 10001 // temporary, will be removed soon
+    // data['teacherId'] = 10001
+    data['teacherId'] = this.teacherData.id;
+    // data[]
+    // temporary, will be removed soon
     // console.log(' student Data ', data);
     // return;
     this.userService.saveUserAndGatha(data).subscribe(
@@ -181,23 +191,23 @@ export class StudentMasterComponent implements OnInit {
     }
     this.isNewStudent = false;
     this.studentForm.reset();
-    this.userService.getUserData({ id: this.studentId })
-      .subscribe(res => {
-        this.studentId = '';
-        if (res && res['data'] && res['data'].length) {
-          let data = res['data'][0];
-          this.profile_image = data.profile_image
-          this.uploadService.setParam({ StudentID: data.id })
-          // console.log(data);
-          this.arrangeFormData({ data, gatha: res['gatha'] });
-        } {
+    this.userService.getUserData({id: this.studentId})
+    .subscribe(res => {
+      this.studentId = '';
+      if (res && res['data'] && res['data'].length) {
+        let data = res['data'][0];
+        this.profile_image = data.profile_image
+        this.uploadService.setParam({StudentID: data.id})
+        // console.log(data);
+        this.arrangeFormData({data, gatha: res['gatha']});
+      } {
 
-        }
+      }
 
-      })
+    })
   }
 
-  arrangeFormData({ data, gatha }) {
+  arrangeFormData({data, gatha}) {
 
     let studentData = this.studentForm.value;
     let contactArray = data.mobile.split(',');
@@ -212,6 +222,7 @@ export class StudentMasterComponent implements OnInit {
     studentData.street = data.street;
     studentData.area_code = data.area_code;
     studentData.city = data.city;
+    studentData.revisionMode = gatha.revision_mode;
     if (data.gender) {
       studentData.gender = data.gender.toLowerCase();
     }
@@ -227,17 +238,17 @@ export class StudentMasterComponent implements OnInit {
 
     if (gatha) {
       let category = gatha.Sutra.SutraCategory;
-      let cat = this.allSutraCategory.find(i => i.id = category.id);
-      studentData['selectedSutraCategory'] = cat;
+      let cat = this.allSutraCategory.find(i => i.id == category.id);
+      studentData['selectedSutraCategory']= cat;
       this.fetchedSelectedSutra = gatha.Sutra;
       this.fetchedGathaCount = gatha.current_gatha_count;
     }
     // this.isNewStudent = true;
     // console.log('studentData ', studentData);
 
-    this.studentForm.patchValue(studentData);
     setTimeout(() => {
-      if (!this.isNewStudent) {
+      this.studentForm.patchValue(studentData);
+      if(!this.isNewStudent) {
         this.studentForm.get('user_id').disable();
       }
     }, 100);
@@ -245,10 +256,10 @@ export class StudentMasterComponent implements OnInit {
   }
 
   getFormattedDate(date: string | Date) {
-    if (typeof date === 'string') {
+    if(typeof date === 'string') {
       let d = new Date(date);
       let month: string | number = (d.getMonth() + 1);
-      month = month < 10 ? ('0' + month) : month;
+      month = month < 10 ? ('0' + month ) : month;
       let day: any = d.getDate();
       day = day > 9 ? day : '0' + day;
       return `${d.getFullYear()}-${month}-${day}`;

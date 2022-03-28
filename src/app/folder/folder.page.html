@@ -195,6 +195,7 @@
         </div>
       </div>
       <div class="days-till-now" *ngIf="userGathaDetails">
+        <div class="dtn-box" *ngIf="userGathaDetails.revision_mode" class="mb-2">Revision Mode</div>
         <div class="dtn-box" [innerHTML]="getCurrentDayOfGatha"></div>
       </div>
       <div class="action-buttons" *ngIf="userGathaDetails">

@@ -87,12 +87,12 @@
     margin: 0 0 28px 0px;
     position: relative;
   }
-  
+
   .form-group .fields {
     position: relative;
     /* select */
   }
-  
+
   .form-group .fields input {
     border: 1px solid #DDDDDD;
     -webkit-box-shadow: none;
@@ -114,34 +114,34 @@
     -webkit-box-shadow: inset 0 60px 0px #fff;
     box-shadow: inset 0 60px 0px #fff;
   }
-  
+
   .form-group .fields input:focus {
     -webkit-box-shadow: inset 0 60px 0px #fff;
     box-shadow: inset 0 60px 0px #fff;
   }
-  
+
   .form-group .fields input::-webkit-input-placeholder {
     color: transparent;
     opacity: 0;
   }
-  
+
   .form-group .fields input::-moz-placeholder {
     color: transparent;
     opacity: 0;
   }
-  
+
   .form-group .fields input:-ms-input-placeholder {
     color: transparent;
     opacity: 0;
   }
-  
+
   .form-group .fields input:not(:placeholder-shown)+label {
     top: -11px;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
   }
-  
+
   .form-group .fields label {
     position: absolute;
     top: 18px;
@@ -160,7 +160,7 @@
     margin: 0;
     text-transform: uppercase;
   }
-  
+
   .form-group .fields.focused label {
     top: -11px;
     font-size: 12px;
@@ -176,6 +176,74 @@
       top: -15px;
     }
   }
+
+  .custom-checkbox {
+    width: auto;
+    float: left;
+    padding-left: 30px;
+    padding-right: 32px;
+    margin-bottom: 20px;
+    position: relative;
+    margin: 0;
+    line-height: 18px;
+    cursor: pointer;
+    font-size: 16px;
+
+    span {
+        color: #a8aab9;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    input[type="checkbox"] {
+        display: none;
+
+        &:checked+span {
+            &:after {
+                visibility: visible;
+                opacity: 1;
+                -webkit-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+        }
+    }
+
+    input[type="checkbox"]+span {
+        &:before {
+            content: "";
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(22, 26, 84, 0.13);
+            -webkit-box-shadow: 0 1px 1px 0 rgba(22, 26, 84, 0.11);
+            box-shadow: 0 1px 1px 0 rgba(22, 26, 84, 0.11);
+            border-radius: 3px;
+            background: #fff;
+        }
+
+        &:after {
+            width: 0;
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 3px;
+            top: 1px;
+            content: "\e902";
+            // background: url("/assets/images/check-tick-b.svg") no-repeat;
+            font-weight: 400;
+            color: #329a7f;
+            font-size: 14px;
+            margin: 0px;
+            border: none;
+            width: 12px;
+            height: 12px;
+            font-family: 'icomoon';
+        }
+    }
+}
 
   ::-webkit-scrollbar {
     width: 8px;
