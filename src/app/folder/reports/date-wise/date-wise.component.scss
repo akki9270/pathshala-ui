@@ -14,16 +14,32 @@ table{
 }
 
 .header-fixed {
-  width: 100% 
+  width: 100%
 }
 
-.header-fixed > thead,
-.header-fixed > tbody,
-.header-fixed > thead > tr,
-.header-fixed > tbody > tr,
-.header-fixed > thead > tr > th,
-.header-fixed > tbody > tr > td {
-  display: block;
+@media only screen and (min-width: 575px) {
+  .header-fixed > thead,
+  .header-fixed > tbody,
+  .header-fixed > thead > tr,
+  .header-fixed > tbody > tr,
+  .header-fixed > thead > tr > th,
+  .header-fixed > tbody > tr > td {
+    display: block;
+  }
+
+  .header-fixed > tbody > tr > td,
+  .header-fixed > thead > tr > th {
+    float: left;
+    width: 25%;
+  }
+  .header-fixed > tbody > tr > td:first-child,
+  .header-fixed > thead > tr > th:first-child {
+    width: 20%;
+  }
+  .header-fixed > tbody > tr > td:last-child,
+  .header-fixed > thead > tr > th:last-child {
+    width: 30%;
+  }
 }
 
 .header-fixed > tbody > tr:after,
@@ -34,13 +50,23 @@ table{
   clear: both;
 }
 
+
 .header-fixed > .primary-body {
   overflow-y: auto;
   height: 55vh;
 }
-
-.header-fixed > tbody > tr > td,
-.header-fixed > thead > tr > th {
-  width: 25%;
-  float: left;
+@media only screen and (max-width: 575px) {
+  table.header-fixed {
+    width: 540px;
+  }
+  .header-fixed > tbody > tr > td:first-child,
+  .header-fixed > thead > tr > th:first-child {
+    width: 50px;
+  }
+}
+.default-no-data {
+  background-color: #fcfbfc;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
 }

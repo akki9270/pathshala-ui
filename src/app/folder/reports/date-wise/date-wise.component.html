@@ -26,35 +26,39 @@
         </div>
       </div>
     </form>
-    <div class="row">
-      <div class="col-12 table-responsive">
-        <table class="table table-striped header-fixed">
-          <thead class="thead-color">
+    <div class="default-data" *ngIf="noData">
+      <div class="default-no-data">
+          <img src="../../../assets/images/no-data.png" />
+      </div>
+    </div>
+    <div class="detected-data" *ngIf="!noData">
+      <div class="row">
+        <div class="col-12 table-responsive">
+          <table class="table table-striped header-fixed border">
+            <thead class="thead-color">
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Time</th>
               <th scope="col">Attendence By</th>
             </tr>
-          </thead>
-          <tbody class="primary-body" *ngIf="!noData">
+            </thead>
+            <tbody class="primary-body">
             <tr *ngFor="let data of tableData">
               <td scope="row">{{ data.Student.id }}</td>
               <td>{{ data.Student.first_name }} {{data.Student.last_name}}</td>
               <td>{{ moment(data.attendence_date).format('lll') }}</td>
               <td>{{data.Teacher.first_name}} {{data.Teacher.last_name}}</td>
             </tr>
-          </tbody>
-          <tbody class="primary-body" *ngIf="noData">
-            <img src="https://picsum.photos/seed/picsum/1920/1080" alt="">
-          </tbody>
-          <tbody class="secondary-body">
+            </tbody>
+            <tbody class="secondary-body">
             <tr class="tr-border">
               <td colspan="2">Present :</td>
               <td>{{ attendance }}</td>
             </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
