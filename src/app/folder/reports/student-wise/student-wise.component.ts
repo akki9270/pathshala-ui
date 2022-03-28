@@ -6,6 +6,7 @@ import { StudentWiseService } from './student-wise.service';
 import { DateWiseService } from '../date-wise/date-wise.service'
 import { ModalController } from '@ionic/angular';
 import { StudentDetailsComponent } from '../../student-details/student-details.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-student-wise',
@@ -17,6 +18,8 @@ export class StudentWiseComponent implements OnInit {
   studentSearch: FormGroup;
   submited = false;
   allStudents = [];
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private _location: Location,
@@ -25,9 +28,15 @@ export class StudentWiseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+
     this.studentWiseService.studentSearch()
       .subscribe(res => {
         this.allStudents = res['data'];
+        this.dtTrigger.next();
       })
   }
   async studentDetails(data) {
@@ -42,5 +51,9 @@ export class StudentWiseComponent implements OnInit {
 
   backClicked() {
     this._location.back();
+  }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 }

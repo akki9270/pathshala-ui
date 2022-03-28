@@ -16,6 +16,7 @@ import { MonthWiseComponent } from '../folder/reports/month-wise/month-wise.comp
 import { StudentWiseComponent } from '../folder/reports/student-wise/student-wise.component';
 import { TeacherWiseComponent } from '../folder/reports/teacher-wise/teacher-wise.component';
 import { BonusPointComponent } from './point-management/bonus-point/bonus-point.component';
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { BonusPointComponent } from './point-management/bonus-point/bonus-point.
         FormsModule,
         ReactiveFormsModule,
         IonicModule.forRoot(),
-        AdminRoutingModule
+        AdminRoutingModule,
+        DataTablesModule
     ],
     exports: [],
     providers: [

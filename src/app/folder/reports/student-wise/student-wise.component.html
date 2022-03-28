@@ -9,25 +9,42 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 table-responsive table-scroll">
-        <table class="table table-bordered table-hover">
-          <thead class="thead-color">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Point</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allStudents">
-              <th scope="row">{{ data.id }}</th>
-              <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
-              <td>{{ data.score }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+      <thead>
+        <tr>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Point</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of allStudents">
+          <td>{{ data.id }}</td>
+          <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
+          <td>{{ data.score }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="row">
+    <div class="col-12 table-responsive table-scroll">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-color">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Point</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of allStudents">
+            <th scope="row">{{ data.id }}</th>
+            <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
+            <td>{{ data.score }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div> -->
   </div>
 </ion-content>
