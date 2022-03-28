@@ -17,11 +17,12 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Select Category</label>
-                <select class="form-control" id="exampleFormControlSelect1" formControlName="category">
+                <label for="category">Select Category</label>
+                <select class="form-control" id="category" formControlName="category">
                   <option *ngFor="let cat of allSutraCategory" [ngValue]="cat">{{cat.name}}</option>
                 </select>
-                <span *ngIf="submited && category.errors?.['required']" class="help-block error">Category is required!
+                <span *ngIf="submited && sutraWise.get('category').errors?.['required']"
+                  class="help-block error">Category is required!
                 </span>
               </div>
             </div>
@@ -29,11 +30,12 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Select Sutra</label>
-                <select class="form-control" id="exampleFormControlSelect1" formControlName="sutra">
+                <label for="sutra">Select Sutra</label>
+                <select class="form-control" id="sutra" formControlName="sutra">
                   <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
                 </select>
-                <span *ngIf="submited && sutra.errors?.['required']" class="help-block error">Sutra is required!
+                <span *ngIf="submited && sutraWise.get('sutra').errors?.['required']" class="help-block error">Sutra is
+                  required!
                 </span>
               </div>
             </div>
@@ -41,19 +43,19 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Status</label>
-                <select class="form-control" id="exampleFormControlSelect1" formControlName="status">
-                  <option>In Progress</option>
-                  <option>Completed</option>
-                  <option>Both</option>
+                <label for="status">Status</label>
+                <select class="form-control" id="status" formControlName="status">
+                  <option *ngFor="let data of statusData" value="{{data.id}}">{{data.name}}</option>
                 </select>
-                <span *ngIf="submited && status.errors?.['required']" class="help-block error">Status is required!
+                <span *ngIf="submited && sutraWise.get('status').errors?.['required']" class="help-block error">Status
+                  is
+                  required!
                 </span>
               </div>
             </div>
             <div class="col-6">
               <label class="d-inline-block invisible">Points</label>
-              <button type="button" class="btn btn-outline-info custom-btn" (click)="sutraSearch()">
+              <button type="button" class="btn btn-outline-info custom-btn" (click)="onSutraSearch()">
                 Search
               </button>
             </div>
@@ -66,24 +68,20 @@
         <table class="table table-bordered table-hover">
           <thead class="thead-color">
             <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Student</th>
+              <th scope="col">Student Id</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Teacher Name</th>
               <th scope="col">Days</th>
+              <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Jacob</td>
-              <td>Jacob</td>
+            <tr *ngFor="let data of sutraData">
+              <th>{{ data.studentId }}</th>
+              <td>{{ data.studentName }}</td>
+              <td>{{ data.teacherName }}</td>
+              <td>{{ data.days }}</td>
+              <td>{{ data.studentId }}</td>
             </tr>
           </tbody>
         </table>

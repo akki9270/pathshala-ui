@@ -33,9 +33,6 @@ export class BonusPointComponent implements OnInit {
       point: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')])
     });
   }
-  get id() { return this.bonusSearch.get('id'); }
-  get name() { return this.bonusSearch.get('name'); }
-  get point() { return this.bonusSearch.get('point'); }
 
   onBonusSearch() {
     this.submited = true;

@@ -105,7 +105,7 @@ export class MonthWiseComponent implements OnInit {
       let endDate = moment(startDate).endOf('month');
       let dateObj = { startDate: moment(startDate).format('yyyy-MM-DD'), endDate: moment(endDate).format('yyyy-MM-DD') }
 
-      this.monthWiseService.monthSearch(dateObj)
+      this.monthWiseService.onMonthSearch(dateObj)
         .subscribe(res => {
           this.tableData = res['monthData'];
           let total = this.tableData.reduce(function (sum, current) {

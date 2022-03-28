@@ -19,7 +19,7 @@ export class SutraWiseComponent implements OnInit {
     (
       private router: Router,
       private _location: Location,
-      public sutraSerice: SutraService
+      public sutraService: SutraService
     ) { }
 
   allSutraCategory = [];
@@ -27,6 +27,8 @@ export class SutraWiseComponent implements OnInit {
   fetchedSelectedSutra;
   fetchedGathaCount;
   submited = false;
+  statusData = [];
+  sutraData = [];
 
   ngOnInit() {
     this.getAllCategory();
@@ -40,14 +42,25 @@ export class SutraWiseComponent implements OnInit {
     this.sutraWise.get('category').valueChanges.subscribe(value => {
       this.getAllSutra(value);
     })
-  }
-  get category() { return this.sutraWise.get('category'); }
-  get sutra() { return this.sutraWise.get('sutra'); }
-  get status() { return this.sutraWise.get('status'); }
+    this.statusData = [
+      {
+        id: 1,
+        name: 'In Progress'
+      },
+      {
+        id: 2,
+        name: 'Completed'
+      },
+      {
+        id: 3,
+        name: 'Both'
+      },
+    ]
 
+  }
 
   getAllCategory() {
-    this.sutraSerice.getAllCategory()
+    this.sutraService.getAllCategory()
       .subscribe(res => {
         if (res['data']) {
           this.allSutraCategory = res['data'];
@@ -56,16 +69,22 @@ export class SutraWiseComponent implements OnInit {
   }
 
   getAllSutra(data) {
-    this.sutraSerice.getAllSutra({ categoryId: data.id })
+    this.sutraService.getAllSutra({ categoryId: data.id })
       .subscribe(res => {
         this.allSutra = res['data'];
       })
   }
 
-  sutraSearch() {
+  onSutraSearch() {
     this.submited = true;
     if (this.sutraWise.valid) {
-      console.log('SeARCh :: ', this.sutraWise.value);
+      let sutraId = this.sutraWise.controls['sutra'].value
+      this.sutraService.getAllSutraWiseStudent({ sutraId: sutraId.id })
+        .subscribe(res => {
+          if (res['sutraData']) {
+            this.sutraData = res['sutraData'];
+          }
+        })
       this.submited = false;
     }
   }

@@ -22,8 +22,8 @@
           <tbody>
             <tr *ngFor="let data of allStudents">
               <th scope="row">{{ data.id }}</th>
-              <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
-              <td>{{ data.time }}</td>
+              <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
+              <td>{{ data.score }}</td>
             </tr>
           </tbody>
         </table>

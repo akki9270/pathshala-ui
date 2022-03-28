@@ -12,7 +12,7 @@ export class MonthWiseService {
 
   constructor(private http: HttpClient) { }
 
-  monthSearch(params) {
+  onMonthSearch(params) {
     return this.http.get(this.URL + '/getMonthWiseStudentData', { params })
       .pipe(
         tap(() => console.log('getMonthWiseStudentData'))

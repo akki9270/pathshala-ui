@@ -31,7 +31,6 @@ export class TeacherWiseComponent implements OnInit {
       date: new FormControl(null, [Validators.required])
     });
   }
-  get teacher() { return this.teacherSearch.get('teacher'); }
 
   onDateWiseSearch() {
     this.submited = true;

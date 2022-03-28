@@ -31,7 +31,6 @@ export class DateWiseComponent implements OnInit {
       date: new FormControl(null, [Validators.required])
     });
   }
-  get date() { return this.dateSearch.get('date'); }
 
   backClicked() {
     this._location.back();

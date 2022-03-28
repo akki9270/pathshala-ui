@@ -14,32 +14,28 @@
         <div class="col-md-3 mb-3">
           <label>ID No</label>
           <input type="text" class="form-control" formControlName="id" />
-          <div class="error" *ngIf="id && id.invalid">
-            <span *ngIf="submited && id.errors?.['required']" class="help-block">Id is required!
-            </span>
-            <span *ngIf="id.errors?.['pattern']" class="help-block">Enter only number!
-            </span>
-          </div>
+          <span *ngIf="submited && bonusSearch.get('id').errors?.['required']" class="help-block error">Id is required!
+          </span>
+          <span *ngIf="bonusSearch.get('id').errors?.['pattern']" class="help-block error">Enter only number!
+          </span>
         </div>
         <div class="col-md-3 mb-3">
           <label>Student Name</label>
           <input type="text" class="form-control" formControlName="name" (input)="filteredList($event.target.value)" />
-          <div class="error" *ngIf="name && name.invalid">
-            <span *ngIf="submited && name.errors?.['required']" class="help-block">Name is required!
-            </span>
-            <span *ngIf="name.errors?.['pattern']" class="help-block">Enter only characters!
-            </span>
-          </div>
+          <span *ngIf="submited && bonusSearch.get('name').errors?.['required']" class="help-block error">Name is
+            required!
+          </span>
+          <span *ngIf="bonusSearch.get('name').errors?.['pattern']" class="help-block error">Enter only characters!
+          </span>
         </div>
         <div class="col-md-3 mb-3">
           <label>Points</label>
           <input type="taxt" class="form-control" formControlName="point" />
-          <div class="error" *ngIf="point && point.invalid">
-            <span *ngIf="submited && point.errors?.['required']" class="help-block">Point is required!
-            </span>
-            <span *ngIf="point.errors?.['pattern']" class="help-block">Enter only number!
-            </span>
-          </div>
+          <span *ngIf="submited && bonusSearch.get('point').errors?.['required']" class="help-block error">Point is
+            required!
+          </span>
+          <span *ngIf="bonusSearch.get('point').errors?.['pattern']" class="help-block error">Enter only number!
+          </span>
         </div>
         <div class="col-md-3">
           <label class="d-inline-block invisible">Points</label>

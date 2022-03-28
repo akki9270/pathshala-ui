@@ -3,8 +3,14 @@
 }
 
 .error {
-    color: red;
-    font-size: 12px;
+  color: red;
+  font-size: 12px;
+  height: 20px;
+  margin-top: 1px;
+  position: absolute;
+}
+table{
+  margin-top: 20px;
 }
 
 .header-fixed {
