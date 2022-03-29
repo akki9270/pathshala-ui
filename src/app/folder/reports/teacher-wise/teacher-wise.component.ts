@@ -15,6 +15,7 @@ export class TeacherWiseComponent implements OnInit {
   submited = false;
   allTeachers = [];
   tableData = [];
+  isDatepickerShow = false;
 
   constructor(
     private _location: Location,
@@ -33,6 +34,10 @@ export class TeacherWiseComponent implements OnInit {
   }
 
   onDateWiseSearch() {
+    this.isDatepickerShow = true;
+  }
+
+  onSearch() {
     this.submited = true;
     if (this.teacherSearch.valid) {
       this.teacherWiseService.dateWiseSearch(this.teacherSearch.value)
@@ -44,11 +49,7 @@ export class TeacherWiseComponent implements OnInit {
   }
 
   onMonthWiseSearch() {
-    this.submited = true;
-    if (this.teacherSearch.valid) {
-      this.teacherWiseService.monthWiseSearch(this.teacherSearch.get('teacher').value);
-      this.submited = false;
-    }
+    this.isDatepickerShow = false;
   }
 
   backClicked() {

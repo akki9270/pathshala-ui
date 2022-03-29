@@ -28,13 +28,21 @@
                 </span>
               </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-3" *ngIf="isDatepickerShow">
               <div class="form-group">
                 <label for="date">Select Date</label>
                 <input type="date" class="form-control" formControlName="date">
                 <span *ngIf="submited && teacherSearch.get('date').errors?.['required']"
                   class="help-block error">Teacher is required!
                 </span>
+              </div>
+            </div>
+            <div class="col-12 col-md-3" *ngIf="isDatepickerShow">
+              <div class="form-group">
+                <label class="d-inline-block invisible">sreach</label>
+                <button type="button" class="btn btn-outline-info custom-btn" (click)="onSearch()">
+                  Search
+                </button>
               </div>
             </div>
           </div>
