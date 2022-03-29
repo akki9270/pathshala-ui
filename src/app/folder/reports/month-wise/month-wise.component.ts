@@ -15,10 +15,13 @@ export class MonthWiseComponent implements OnInit {
   years = [];
   monthData = [];
   monthSearch: FormGroup;
+  temp = [];
   tableData = [];
   averege = 0;
   max = 0;
   min = 0;
+  startDate;
+  endDate;
 
   constructor(
     private _location: Location,
@@ -29,7 +32,7 @@ export class MonthWiseComponent implements OnInit {
 
     let date = new Date();
     let year = date.getFullYear();
-    for (var i = year - 5; i <= year; i++) {
+    for (let i = year - 5; i <= year; i++) {
       this.years.push({ id: i })
     }
 
@@ -98,23 +101,51 @@ export class MonthWiseComponent implements OnInit {
   }
 
   onMonthSearch() {
+    this.temp = [];
     if (this.monthSearch.valid) {
       let year = this.monthSearch.controls['year'].value;
       let month = this.monthSearch.controls['month'].value;
       let startDate = moment([year, month - 1]);
       let endDate = moment(startDate).endOf('month');
-      let dateObj = { startDate: moment(startDate).format('yyyy-MM-DD'), endDate: moment(endDate).format('yyyy-MM-DD') }
+      this.startDate = moment(startDate).format('yyyy-MM-DD');
+      this.endDate = moment(endDate).format('yyyy-MM-DD');
+      let dateObj = { startDate: this.startDate, endDate: this.endDate }
 
       this.monthWiseService.onMonthSearch(dateObj)
         .subscribe(res => {
-          this.tableData = res['monthData'];
-          let total = this.tableData.reduce(function (sum, current) {
-            return sum + current.count;
-          }, 0);
-          this.averege = Math.round(total / this.tableData.length);
-          this.max = Math.max.apply(Math, this.tableData.map(function (o) { return o.count; }))
-          this.min = Math.min.apply(Math, this.tableData.map(function (o) { return o.count; }))
+          this.tableData = [];
+          if (res['monthData'].length) {
+            this.temp = res['monthData'];
+            this.onDate(res['monthData'])
+
+            let total = this.temp.reduce(function (sum, current) {
+              return sum + current.count;
+            }, 0);
+            this.averege = Math.round(total / this.temp.length);
+            this.max = Math.max.apply(Math, this.temp.map(function (o) { return o.count; }))
+            this.min = Math.min.apply(Math, this.temp.map(function (o) { return o.count; }))
+          } else {
+            this.tableData.push({ date: 'No data available!', count: 'No data available!' })
+          }
         })
+    }
+  }
+
+  onDate(data) {
+    let start = Number(moment(this.startDate).format('DD'))
+    let end = Number(moment(this.endDate).format('DD'))
+    let month = Number(moment(this.endDate).format('MM'))
+    let year = Number(moment(this.endDate).format('yyyy'))
+
+    for (let i = start; i <= end; i++) {
+      let date = moment(`${year}-${month}-${i}`).format('yyyy-MM-DD');
+
+      if (data.find(obj => obj.Date === date)) {
+        let obj = data.find(obj => obj.Date === date)
+        this.tableData.push({ date: date, count: obj.count })
+      } else {
+        this.tableData.push({ date: date, count: 'Holliday' })
+      }
     }
   }
 
