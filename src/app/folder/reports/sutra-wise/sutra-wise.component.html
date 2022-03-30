@@ -45,11 +45,11 @@
               <div class="form-group">
                 <label for="status">Status</label>
                 <select class="form-control" id="status" formControlName="status">
-                  <option *ngFor="let data of statusData" value="{{data.id}}">{{data.name}}</option>
+                  <option *ngFor="let data of statusData" [ngValue]="data">{{data.name}}
+                  </option>
                 </select>
                 <span *ngIf="submited && sutraWise.get('status').errors?.['required']" class="help-block error">Status
-                  is
-                  required!
+                  is required!
                 </span>
               </div>
             </div>
@@ -68,11 +68,11 @@
         <table class="table table-bordered table-hover">
           <thead class="thead-color">
             <tr>
-              <th scope="col">Student Id</th>
-              <th scope="col">Student Name</th>
-              <th scope="col">Teacher Name</th>
-              <th scope="col">Days</th>
-              <th scope="col">Status</th>
+              <th>Student Id</th>
+              <th>Student Name</th>
+              <th>Teacher Name</th>
+              <th>Days</th>
+              <th *ngIf="isStatus">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -81,7 +81,7 @@
               <td>{{ data.studentName }}</td>
               <td>{{ data.teacherName }}</td>
               <td>{{ data.days }}</td>
-              <td></td>
+              <td *ngIf="isStatus">{{statusData[2].name}}</td>
             </tr>
           </tbody>
         </table>

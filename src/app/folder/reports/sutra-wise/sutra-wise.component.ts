@@ -29,6 +29,7 @@ export class SutraWiseComponent implements OnInit {
   submited = false;
   statusData = [];
   sutraData = [];
+  isStatus = false;
 
   ngOnInit() {
     this.getAllCategory();
@@ -78,6 +79,8 @@ export class SutraWiseComponent implements OnInit {
   onSutraSearch() {
     this.submited = true;
     if (this.sutraWise.valid) {
+      let status = this.sutraWise.controls['status'].value
+      this.isStatus = status.id === 3 ? true : false
       let sutraId = this.sutraWise.controls['sutra'].value
       this.sutraService.getAllSutraWiseStudent({ sutraId: sutraId.id })
         .subscribe(res => {

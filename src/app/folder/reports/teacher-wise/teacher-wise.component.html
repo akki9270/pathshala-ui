@@ -15,7 +15,7 @@
       <div class="col-12">
         <form [formGroup]="teacherSearch">
           <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-6 col-md-6">
               <div class="form-group">
                 <label for="teacher">Select Teacher</label>
                 <select class="form-control" id="teacherId" formControlName="teacherId">
@@ -26,6 +26,16 @@
                 <span *ngIf="submited && teacherSearch.get('teacherId').errors?.['required']"
                   class="help-block error">Teacher is required!
                 </span>
+              </div>
+            </div>
+            <div class="col-6 col-md-6 button-datewise">
+              <div class="form-group">
+                <button type="button" class="btn btn-outline-info mr-2 mb-2" (click)="onDateWiseSearch()">
+                  Date Wise
+                </button>
+                <button type="button" class="btn btn-outline-info mb-2" (click)="onMonthWiseSearch()">
+                  Month Wise
+                </button>
               </div>
             </div>
             <div class="col-12 col-md-3" *ngIf="isDatepickerShow">
@@ -47,18 +57,6 @@
             </div>
           </div>
         </form>
-        <div class="row mt-2">
-          <div class="col-12">
-            <div class="form-group">
-              <button type="button" class="btn btn-outline-info mr-2 mb-2" (click)="onDateWiseSearch()">
-                Date Wise
-              </button>
-              <button type="button" class="btn btn-outline-info mb-2" (click)="onMonthWiseSearch()">
-                Month Wise
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     <div class="row">
