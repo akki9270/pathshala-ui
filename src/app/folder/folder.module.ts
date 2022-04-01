@@ -17,7 +17,6 @@ import { SummaryDetailsComponent } from './student-details/summary-details/summa
 import { EventsComponent } from './events/events.component';
 import { EventAttendanceComponent } from './events/event-attendance/event-attendance.component';
 import { ReportsComponent } from './reports/reports.component';
-import { DateWiseComponent } from './reports/date-wise/date-wise.component';
 
 @NgModule({
   imports: [
@@ -38,8 +37,7 @@ import { DateWiseComponent } from './reports/date-wise/date-wise.component';
     EventsComponent,
     EventAttendanceComponent,
     ReportsComponent,
-    DateWiseComponent,
   ],
   providers: [],
 })
-export class FolderPageModule {}
+export class FolderPageModule { }

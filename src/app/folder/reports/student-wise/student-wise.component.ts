@@ -53,7 +53,6 @@ export class StudentWiseComponent implements OnInit {
     this._location.back();
   }
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }

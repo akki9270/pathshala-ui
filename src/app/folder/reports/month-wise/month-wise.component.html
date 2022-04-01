@@ -37,35 +37,25 @@
     </form>
     <div class="row">
       <div class="col-12 table-responsive">
-        <table class="table table-bordered table-hover">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
           <thead class="thead-color">
             <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Attendence Count</th>
+              <th>Date</th>
+              <th>Attendence Count</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of tableData">
-              <th scope="row">{{ data.date }}</th>
+              <th>{{ data.date }}</th>
               <td>{{data.count}}</td>
-            </tr>
-
-          </tbody>
-          <tbody>
-            <tr class="tr-top-border">
-              <th scope="row">Averege :</th>
-              <td>{{averege}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Max :</th>
-              <td>{{max}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Min :</th>
-              <td>{{min}}</td>
             </tr>
           </tbody>
         </table>
+        <div class="row count-total">
+          <div class="col"><strong>Averege: </strong>{{averege}}</div>
+          <div class="col"><strong>Max: </strong>{{max}}</div>
+          <div class="col"><strong>Min: </strong>{{min}}</div>
+        </div>
       </div>
     </div>
   </div>

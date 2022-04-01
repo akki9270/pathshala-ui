@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SutraService } from 'src/app/services/sutra.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 
 @Component({
@@ -13,11 +14,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class SutraWiseComponent implements OnInit {
 
+  @ViewChild(DataTableDirective, { static: false }) datatableElement: DataTableDirective;
+  dtElement: DataTableDirective;
+
   sutraWise: FormGroup;
 
   constructor
     (
-      private router: Router,
       private _location: Location,
       public sutraService: SutraService
     ) { }
@@ -30,8 +33,15 @@ export class SutraWiseComponent implements OnInit {
   statusData = [];
   sutraData = [];
   isStatus = false;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+
     this.getAllCategory();
 
     this.sutraWise = new FormGroup({
@@ -57,7 +67,6 @@ export class SutraWiseComponent implements OnInit {
         name: 'Both'
       },
     ]
-
   }
 
   getAllCategory() {
@@ -86,6 +95,7 @@ export class SutraWiseComponent implements OnInit {
         .subscribe(res => {
           if (res['sutraData']) {
             this.sutraData = res['sutraData'];
+            this.rerender();
           }
         })
       this.submited = false;
@@ -94,6 +104,19 @@ export class SutraWiseComponent implements OnInit {
 
   backClicked() {
     this._location.back();
+  }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+  }
+  rerender(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
   }
 
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Location } from '@angular/common';
 import { MonthWiseService } from './month-wise.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 
 @Component({
@@ -12,6 +14,10 @@ import * as moment from 'moment';
   styleUrls: ['./month-wise.component.scss'],
 })
 export class MonthWiseComponent implements OnInit {
+
+  @ViewChild(DataTableDirective, { static: false }) datatableElement: DataTableDirective;
+  dtElement: DataTableDirective;
+
   years = [];
   monthData = [];
   monthSearch: FormGroup;
@@ -22,6 +28,8 @@ export class MonthWiseComponent implements OnInit {
   min = 0;
   startDate;
   endDate;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private _location: Location,
@@ -29,6 +37,10 @@ export class MonthWiseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    }
 
     let date = new Date();
     let year = date.getFullYear();
@@ -96,10 +108,6 @@ export class MonthWiseComponent implements OnInit {
     this.monthSearch.controls['month'].patchValue(this.monthData[0].id)
   }
 
-  backClicked() {
-    this._location.back();
-  }
-
   onMonthSearch() {
     this.temp = [];
     if (this.monthSearch.valid) {
@@ -117,6 +125,7 @@ export class MonthWiseComponent implements OnInit {
           if (res['monthData'].length) {
             this.temp = res['monthData'];
             this.onDate(res['monthData'])
+            this.rerender();
 
             let total = this.temp.reduce(function (sum, current) {
               return sum + current.count;
@@ -147,6 +156,24 @@ export class MonthWiseComponent implements OnInit {
         this.tableData.push({ date: date, count: 'Holliday' })
       }
     }
+  }
+
+  backClicked() {
+    this._location.back();
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+  }
+  rerender(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
   }
 
 }

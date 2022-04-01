@@ -26,40 +26,32 @@
         </div>
       </div>
     </form>
-    <div class="default-data" *ngIf="noData">
+    <!-- <div class="default-data" *ngIf="noData">
       <div class="default-no-data">
-          <img src="../../../assets/images/no-data.png" />
+        <img src="../../../assets/images/no-data.png" />
       </div>
+    </div> -->
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
+      <thead class="thead-color">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Time</th>
+          <th>Attendence By</th>
+        </tr>
+      </thead>
+      <tbody class="primary-body">
+        <tr *ngFor="let data of tableData">
+          <td>{{ data.Student.id }}</td>
+          <td>{{ data.Student.first_name }} {{ data.Student.last_name }}</td>
+          <td>{{ moment(data.attendence_date).format('lll') }}</td>
+          <td>{{ data.Teacher.first_name }} {{ data.Teacher.last_name }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row count-total">
+      <div class="col"><strong>Present: </strong>{{ attendance }}</div>
     </div>
-    <div class="detected-data" *ngIf="!noData">
-      <div class="row">
-        <div class="col-12 table-responsive">
-          <table class="table table-striped header-fixed border">
-            <thead class="thead-color">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Time</th>
-              <th scope="col">Attendence By</th>
-            </tr>
-            </thead>
-            <tbody class="primary-body">
-            <tr *ngFor="let data of tableData">
-              <td scope="row">{{ data.Student.id }}</td>
-              <td>{{ data.Student.first_name }} {{data.Student.last_name}}</td>
-              <td>{{ moment(data.attendence_date).format('lll') }}</td>
-              <td>{{data.Teacher.first_name}} {{data.Teacher.last_name}}</td>
-            </tr>
-            </tbody>
-            <tbody class="secondary-body">
-            <tr class="tr-border">
-              <td colspan="2">Present :</td>
-              <td>{{ attendance }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+
   </div>
 </ion-content>

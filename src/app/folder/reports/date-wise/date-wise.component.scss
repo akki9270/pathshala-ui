@@ -9,64 +9,41 @@
   margin-top: 1px;
   position: absolute;
 }
-table{
+
+table {
   margin-top: 20px;
 }
 
-.header-fixed {
-  width: 100%
-}
-
-@media only screen and (min-width: 575px) {
-  .header-fixed > thead,
-  .header-fixed > tbody,
-  .header-fixed > thead > tr,
-  .header-fixed > tbody > tr,
-  .header-fixed > thead > tr > th,
-  .header-fixed > tbody > tr > td {
-    display: block;
-  }
-
-  .header-fixed > tbody > tr > td,
-  .header-fixed > thead > tr > th {
-    float: left;
-    width: 25%;
-  }
-  .header-fixed > tbody > tr > td:first-child,
-  .header-fixed > thead > tr > th:first-child {
-    width: 20%;
-  }
-  .header-fixed > tbody > tr > td:last-child,
-  .header-fixed > thead > tr > th:last-child {
-    width: 30%;
-  }
-}
-
-.header-fixed > tbody > tr:after,
-.header-fixed > thead > tr:after {
-  content: ' ';
-  display: block;
-  visibility: hidden;
-  clear: both;
-}
-
-
-.header-fixed > .primary-body {
-  overflow-y: auto;
-  height: 55vh;
-}
-@media only screen and (max-width: 575px) {
-  table.header-fixed {
-    width: 540px;
-  }
-  .header-fixed > tbody > tr > td:first-child,
-  .header-fixed > thead > tr > th:first-child {
-    width: 50px;
-  }
-}
-.default-no-data {
-  background-color: #fcfbfc;
+.count-total {
+  border: 1px solid;
+  border-color: aquamarine;
+  height: 40px;
   width: 100%;
-  text-align: center;
-  margin: 0 auto;
+  margin-left: -1px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: #333;
+  border: 1px solid #b7fadf;
+  background: linear-gradient(to bottom, white 0%, #b7fadf 100%);
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: rgb(0, 0, 0);
+  border: 1px solid #57e5ac;
+  background: linear-gradient(to bottom, #c1f1dd 0%, #68dfaf 100%)
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: rgb(0, 0, 0);
+  border: 1px solid #57e5ac;
+  background: linear-gradient(to bottom, #c1f1dd 0%, #68dfaf 100%)
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+  outline: none;
+  box-shadow: inset 0 0 3px #78f7c4;
 }
