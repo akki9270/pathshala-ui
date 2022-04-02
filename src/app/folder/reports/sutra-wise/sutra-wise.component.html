@@ -71,7 +71,7 @@
               <th>Student Name</th>
               <th>Teacher Name</th>
               <th>Days</th>
-              <th *ngIf="isStatus">Status</th>
+              <th [hidden]="!isStatus">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -80,7 +80,7 @@
               <td>{{ data.studentName }}</td>
               <td>{{ data.teacherName }}</td>
               <td>{{ data.days }}</td>
-              <td *ngIf="isStatus">{{statusData[2].name}}</td>
+              <td [hidden]="!isStatus">{{statusData[2].name}}</td>
             </tr>
           </tbody>
         </table>
