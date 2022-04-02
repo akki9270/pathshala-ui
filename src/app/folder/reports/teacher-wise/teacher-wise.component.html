@@ -1,9 +1,9 @@
 <ion-content>
-  <div class="container mt-3">
+  <div class="container mt-5">
     <div class="row">
-      <div class="col-12 d-flex justify-content-between">
-        <h2>Teacher Wise Report</h2>
-        <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0 mt-0">Teacher Wise Report</h2>
+        <button type="button" class="btn btn-outline-info" (click)="backClicked()">
           Back
         </button>
       </div>
@@ -12,9 +12,9 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <form [formGroup]="teacherSearch" class="mt-4">
-          <div class="row">
-            <div class="col-6 col-md-6">
+        <form [formGroup]="teacherSearch" class="mt-4 mb-3">
+          <div class="row align-items-end">
+            <div class="col-sm-6 col-md-6">
               <div class="form-group">
                 <label for="teacher">Select Teacher</label>
                 <select class="form-control" id="teacherId" formControlName="teacherId">
@@ -27,12 +27,12 @@
                 </span>
               </div>
             </div>
-            <div class="col-6 col-md-6 button-datewise">
+            <div class="col-sm-6 col-md-6 button-datewise">
               <div class="form-group">
-                <button type="button" class="btn btn-outline-info mr-2 mb-2" (click)="onDateWiseSearch()">
+                <button type="button" class="btn btn-outline-info mr-2" (click)="onDateWiseSearch()">
                   Date Wise
                 </button>
-                <button type="button" class="btn btn-outline-info mb-2" (click)="onMonthWiseSearch()">
+                <button type="button" class="btn btn-outline-info" (click)="onMonthWiseSearch()">
                   Month Wise
                 </button>
               </div>
@@ -48,7 +48,6 @@
             </div>
             <div class="col-12 col-md-3" *ngIf="isDatepickerShow">
               <div class="form-group">
-                <label class="d-inline-block invisible">sreach</label>
                 <button type="button" class="btn btn-outline-info custom-btn" (click)="onSearch()">
                   Search
                 </button>

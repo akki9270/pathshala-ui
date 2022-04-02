@@ -13,9 +13,7 @@
   display: inherit;
 }
 
-.button-datewise{
-  margin-top: 28px;
-}
+
 ::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
   color: #333;
   border: 1px solid #b7fadf;
@@ -38,4 +36,4 @@
   outline: none;
   box-shadow: inset 0 0 3px #78f7c4;
 }
- 
+
