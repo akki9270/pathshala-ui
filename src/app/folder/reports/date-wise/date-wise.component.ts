@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-date-wise',
@@ -29,15 +30,15 @@ export class DateWiseComponent implements OnInit {
   constructor
     (
       private _location: Location,
-      private dateWiseService: DateWiseService
-    ) {
+      private dateWiseService: DateWiseService,
+      private loaderService: LoaderService,
+  ) {
   }
 
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
-      processing: true
+      pageLength: 10
     };
 
     this.dateSearch = new FormGroup({
@@ -48,9 +49,11 @@ export class DateWiseComponent implements OnInit {
   onDateSearch() {
     this.submited = true;
     if (this.dateSearch.valid) {
+      this.loaderService.presentLoading();
       let date = this.dateSearch.get('date').value
       this.dateWiseService.dateSearch({ date })
         .subscribe(res => {
+          this.loaderService.dismisLoading();
           this.tableData = res['data'];
           this.rerender();
 

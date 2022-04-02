@@ -1,32 +1,33 @@
 <ion-content>
   <div class="container mt-3">
     <div class="row">
-      <div class="col-12 d-flex justify-content-end">
-        <div class="form-group">
-          <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
-            Back
-          </button>
-        </div>
+      <div class="col-12 d-flex justify-content-between">
+        <h2>Students Wise Report</h2>
+        <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+          Back
+        </button>
       </div>
     </div>
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover thead-color">
-      <thead>
-        <tr>
-        <tr>
-          <th>Student ID</th>
-          <th>Student Name</th>
-          <th>Point</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of allStudents">
-          <td>{{ data.id }}</td>
-          <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
-          <td>{{ data.score }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <div class="row">
+    <div class="row mt-4">
+      <div class="col">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover thead-color">
+          <thead>
+            <tr>
+            <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Point</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of allStudents">
+              <td>{{ data.id }}</td>
+              <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
+              <td>{{ data.score }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="row">
     <div class="col-12 table-responsive table-scroll">
       <table class="table table-bordered table-hover">
         <thead class="thead-color">
@@ -46,5 +47,7 @@
       </table>
     </div>
   </div> -->
+      </div>
+    </div>
   </div>
 </ion-content>

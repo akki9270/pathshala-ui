@@ -5,6 +5,7 @@ import { SutraService } from 'src/app/services/sutra.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { LoaderService } from 'src/app/services/loader.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class SutraWiseComponent implements OnInit {
   constructor
     (
       private _location: Location,
-      public sutraService: SutraService
+      public sutraService: SutraService,
+      private loaderService: LoaderService
     ) { }
 
   allSutraCategory = [];
@@ -88,11 +90,13 @@ export class SutraWiseComponent implements OnInit {
   onSutraSearch() {
     this.submited = true;
     if (this.sutraWise.valid) {
+      this.loaderService.presentLoading();
       let status = this.sutraWise.controls['status'].value
       this.isStatus = status.id === 3 ? true : false
       let sutraId = this.sutraWise.controls['sutra'].value
       this.sutraService.getAllSutraWiseStudent({ sutraId: sutraId.id })
         .subscribe(res => {
+          this.loaderService.dismisLoading();
           if (res['sutraData']) {
             this.sutraData = res['sutraData'];
             this.rerender();

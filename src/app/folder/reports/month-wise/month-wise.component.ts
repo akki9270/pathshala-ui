@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { LoaderService } from 'src/app/services/loader.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class MonthWiseComponent implements OnInit {
 
   constructor(
     private _location: Location,
-    private monthWiseService: MonthWiseService
+    private monthWiseService: MonthWiseService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -111,6 +113,7 @@ export class MonthWiseComponent implements OnInit {
   onMonthSearch() {
     this.temp = [];
     if (this.monthSearch.valid) {
+      this.loaderService.presentLoading();
       let year = this.monthSearch.controls['year'].value;
       let month = this.monthSearch.controls['month'].value;
       let startDate = moment([year, month - 1]);
@@ -121,6 +124,7 @@ export class MonthWiseComponent implements OnInit {
 
       this.monthWiseService.onMonthSearch(dateObj)
         .subscribe(res => {
+          this.loaderService.dismisLoading();
           this.tableData = [];
           if (res['monthData'].length) {
             this.temp = res['monthData'];
@@ -133,8 +137,6 @@ export class MonthWiseComponent implements OnInit {
             this.averege = Math.round(total / this.temp.length);
             this.max = Math.max.apply(Math, this.temp.map(function (o) { return o.count; }))
             this.min = Math.min.apply(Math, this.temp.map(function (o) { return o.count; }))
-          } else {
-            this.tableData.push({ date: 'No data available!', count: 'No data available!' })
           }
         })
     }

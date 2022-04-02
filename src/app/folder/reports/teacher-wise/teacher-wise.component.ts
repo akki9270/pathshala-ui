@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TeacherWiseService } from './teacher-wise.service';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-teacher-wise',
@@ -26,7 +27,8 @@ export class TeacherWiseComponent implements OnInit {
 
   constructor(
     private _location: Location,
-    private teacherWiseService: TeacherWiseService
+    private teacherWiseService: TeacherWiseService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -52,8 +54,10 @@ export class TeacherWiseComponent implements OnInit {
   onSearch() {
     this.submited = true;
     if (this.teacherSearch.valid) {
+      this.loaderService.presentLoading();
       this.teacherWiseService.dateWiseSearch(this.teacherSearch.value)
         .subscribe(res => {
+          this.loaderService.dismisLoading();
           this.tableData = res['teacherData'];
           this.rerender();
         })

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Location } from '@angular/common';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { StudentWiseService } from './student-wise.service';
-import { DateWiseService } from '../date-wise/date-wise.service'
 import { ModalController } from '@ionic/angular';
 import { StudentDetailsComponent } from '../../student-details/student-details.component';
 import { Subject } from 'rxjs';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-student-wise',
@@ -24,10 +24,12 @@ export class StudentWiseComponent implements OnInit {
   constructor(
     private _location: Location,
     private studentWiseService: StudentWiseService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit() {
+    this.loaderService.presentLoading();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10
@@ -35,6 +37,7 @@ export class StudentWiseComponent implements OnInit {
 
     this.studentWiseService.studentSearch()
       .subscribe(res => {
+        this.loaderService.dismisLoading();
         this.allStudents = res['data'];
         this.dtTrigger.next();
       })
