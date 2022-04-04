@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BonusPointService } from './bonus-point.service';
-import { DateWiseService } from '../../../folder/reports/date-wise/date-wise.service';
+import { Subject } from 'rxjs';
+import { LoaderService } from 'src/app/services/loader.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SharedService } from '../../../services/shared.service'
 
 @Component({
   selector: 'app-bonus-point',
@@ -11,45 +14,70 @@ import { DateWiseService } from '../../../folder/reports/date-wise/date-wise.ser
 })
 export class BonusPointComponent implements OnInit {
 
-  bonusSearch: FormGroup;
+  bonusPoint: FormGroup;
+  allStudents = [];
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+  student = { id: '' };
   submited = false;
-  tableData = [];
-  filteredData = [];
-  stuentSearch;
+
 
   constructor(
     private _location: Location,
-    private formBuilder: FormBuilder,
     private bonusPointService: BonusPointService,
-    private dateWiseService: DateWiseService
+    private loaderService: LoaderService,
+    private modalService: NgbModal,
+    public sharedService: SharedService
   ) { }
 
   ngOnInit() {
-    this.tableData = this.dateWiseService.fetchTableData();
-    this.filteredData = this.tableData;
-    this.bonusSearch = this.formBuilder.group({
-      id: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')]),
-      name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z]*')]),
-      point: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*')])
-    });
-  }
+    this.loaderService.presentLoading();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+    this.bonusPointService.bonusSearch()
+      .subscribe(res => {
+        this.loaderService.dismisLoading();
+        this.allStudents = res['data'];
+        this.dtTrigger.next();
+      })
 
-  onBonusSearch() {
+    this.bonusPoint = new FormGroup({
+      point: new FormControl(null, [Validators.required]),
+      description: new FormControl(null, [Validators.required]),
+      studentId: new FormControl(null),
+      teacherId: new FormControl(null),
+    });
+
+  }
+  savePoint() {
     this.submited = true;
-    if (this.bonusSearch.valid) {
-      this.bonusPointService.bonusSearch(this.bonusSearch.value)
-      this.submited = false;
+    if (this.bonusPoint.valid) {
+      console.log('bonuspoint submitted :', this.bonusPoint.value);
+      this.close();
     }
   }
 
+  public open(modal: any, student: any): void {
+    this.modalService.open(modal);
+    this.student = student;
+    this.sharedService.getTeacher.subscribe((data: any) => {
+      this.bonusPoint.controls['teacherId'].patchValue(data.id)
+    });
+    this.bonusPoint.controls['studentId'].patchValue(this.student.id)
+  }
+
+  close() {
+    this.modalService.dismissAll();
+    this.bonusPoint.reset();
+    this.submited = false;
+  }
   backClicked() {
     this._location.back();
   }
-
-  filteredList(search) {
-    this.filteredData = this.tableData.filter(stuedent => {
-      return search ? stuedent.name.toLowerCase().includes(search.toLowerCase()) : this.tableData
-    })
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
 }

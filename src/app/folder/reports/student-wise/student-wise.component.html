@@ -17,36 +17,18 @@
               <th>Student ID</th>
               <th>Student Name</th>
               <th>Point</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of allStudents">
               <td>{{ data.id }}</td>
-              <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
+              <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
               <td>{{ data.score }}</td>
+              <td><button type="button" class="btn btn-primary" (click)="studentDetails(data)">View</button></td>
             </tr>
           </tbody>
         </table>
-        <!-- <div class="row">
-    <div class="col-12 table-responsive table-scroll">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-color">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Point</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of allStudents">
-            <th scope="row">{{ data.id }}</th>
-            <td (click)="studentDetails(data)">{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}
-            <td>{{ data.score }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div> -->
       </div>
     </div>
   </div>

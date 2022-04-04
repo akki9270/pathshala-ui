@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Location } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { StudentWiseService } from './student-wise.service';
@@ -16,7 +15,6 @@ import { LoaderService } from 'src/app/services/loader.service';
 export class StudentWiseComponent implements OnInit {
 
   studentSearch: FormGroup;
-  submited = false;
   allStudents = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -34,7 +32,6 @@ export class StudentWiseComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-
     this.studentWiseService.studentSearch()
       .subscribe(res => {
         this.loaderService.dismisLoading();
@@ -50,7 +47,6 @@ export class StudentWiseComponent implements OnInit {
     });
     await modal.present();
   }
-
 
   backClicked() {
     this._location.back();

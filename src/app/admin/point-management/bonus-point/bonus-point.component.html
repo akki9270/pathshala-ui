@@ -1,67 +1,69 @@
 <ion-content>
   <div class="container mt-3">
     <div class="row">
-      <div class="col-12 d-flex justify-content-end">
-        <div class="form-group">
-          <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
-            Back
-          </button>
-        </div>
+      <div class="col-12 d-flex justify-content-between">
+        <h2>Bonus Point Management</h2>
+        <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+          Back
+        </button>
       </div>
     </div>
-    <form [formGroup]="bonusSearch">
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <label>ID No</label>
-          <input type="text" class="form-control" formControlName="id" />
-          <span *ngIf="submited && bonusSearch.get('id').errors?.['required']" class="help-block error">Id is required!
-          </span>
-          <span *ngIf="bonusSearch.get('id').errors?.['pattern']" class="help-block error">Enter only number!
-          </span>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label>Student Name</label>
-          <input type="text" class="form-control" formControlName="name" (input)="filteredList($event.target.value)" />
-          <span *ngIf="submited && bonusSearch.get('name').errors?.['required']" class="help-block error">Name is
-            required!
-          </span>
-          <span *ngIf="bonusSearch.get('name').errors?.['pattern']" class="help-block error">Enter only characters!
-          </span>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label>Points</label>
-          <input type="taxt" class="form-control" formControlName="point" />
-          <span *ngIf="submited && bonusSearch.get('point').errors?.['required']" class="help-block error">Point is
-            required!
-          </span>
-          <span *ngIf="bonusSearch.get('point').errors?.['pattern']" class="help-block error">Enter only number!
-          </span>
-        </div>
-        <div class="col-md-3">
-          <label class="d-inline-block invisible">Points</label>
-          <button type="button" class="btn btn-outline-info custom-btn" (click)="onBonusSearch()">Search</button>
-        </div>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col-12 table-responsive table-scroll">
-        <table class="table table-bordered table-hover">
-          <thead class="thead-color">
+    <div class="row mt-4">
+      <div class="col-12">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color">
+          <thead>
             <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Time</th>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Point</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of filteredData">
-              <th scope="row">{{ data.index }}</th>
-              <td>{{ data.name }}</td>
-              <td>{{ data.time }}</td>
+            <tr *ngFor="let data of allStudents">
+              <td>{{ data.id }}</td>
+              <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
+              <td>{{ data.score }}</td>
+              <td><button type="button" class="btn btn-primary" (click)="open(demoModal,data)">Add Point</button></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <ng-template #demoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title"><strong>{{student.first_name}} {{ student.middle_name }} {{
+          student.last_name }}</strong></h4>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="bonusPoint">
+        <div class="form-group">
+          <label>Point</label>
+          <input type="number" class="form-control" formControlName="point">
+          <span *ngIf="submited && bonusPoint.get('point').errors?.['required']" class="help-block error">Point is
+            required!
+          </span>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" rows="3" formControlName="description"></textarea>
+          <span *ngIf="submited && bonusPoint.get('description').errors?.['required']"
+            class="help-block error">Description is
+            required!
+          </span>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="close()">
+        Close
+      </button>
+      <button type="button" class="btn btn-outline-dark" (click)="savePoint()">
+        Add Point
+      </button>
+    </div>
+  </ng-template>
 </ion-content>
