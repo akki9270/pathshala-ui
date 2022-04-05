@@ -18,6 +18,8 @@ import { TeacherWiseComponent } from '../folder/reports/teacher-wise/teacher-wis
 import { BonusPointComponent } from './point-management/bonus-point/bonus-point.component';
 import { DataTablesModule } from "angular-datatables";
 import { DateWiseComponent } from '../folder/reports/date-wise/date-wise.component';
+import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
+import { AddRewardComponent } from './point-management/point-redemption/add-reward/add-reward.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +33,9 @@ import { DateWiseComponent } from '../folder/reports/date-wise/date-wise.compone
         StudentWiseComponent,
         TeacherWiseComponent,
         BonusPointComponent,
-        DateWiseComponent
+        DateWiseComponent,
+        PointRedemptionComponent,
+        AddRewardComponent
     ],
     imports: [
         BrowserModule,
