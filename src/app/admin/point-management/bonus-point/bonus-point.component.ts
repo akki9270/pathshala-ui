@@ -48,6 +48,7 @@ export class BonusPointComponent implements OnInit {
       description: new FormControl(null, [Validators.required]),
       studentId: new FormControl(null),
       teacherId: new FormControl(null),
+      pointStatus: new FormControl(null),
     });
 
   }

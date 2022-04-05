@@ -40,6 +40,13 @@
     </div>
     <div class="modal-body">
       <form [formGroup]="bonusPoint">
+        <label class="switch">
+          <input type="checkbox" id="togBtn" formControlName="pointStatus">
+          <div class="slider round">
+            <span class="on">Add</span>
+            <span class="off">Remove</span>
+          </div>
+        </label>
         <div class="form-group">
           <label>Point</label>
           <input type="number" class="form-control" formControlName="point">
