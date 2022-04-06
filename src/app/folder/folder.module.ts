@@ -17,7 +17,7 @@ import { SummaryDetailsComponent } from './student-details/summary-details/summa
 import { EventsComponent } from './events/events.component';
 import { EventAttendanceComponent } from './events/event-attendance/event-attendance.component';
 import { ReportsComponent } from './reports/reports.component';
-
+import { IonicSelectableModule } from 'ionic-selectable';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +26,7 @@ import { ReportsComponent } from './reports/reports.component';
     IonicModule.forRoot(),
     FolderPageRoutingModule,
     NgQrScannerModule,
+    IonicSelectableModule
   ],
   declarations: [
     FolderPage,

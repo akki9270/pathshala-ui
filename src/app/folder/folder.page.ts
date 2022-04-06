@@ -137,7 +137,7 @@ export class FolderPage implements OnInit {
     // this.getAllSutra(1);
     this.getSutraCategory();
     setTimeout(() => {
-      this.getUserData(1001);
+      // this.getUserData(1001);
       if (this.platform.is('capacitor')) {
         this.barcodeScan();
       } else {
@@ -171,7 +171,7 @@ export class FolderPage implements OnInit {
   }
 
   getAllSutra(id) {
-    this.sutraSerice.getAllSutra(id)
+    this.sutraSerice.getAllSutra({categoryId: id, studentId: this.studentData.id})
       .subscribe(res => {
         console.log(' getAll Sutra ', res);
         this.allSutra = res['data'];
@@ -288,6 +288,7 @@ export class FolderPage implements OnInit {
     this.presentLoading();
     this.userService.getUserData({ id }).subscribe(
       (response) => {
+        this.studentData = {};
         this.dismisLoading();
         if (response && response['data'] && response['data'].length) {
 

@@ -139,12 +139,22 @@
             <div class="fields">
               <ion-item>
                 <ion-label>Sutra</ion-label>
-                <ion-select placeholder="Select Sutra" [disabled]="teacherData && !teacherData.id"
+                <ionic-selectable
+                [canSearch]="true"
+                [items]="allSutra"
+                [(ngModel)]="selectedSutra"
+                itemTextField="name"
+                itemValueField="id"
+                (onChange)="getGathaCount()"
+                [disabled]="teacherData && !teacherData.id"
+                placeholder="Select Sutra"
+                ></ionic-selectable>
+                <!-- <ion-select placeholder="Select Sutra" [disabled]="teacherData && !teacherData.id"
                 [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
                   <ion-select-option *ngFor="let op of allSutra" [value]="op">{{op.name}}</ion-select-option>
-                  <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
-                </ion-select>
+                </ion-select> -->
               </ion-item>
+              <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
 
               <!-- <select class="form-control form-control-lg" [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
                 <option *ngFor="let op of allSutra" [ngValue]="op">{{op.name}}</option>
