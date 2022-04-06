@@ -20,39 +20,4 @@
       </div>
     </div>
   </div>
-
-  <div class="button-container">
-    <ng-container *ngIf="!openLogin">
-      <!-- <div class="button-image-container" (click)="onPathshalaClick()">
-        <img src="assets/images/pathshala.jpeg" />
-        <ion-button> Pathshala </ion-button>
-      </div>    -->
-      <div class="button-image-container" (click)="onEventClick()" *ngIf="isTeacherLoggedIn">
-        <img src="assets/images/events.jpeg" alt="Events" />
-        <ion-button> Events </ion-button>
-      </div>
-      <div class="button-image-container" (click)="onReportClick()" *ngIf="isTeacherLoggedIn">
-        <img src="assets/images/reports.jpeg" alt="Reports" />
-        <ion-button> Reports </ion-button>
-      </div>
-      <div class="button-image-container" (click)="onAdminClick()" *ngIf="isTeacherLoggedIn">
-        <img src="assets/images/admin.jpeg" alt="Admin" />
-        <ion-button> Admin </ion-button>
-      </div>
-    </ng-container>
-    <div *ngIf="openLogin">
-      <ion-col>
-        <ion-input type="text" placeholder="Email" [(ngModel)]="email"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-button (click)="onLogin()" class="login-button">
-          Login
-        </ion-button>
-        <ion-button (click)="goBack()" class="login-button"> Back </ion-button>
-      </ion-col>
-    </div>
-  </div>
 </ion-content>
