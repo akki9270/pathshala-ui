@@ -26,14 +26,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of allStudents">
+            <tr *ngFor="let data of allStudents; let i = index;">
               <td>{{ data.id }}</td>
               <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
               <td>{{ data.score }}</td>
               <td>{{ data.score }}</td>
               <td>
-                <button type="button" class="btn btn-primary mr-2">Edit</button>
-                <button type="button" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn btn-primary mr-2" (click)="onEditReward(i)">Edit</button>
+                <button type="button" class="btn btn-primary" (click)="onDeleteReward(i)">Delete</button>
               </td>
             </tr>
           </tbody>

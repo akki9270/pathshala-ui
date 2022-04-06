@@ -45,6 +45,10 @@ const routes: Route[] = [
           {
             path: 'add-reward',
             component: AddRewardComponent,
+          },
+          {
+            path: 'edit-reward/:id',
+            component: AddRewardComponent,
           }
         ],
       },
