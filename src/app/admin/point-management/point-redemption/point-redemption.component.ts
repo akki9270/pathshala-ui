@@ -34,7 +34,7 @@ export class PointRedemptionComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.bonusPointService.bonusSearch()
+    this.bonusPointService.bonusPoint()
       .subscribe(res => {
         this.loaderService.dismisLoading();
         this.allStudents = res['data'];

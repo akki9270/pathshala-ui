@@ -12,10 +12,17 @@ export class BonusPointService {
   private env = environment;
   private URL = this.env.server_url;
 
-  bonusSearch() {
+  bonusPoint() {
     return this.http.get(this.URL + '/getAllStudent')
       .pipe(
         tap(() => console.log('getAllStudent'))
+      )
+  }
+
+  addPoint(point) {
+    return this.http.post(this.URL + '/addPoint', point)
+      .pipe(
+        tap(() => console.log('addPoint'))
       )
   }
 }

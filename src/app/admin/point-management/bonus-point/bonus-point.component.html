@@ -10,8 +10,8 @@
     </div>
     <div class="row mt-4">
       <div class="col-12">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color">
-          <thead>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
+          <thead class="thead-color">
             <tr>
               <th>Student ID</th>
               <th>Student Name</th>
@@ -43,7 +43,7 @@
     <div class="modal-body">
       <form [formGroup]="bonusPoint">
         <label class="switch">
-          <input type="checkbox" id="togBtn" formControlName="pointStatus">
+          <input type="checkbox" id="togBtn" formControlName="isPointAdded">
           <div class="slider round">
             <span class="on">Add</span>
             <span class="off">Remove</span>
