@@ -21,7 +21,7 @@ export class BonusPointComponent implements OnInit {
   allStudents = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  student = { id: '' };
+  student: any = { id: '' };
   submited = false;
 
 

@@ -20,6 +20,7 @@ import { DataTablesModule } from "angular-datatables";
 import { DateWiseComponent } from '../folder/reports/date-wise/date-wise.component';
 import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
 import { AddRewardComponent } from './point-management/point-redemption/add-reward/add-reward.component';
+import { PointManagementComponent } from './point-management/point-management.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { AddRewardComponent } from './point-management/point-redemption/add-rewa
         BonusPointComponent,
         DateWiseComponent,
         PointRedemptionComponent,
-        AddRewardComponent
+        AddRewardComponent,
+        PointManagementComponent
     ],
     imports: [
         BrowserModule,

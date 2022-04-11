@@ -222,7 +222,7 @@ export class StudentMasterComponent implements OnInit {
     studentData.street = data.street;
     studentData.area_code = data.area_code;
     studentData.city = data.city;
-    studentData.revisionMode = gatha.revision_mode;
+    // studentData.revisionMode = gatha.revision_mode;
     if (data.gender) {
       studentData.gender = data.gender.toLowerCase();
     }
@@ -242,6 +242,7 @@ export class StudentMasterComponent implements OnInit {
       studentData['selectedSutraCategory']= cat;
       this.fetchedSelectedSutra = gatha.Sutra;
       this.fetchedGathaCount = gatha.current_gatha_count;
+      studentData.revisionMode = gatha.revision_mode;
     }
     // this.isNewStudent = true;
     // console.log('studentData ', studentData);

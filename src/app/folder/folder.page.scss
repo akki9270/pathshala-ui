@@ -483,3 +483,11 @@ input {
       height: 100%;
   }
 }
+
+::ng-deep ionic-selectable {
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
+}
