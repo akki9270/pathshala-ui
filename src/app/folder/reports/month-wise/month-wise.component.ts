@@ -21,6 +21,7 @@ export class MonthWiseComponent implements OnInit {
 
   years = [];
   monthData = [];
+  Allmonth = [];
   monthSearch: FormGroup;
   temp = [];
   tableData = [];
@@ -55,7 +56,7 @@ export class MonthWiseComponent implements OnInit {
       month: new FormControl(null, [Validators.required])
     });
 
-    this.monthData = [
+    this.Allmonth = [
       {
         id: 1,
         name: 'Janaury'
@@ -105,9 +106,10 @@ export class MonthWiseComponent implements OnInit {
         name: 'December'
       },
     ]
+    this.monthData = this.Allmonth
 
     this.monthSearch.controls['year'].patchValue(this.years[0].id)
-    this.monthSearch.controls['month'].patchValue(this.monthData[0].id)
+    this.monthSearch.controls['month'].patchValue(this.Allmonth[0].id)
   }
 
   onMonthSearch() {
@@ -120,15 +122,15 @@ export class MonthWiseComponent implements OnInit {
       let endDate = moment(startDate).endOf('month');
       this.startDate = moment(startDate).format('yyyy-MM-DD');
       this.endDate = moment(endDate).format('yyyy-MM-DD');
-      let dateObj = { startDate: this.startDate, endDate: this.endDate }
 
+      let dateObj = { startDate: this.startDate, endDate: this.endDate }
       this.monthWiseService.onMonthSearch(dateObj)
         .subscribe(res => {
           this.loaderService.dismisLoading();
           this.tableData = [];
-          if (res['monthData'].length) {
-            this.temp = res['monthData'];
-            this.onDate(res['monthData'])
+          if (res['monthAll'].length) {
+            this.temp = res['monthAll'];
+            this.onDate(res['monthAll'])
             this.rerender();
 
             let total = this.temp.reduce(function (sum, current) {
@@ -157,6 +159,19 @@ export class MonthWiseComponent implements OnInit {
       } else {
         this.tableData.push({ date: date, count: 'Holliday' })
       }
+    }
+  }
+
+  getCurrentMonth() {
+    let date = new Date();
+    let curYear = date.getFullYear();
+    let year = this.monthSearch.controls['year'].value;
+    if (curYear == year) {
+      let month = date.getMonth();
+      let remaining = this.Allmonth.slice(0, month + 1);
+      this.monthData = remaining
+    } else {
+      this.monthData = this.Allmonth
     }
   }
 

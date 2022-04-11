@@ -13,7 +13,7 @@
         <div class="col-12 col-sm-4">
           <div class="form-group">
             <label for="year">Year</label>
-            <select class="form-control" id="year" formControlName="year">
+            <select class="form-control" id="year" formControlName="year" (change)="getCurrentMonth()">
               <option *ngFor="let data of years" value="{{data.id}}">{{ data.id }}</option>
             </select>
           </div>
