@@ -1,3 +1,44 @@
-<p>
-  point-redemption works!
-</p>
+<ion-content>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between">
+        <h2>Point Redemption</h2>
+        <button type="button" class="btn btn-primary back-btn" (click)="backClicked()">
+          Back
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="col d-flex justify-content-start mb-4">
+          <button type="button" class="btn btn-primary" routerLink="add-reward">
+            New Reward
+          </button>
+        </div>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Require Point</th>
+              <th>Reward StartDate</th>
+              <th>Reward EndDate</th>
+              <th>Reward AnnouncementDate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of allStudents; let i = index;">
+              <td>{{ data.id }}</td>
+              <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
+              <td>{{ data.score }}</td>
+              <td>{{ data.score }}</td>
+              <td>
+                <button type="button" class="btn btn-primary mr-2" (click)="onEditReward(i)">Edit</button>
+                <button type="button" class="btn btn-primary" (click)="onDeleteReward(i)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ion-content>

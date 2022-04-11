@@ -9,6 +9,7 @@ import { PointManagementComponent } from './point-management/point-management.co
 import { BonusPointComponent } from './point-management/bonus-point/bonus-point.component';
 import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
 import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
+import { AddRewardComponent } from './point-management/point-redemption/add-reward/add-reward.component';
 
 const routes: Route[] = [
   {
@@ -36,7 +37,20 @@ const routes: Route[] = [
       },
       {
         path: 'point-redepmtion',
-        component: PointRedemptionComponent,
+        children: [
+          {
+            path: '',
+            component: PointRedemptionComponent,
+          },
+          {
+            path: 'add-reward',
+            component: AddRewardComponent,
+          },
+          {
+            path: 'edit-reward/:id',
+            component: AddRewardComponent,
+          }
+        ],
       },
       {
         path: 'point-ledger',

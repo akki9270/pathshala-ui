@@ -20,7 +20,8 @@ export class StudentDetailsComponent implements OnInit {
   SUMMARY_REPORTS = {
     ATTENDANCE: 'attandence',
     SUTRA: 'sutra',
-    SUMMARY: 'summary'
+    SUMMARY: 'summary',
+    REWARD: 'reward'
   }
   ngOnInit() {
   }

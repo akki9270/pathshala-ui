@@ -1,0 +1,34 @@
+.thead-color {
+    background-color: #4ff3b269;
+}
+
+.back-btn {
+    height: 38px;
+    padding-top: 5px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #333;
+    border: 1px solid #b7fadf;
+    background: linear-gradient(to bottom, white 0%, #b7fadf 100%);
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: rgb(0, 0, 0);
+    border: 1px solid #57e5ac;
+    background: linear-gradient(to bottom, #c1f1dd 0%, #68dfaf 100%)
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: rgb(0, 0, 0);
+    border: 1px solid #57e5ac;
+    background: linear-gradient(to bottom, #c1f1dd 0%, #68dfaf 100%)
+}
+
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    outline: none;
+    box-shadow: inset 0 0 3px #78f7c4;
+}

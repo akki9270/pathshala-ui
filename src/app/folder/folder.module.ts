@@ -14,6 +14,7 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { AttendanceDetailsComponent } from './student-details/attendance-details/attendance-details.component';
 import { SutraDetailsComponent } from './student-details/sutra-details/sutra-details.component';
 import { SummaryDetailsComponent } from './student-details/summary-details/summary-details.component';
+import { RewardDetailsComponent } from './student-details/reward-details/reward-details.component';
 import { EventsComponent } from './events/events.component';
 import { EventAttendanceComponent } from './events/event-attendance/event-attendance.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -37,6 +38,7 @@ import { ReportsComponent } from './reports/reports.component';
     EventsComponent,
     EventAttendanceComponent,
     ReportsComponent,
+    RewardDetailsComponent
   ],
   providers: [],
 })

@@ -3,15 +3,15 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-between">
         <h2>Bonus Point Management</h2>
-        <button type="button" class="btn btn-primary btn-lg" (click)="backClicked()">
+        <button type="button" class="btn btn-primary back-btn" (click)="backClicked()">
           Back
         </button>
       </div>
     </div>
     <div class="row mt-4">
       <div class="col-12">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color">
-          <thead>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
+          <thead class="thead-color">
             <tr>
               <th>Student ID</th>
               <th>Student Name</th>
@@ -33,13 +33,22 @@
   </div>
   <ng-template #demoModal let-modal>
     <div class="modal-header">
-      <h4 class="modal-title"><strong>{{student.first_name}} {{ student.middle_name }} {{
-          student.last_name }}</strong></h4>
+      <h4 class="modal-title">
+        <strong>{{student.first_name}} {{ student.middle_name }} {{ student.last_name }}
+        </strong>
+      </h4>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
         (click)="modal.dismiss('Cross click')">&times;</button>
     </div>
     <div class="modal-body">
       <form [formGroup]="bonusPoint">
+        <label class="switch">
+          <input type="checkbox" id="togBtn" formControlName="isPointAdded">
+          <div class="slider round">
+            <span class="on">Add</span>
+            <span class="off">Remove</span>
+          </div>
+        </label>
         <div class="form-group">
           <label>Point</label>
           <input type="number" class="form-control" formControlName="point">
