@@ -1,74 +1,62 @@
-<ion-content>
-  <div class="container mt-5">
-    <div class="row">
-      <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 d-flex justify-content-end">
-        <button type="button" class="btn btn-primary back-btn" (click)="backClicked()">
-          Back
-        </button>
-      </div>
-    </div>
-    <div class="row mt-4">
-      <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded">
-        <h3 class="text-center text-inverse">Add Reward</h3>
-        <hr>
-        <form class="container" [formGroup]="addReward">
-          <div class="row">
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" formControlName="name">
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="form-group">
-                <label>Reward Point</label>
-                <input type="text" class="form-control" formControlName="rewardpoint">
-              </div>
-            </div>
+<ion-content [fullscreen]="true">
+  <div class="container-fluid mb-4">
+    <div class="row justify-content-center mt-4 pt-4">
+      <div class="col-md-10 col-lg-6">
+        <div class="card card-outline-secondary">
+          <div class="card-header">
+            <h3 class="mb-0 mt-0">Add Reward</h3>
           </div>
-          <div class="row">
-            <div class="col-md-6 col-sm-12 col-12">
-              <div class="form-group">
-                <label>Image Url</label>
-                <input type="text" class="form-control" formControlName="url">
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="form-group">
-                <label>Description</label>
-                <textarea class="form-control" rows="2" formControlName="description"></textarea>
-              </div>
-            </div>
+          <div class="card-body">
+            <form autocomplete="off" class="form" role="form" [formGroup]="addReward">
+              <fieldset>
+                <label class="mb-0 mt-4" for=" ">Name</label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <input class="form-control" type="text" formControlName="name">
+                  </div>
+                </div>
+                <label class="mb-0 mt-4">Reward Point </label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <input class="form-control" type="number" formControlName="required_point">
+                  </div>
+                </div>
+                <label class="mb-0 mt-4">Image Url</label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <input class="form-control" type="text" formControlName="item_image_url">
+                  </div>
+                </div>
+                <label class="mb-0 mt-4">Description</label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <textarea class="form-control" formControlName="description" rows="3"></textarea>
+                  </div>
+                </div>
+                <label class="mb-0 mt-4">Reward StartDate </label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <input class="form-control" type="date" formControlName="start_date">
+                  </div>
+                </div>
+                <label class="mb-0 mt-4">Reward EndDate </label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <input class="form-control" type="date" formControlName="end_date">
+                  </div>
+                </div>
+                <label class="mb-0 mt-4">Reward AnnouncementDate </label>
+                <div class="row mb-1">
+                  <div class="col-lg-12">
+                    <input class="form-control" type="date" formControlName="announcement_date">
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-lg float-right mt-4 ml-2" (click)="saveReward()">Save</button>
+                <!-- <button class="btn btn-secondary btn-lg float-right mt-4 ml-2" [routerLink]="">Cancle</button> -->
+              </fieldset>
+            </form>
           </div>
-          <div class="row">
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="form-group">
-                <label>Reward StartDate</label>
-                <input type="date" class="form-control" formControlName="startdate">
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="form-group">
-                <label>Reward EndDate</label>
-                <input type="date" class="form-control" formControlName="anddate">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="form-group">
-                <label>Reward AnnouncementDate</label>
-                <input type="date" class="form-control" formControlName="announcementdate">
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-lg-12 col-sm-12 col-12 text-center mb-4">
-              <button class="btn btn-info" type="button" (click)="saveReward()">Submit</button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
