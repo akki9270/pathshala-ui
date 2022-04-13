@@ -20,3 +20,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: transparent;
     background: transparent;
 }
+
+.error {
+    color: red;
+    font-size: 12px;
+    height: 30px;
+    margin-top: 1px;
+    position: absolute;
+}

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Location } from '@angular/common';
-import { BonusPointService } from '../bonus-point/bonus-point.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Router } from '@angular/router';
 import { AddRewardService } from './add-reward/add-reward.service';
-import { data } from 'jquery';
+import * as moment from 'moment';
+import { PointRedemptionService } from './point-redemption.service';
 
 
 @Component({
@@ -20,15 +20,15 @@ export class PointRedemptionComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   allReward = [];
-  addReward: any;
+  moment = moment;
 
   constructor(
     private _location: Location,
-    private bonusPointService: BonusPointService,
     private loaderService: LoaderService,
     public sharedService: SharedService,
     private router: Router,
-    private addRewardService: AddRewardService
+    private addRewardService: AddRewardService,
+    private pointRedemptionService: PointRedemptionService
   ) { }
 
   ngOnInit() {
@@ -37,22 +37,18 @@ export class PointRedemptionComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    let reward = { startDate: '2021-08-24', endDate: '2021-09-27' }
-    this.fatchAllReward(reward);
-    //   this.addRewardService.getReward()
-    //     .subscribe(res => {
-    //       this.loaderService.dismisLoading();
-    //       this.allReward = res['data'];
-    //       console.log('list rewoerd::', this.allReward)
-    //       this.dtTrigger.next();
-    //     })
+
+    // let reward = { startDate: '2021-08-24', endDate: '2021-09-27' }
+    let reward = { startDate: '2022-04-12', endDate: '2022-04-12' }
+    this.getAllReward(reward);
+
   }
-  fatchAllReward(data) {
-    this.addRewardService.getReward(data)
+  getAllReward(data) {
+    this.pointRedemptionService.getReward(data)
       .subscribe(res => {
-        console.log('list reward :', res)
         this.loaderService.dismisLoading();
         this.allReward = res['data'];
+        console.log('fatch', this.allReward)
         this.dtTrigger.next();
       })
   }
@@ -60,16 +56,21 @@ export class PointRedemptionComponent implements OnInit {
   onEditReward(index: any) {
     this.sharedService.setStudent(this.allReward[index]);
     this.router.navigateByUrl("/point/point-redepmtion/edit-reward/" + index);
-    // this.router.navigate(['/point/point-redepmtion/edit-reward']);
+
   }
 
   onDeleteReward(index: any) {
     this.allReward.splice(index, 1);
   }
 
-  backClicked() {
-    this._location.back();
+  iconDisabled(date) {
+    return moment(moment(date)).isBefore(moment());
   }
+
+  goBack() {
+    this.router.navigate(['/point'])
+  }
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }

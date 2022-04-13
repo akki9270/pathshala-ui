@@ -3,6 +3,19 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+interface GetReward {
+  data: {
+    id: string
+    name: string
+    required_point: string
+    item_image_url: string
+    description: string
+    start_date: string
+    end_date: string
+    announcement_date: string
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +25,6 @@ export class AddRewardService {
   private env = environment;
   private URL = this.env.server_url;
 
-  getReward(params) {
-    return this.http.get(this.URL + '/getAllReward', { params })
-      .pipe(
-        tap(() => console.log('getAllReward'))
-      )
-  }
 
   createReward(Reward) {
     return this.http.post(this.URL + '/createReward', Reward)
@@ -25,4 +32,11 @@ export class AddRewardService {
         tap(() => console.log('createReward'))
       )
   }
+
+  //   getReward(rewardId) {
+  //     return this.http.get<GetReward>(this.URL + '/getRewardById/' + rewardId)
+  //       .pipe(
+  //         tap((res) => console.log('getReward'))
+  //       )
+  //   }
 }

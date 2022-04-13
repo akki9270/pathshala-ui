@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-between align-items-center">
         <h2 class="mb-0 mt-0">Point Redemption</h2>
-        <button type="button" class="btn btn-outline-info" (click)="backClicked()">
+        <button type="button" class="btn btn-outline-info" (click)="goBack()">
           Back
         </button>
       </div>
@@ -22,20 +22,28 @@
               <th>Require Point</th>
               <th>Reward StartDate</th>
               <th>Reward EndDate</th>
-              <th>Reward AnnouncementDate</th>
+              <th>AnnouncementDate</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of allReward; let i = index;">
               <td>{{ data.name }}</td>
               <td>{{ data.required_point }}</td>
-              <td>{{ data.start_date }}</td>
-              <td>{{ data.end_date }}</td>
-              <td>{{ data.announcement_date }}</td>
-              <td>
+              <td>{{ moment(data.start_date).format('ll') }}</td>
+              <td>{{ moment(data.end_date).format('ll') }}</td>
+              <td>{{ moment(data.announcement_date).format('ll') }}</td>
+              <td (click)="onEditReward(i)" [class.icon-disabled]="iconDisabled(data.start_date)">
+                <i class=" icons icon-pencil text-primary"></i>
+              </td>
+              <td (click)="onDeleteReward(i)" [class.icon-disabled]="iconDisabled(data.start_date)">
+                <i class=" icons icon-bin text-danger ml-3"></i>
+              </td>
+              <!-- <td>
                 <button type="button" class="btn btn-primary mr-2" (click)="onEditReward(i)">Edit</button>
                 <button type="button" class="btn btn-primary" (click)="onDeleteReward(i)">Delete</button>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
