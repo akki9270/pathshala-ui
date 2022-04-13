@@ -128,9 +128,9 @@ export class MonthWiseComponent implements OnInit {
         .subscribe(res => {
           this.loaderService.dismisLoading();
           this.tableData = [];
-          if (res['monthAll'].length) {
-            this.temp = res['monthAll'];
-            this.onDate(res['monthAll'])
+          if (res['monthData'].length) {
+            this.temp = res['monthData'];
+            this.onDate(res['monthData'])
             this.rerender();
 
             let total = this.temp.reduce(function (sum, current) {
