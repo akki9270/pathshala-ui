@@ -7,15 +7,15 @@ import { SharedService } from 'src/app/services/shared.service';
 import { Router } from '@angular/router';
 import { AddRewardService } from './add-reward/add-reward.service';
 import * as moment from 'moment';
-import { PointRedemptionService } from './point-redemption.service';
+import { RewardsService } from './rewards.service';
 
 
 @Component({
-  selector: 'app-point-redemption',
-  templateUrl: './point-redemption.component.html',
-  styleUrls: ['./point-redemption.component.scss'],
+  selector: 'app-rewards',
+  templateUrl: './rewards.component.html',
+  styleUrls: ['./rewards.component.scss'],
 })
-export class PointRedemptionComponent implements OnInit {
+export class RewardsComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -27,8 +27,7 @@ export class PointRedemptionComponent implements OnInit {
     private loaderService: LoaderService,
     public sharedService: SharedService,
     private router: Router,
-    private addRewardService: AddRewardService,
-    private pointRedemptionService: PointRedemptionService
+    private rewardsService: RewardsService
   ) { }
 
   ngOnInit() {
@@ -44,7 +43,7 @@ export class PointRedemptionComponent implements OnInit {
 
   }
   getAllReward(data) {
-    this.pointRedemptionService.getReward(data)
+    this.rewardsService.getReward(data)
       .subscribe(res => {
         this.loaderService.dismisLoading();
         this.allReward = res['data'];
@@ -55,7 +54,7 @@ export class PointRedemptionComponent implements OnInit {
 
   onEditReward(index: any) {
     this.sharedService.setStudent(this.allReward[index]);
-    this.router.navigateByUrl("/point/point-redepmtion/edit-reward/" + index);
+    this.router.navigateByUrl("/point/rewards/edit-reward/" + index);
 
   }
 

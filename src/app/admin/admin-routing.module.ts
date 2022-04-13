@@ -7,9 +7,9 @@ import { EventsComponent } from './events/events.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { PointManagementComponent } from './point-management/point-management.component';
 import { BonusPointComponent } from './point-management/bonus-point/bonus-point.component';
-import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
+import { RewardsComponent } from './point-management/rewards/rewards.component';
 import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
-import { AddRewardComponent } from './point-management/point-redemption/add-reward/add-reward.component';
+import { AddRewardComponent } from './point-management/rewards/add-reward/add-reward.component';
 
 const routes: Route[] = [
   {
@@ -36,11 +36,11 @@ const routes: Route[] = [
         component: BonusPointComponent,
       },
       {
-        path: 'point-redepmtion',
+        path: 'rewards',
         children: [
           {
             path: '',
-            component: PointRedemptionComponent,
+            component: RewardsComponent,
           },
           {
             path: 'add-reward',

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PointRedemptionComponent } from './point-redemption.component';
+import { RewardsComponent } from './rewards.component';
 
-describe('PointRedemptionComponent', () => {
-  let component: PointRedemptionComponent;
-  let fixture: ComponentFixture<PointRedemptionComponent>;
+describe('rewards', () => {
+  let component: RewardsComponent;
+  let fixture: ComponentFixture<RewardsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PointRedemptionComponent ],
+      declarations: [RewardsComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PointRedemptionComponent);
+    fixture = TestBed.createComponent(RewardsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

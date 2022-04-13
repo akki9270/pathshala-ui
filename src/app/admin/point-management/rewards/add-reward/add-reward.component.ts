@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { formatDate, Location } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +22,6 @@ export class AddRewardComponent implements OnInit {
   minDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
 
   constructor(
-    private _location: Location,
     public sharedService: SharedService,
     private router: Router,
     private addRewardService: AddRewardService,
@@ -64,7 +63,7 @@ export class AddRewardComponent implements OnInit {
           this.addReward.reset();
         })
 
-      this.router.navigateByUrl("/point/point-redepmtion");
+      this.router.navigateByUrl("/point/rewards");
     }
   }
 }

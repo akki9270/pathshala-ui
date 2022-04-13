@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class PointRedemptionService {
+export class RewardsService {
 
   private env = environment;
   private URL = this.env.server_url;
