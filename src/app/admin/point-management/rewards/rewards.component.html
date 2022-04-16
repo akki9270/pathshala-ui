@@ -34,16 +34,12 @@
               <td>{{ moment(data.start_date).format('ll') }}</td>
               <td>{{ moment(data.end_date).format('ll') }}</td>
               <td>{{ moment(data.announcement_date).format('ll') }}</td>
-              <td (click)="onEditReward(i)" [class.icon-disabled]="iconDisabled(data.start_date)">
+              <td (click)="onEditReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
                 <i class=" icons icon-pencil text-primary"></i>
               </td>
-              <td (click)="onDeleteReward(i)" [class.icon-disabled]="iconDisabled(data.start_date)">
+              <td (click)="onDeleteReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
                 <i class=" icons icon-bin text-danger ml-3"></i>
               </td>
-              <!-- <td>
-                <button type="button" class="btn btn-primary mr-2" (click)="onEditReward(i)">Edit</button>
-                <button type="button" class="btn btn-primary" (click)="onDeleteReward(i)">Delete</button>
-              </td> -->
             </tr>
           </tbody>
         </table>

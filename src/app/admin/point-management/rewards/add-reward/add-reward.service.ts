@@ -33,10 +33,17 @@ export class AddRewardService {
       )
   }
 
-  //   getReward(rewardId) {
-  //     return this.http.get<GetReward>(this.URL + '/getRewardById/' + rewardId)
-  //       .pipe(
-  //         tap((res) => console.log('getReward'))
-  //       )
-  //   }
+  getReward(rewardId) {
+    return this.http.get<GetReward>(this.URL + '/getRewardById/' + rewardId)
+      .pipe(
+        tap((res) => console.log('getReward'))
+      )
+  }
+  updateReward(reward) {
+    return this.http.post(this.URL + '/updateReward/' + reward.id, reward)
+      .pipe(
+        tap((res) => console.log('updateReward'))
+      )
+  }
+
 }

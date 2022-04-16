@@ -25,15 +25,19 @@ export class AddRewardComponent implements OnInit {
     public sharedService: SharedService,
     private router: Router,
     private addRewardService: AddRewardService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.activeRoute.paramMap.subscribe((params) => {
       this.rewardId = params.get("id");
     });
+    if (this.rewardId) {
+      this.fetchReward(this.rewardId)
+    }
 
     this.addReward = new FormGroup({
+      id: new FormControl(),
       name: new FormControl(null, Validators.required),
       required_point: new FormControl(null, Validators.required),
       item_image_url: new FormControl(null, Validators.required),
@@ -42,28 +46,44 @@ export class AddRewardComponent implements OnInit {
       end_date: new FormControl(null, Validators.required),
       announcement_date: new FormControl(null, Validators.required),
     });
-    this.sharedService.getStudent.subscribe((data: any) => {
-      this.addReward.controls['name'].patchValue(data.name)
-      this.addReward.controls['required_point'].patchValue(data.required_point)
-      this.addReward.controls['item_image_url'].patchValue(data.item_image_url)
-      this.addReward.controls['description'].patchValue(data.description)
-      this.addReward.controls['start_date'].patchValue(data.start_date)
-      this.addReward.controls['end_date'].patchValue(data.end_date)
-      this.addReward.controls['announcement_date'].patchValue(data.announcement_date)
-    })
   }
 
   saveReward() {
     this.submitted = true;
     if (this.addReward.valid) {
-      this.addRewardService.createReward(this.addReward.value)
-        .subscribe(res => {
-          this.allReward = res['data'];
-          this.submitted = false;
-          this.addReward.reset();
-        })
-
-      this.router.navigateByUrl("/point/rewards");
+      if (this.rewardId) {
+        this.addRewardService.updateReward(this.addReward.value)
+          .subscribe(res => {
+            this.allReward = res['data'];
+            this.submitted = false;
+            this.addReward.reset();
+            this.router.navigateByUrl("/point/rewards");
+          })
+      } else {
+        this.addRewardService.createReward(this.addReward.value)
+          .subscribe(res => {
+            this.allReward = res['data'];
+            this.submitted = false;
+            this.addReward.reset();
+            this.router.navigateByUrl("/point/rewards");
+          })
+      }
     }
+  }
+  fetchReward(rewardId) {
+    this.addRewardService.getReward(rewardId)
+      .subscribe(res => {
+        let reward = {
+          id: res.data.id,
+          name: res.data.name,
+          required_point: res.data.required_point,
+          description: res.data.description,
+          item_image_url: res.data.item_image_url,
+          start_date: formatDate(res.data.start_date, 'yyyy-MM-dd', 'en'),
+          end_date: formatDate(res.data.end_date, 'yyyy-MM-dd', 'en'),
+          announcement_date: formatDate(res.data.announcement_date, 'yyyy-MM-dd', 'en')
+        }
+        this.addReward.patchValue(reward)
+      })
   }
 }
