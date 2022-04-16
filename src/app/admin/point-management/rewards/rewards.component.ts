@@ -58,11 +58,11 @@ export class RewardsComponent implements OnInit {
         } else {
           this.dtTrigger.next();
         }
+        this.isEdit = true;
       })
   }
 
   onEditReward(index: any,) {
-    this.isEdit = true;
     this.router.navigateByUrl("/point/rewards/edit-reward/" + index);
   }
 
@@ -70,7 +70,6 @@ export class RewardsComponent implements OnInit {
     this.rewardsService.deleteReward(id)
       .subscribe(res => {
         this.getAllReward(this.reward);
-        this.isEdit = true;
       })
   }
 
