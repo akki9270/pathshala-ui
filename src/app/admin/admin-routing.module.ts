@@ -10,6 +10,7 @@ import { BonusPointComponent } from './point-management/bonus-point/bonus-point.
 import { RewardsComponent } from './point-management/rewards/rewards.component';
 import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
 import { AddRewardComponent } from './point-management/rewards/add-reward/add-reward.component';
+import { BookedRewardsComponent } from './point-management/booked-rewards/booked-rewards.component';
 
 const routes: Route[] = [
   {
@@ -51,6 +52,10 @@ const routes: Route[] = [
             component: AddRewardComponent,
           }
         ],
+      },
+      {
+        path: 'booked-point',
+        component: BookedRewardsComponent,
       },
       {
         path: 'point-ledger',

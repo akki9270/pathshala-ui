@@ -42,13 +42,16 @@
     </div>
     <div class="modal-body">
       <form [formGroup]="bonusPoint">
-        <label class="switch">
-          <input type="checkbox" id="togBtn" formControlName="isPointAdded">
-          <div class="slider round">
-            <span class="on">Add</span>
-            <span class="off">Remove</span>
-          </div>
-        </label>
+        <div class="form-group">
+          <label>Reward Point</label>
+          <label class="switch">
+            <input type="checkbox" id="togBtn" formControlName="isPointAdded">
+            <div class="slider round point-button">
+              <span class="on">Add</span>
+              <span class="off">Remove</span>
+            </div>
+          </label>
+        </div>
         <div class="form-group">
           <label>Point</label>
           <input type="number" class="form-control" formControlName="point">
@@ -60,7 +63,8 @@
           <label>Description</label>
           <textarea class="form-control" rows="3" formControlName="description"></textarea>
           <span *ngIf="submited && bonusPoint.get('description').errors?.['required']"
-            class="help-block error">Description is
+            class="help-block error">Description
+            is
             required!
           </span>
         </div>
@@ -71,7 +75,7 @@
         Close
       </button>
       <button type="button" class="btn btn-outline-dark" (click)="savePoint()">
-        Add Point
+        Submit
       </button>
     </div>
   </ng-template>

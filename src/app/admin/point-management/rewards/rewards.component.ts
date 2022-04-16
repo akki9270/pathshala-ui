@@ -39,7 +39,8 @@ export class RewardsComponent implements OnInit {
     this.loaderService.presentLoading();
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10
+      pageLength: 10,
+      columnDefs: [{ targets: 5, orderable: false }, { targets: 6, orderable: false }]
     };
 
     this.isEdit = false;

@@ -9,6 +9,10 @@
     margin-top: 10px;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 ::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     color: #333;

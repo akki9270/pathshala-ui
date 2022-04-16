@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PointLedgerService } from './point-ledger.service';
 
 @Component({
   selector: 'app-point-ledger',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PointLedgerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private pointLedgerService: PointLedgerService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

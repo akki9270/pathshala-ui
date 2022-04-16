@@ -20,9 +20,9 @@
             <tr>
               <th>Name</th>
               <th>Require Point</th>
-              <th>Reward StartDate</th>
-              <th>Reward EndDate</th>
-              <th>AnnouncementDate</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Announcement Date</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -35,10 +35,10 @@
               <td>{{ moment(data.end_date).format('ll') }}</td>
               <td>{{ moment(data.announcement_date).format('ll') }}</td>
               <td (click)="onEditReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
-                <i class=" icons icon-pencil text-primary"></i>
+                <i class="icons icon-pencil text-primary pointer"></i>
               </td>
               <td (click)="onDeleteReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
-                <i class=" icons icon-bin text-danger ml-3"></i>
+                <i class="icons icon-bin text-danger ml-3 pointer"></i>
               </td>
             </tr>
           </tbody>

@@ -29,11 +29,15 @@ export class AddRewardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.activeRoute.paramMap.subscribe((params) => {
       this.rewardId = params.get("id");
     });
     if (this.rewardId) {
-      this.fetchReward(this.rewardId)
+      this.editBtn = true;
+      this.fetchReward(this.rewardId);
+    } else {
+      this.editBtn = false;
     }
 
     this.addReward = new FormGroup({
