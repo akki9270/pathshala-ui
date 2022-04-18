@@ -21,6 +21,7 @@ import { DateWiseComponent } from '../folder/reports/date-wise/date-wise.compone
 import { RewardsComponent } from './point-management/rewards/rewards.component';
 import { AddRewardComponent } from './point-management/rewards/add-reward/add-reward.component';
 import { PointManagementComponent } from './point-management/point-management.component';
+import { BookedRewardsComponent } from './point-management/booked-rewards/booked-rewards.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { PointManagementComponent } from './point-management/point-management.co
         DateWiseComponent,
         RewardsComponent,
         AddRewardComponent,
-        PointManagementComponent
+        PointManagementComponent,
+        BookedRewardsComponent
     ],
     imports: [
         BrowserModule,

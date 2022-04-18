@@ -20,6 +20,7 @@ export class AddRewardComponent implements OnInit {
   editBtn: Boolean;
   tommorow: Date = moment().toDate();
   minDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
+  minEndDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
 
   constructor(
     public sharedService: SharedService,
@@ -50,6 +51,10 @@ export class AddRewardComponent implements OnInit {
       end_date: new FormControl(null, Validators.required),
       announcement_date: new FormControl(null, Validators.required),
     });
+
+    this.addReward.get('start_date').valueChanges.subscribe(value => {
+      this.minEndDate = formatDate(value, 'yyyy-MM-dd', 'en');
+    })
   }
 
   saveReward() {

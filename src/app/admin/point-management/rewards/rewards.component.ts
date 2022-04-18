@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RewardsService } from './rewards.service';
 import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
+import { AlertController } from '@ionic/angular';
 
 
 
@@ -24,7 +25,7 @@ export class RewardsComponent implements OnInit {
   allReward;
   moment = moment;
   isEdit = false;
-  reward = { startDate: '2021-12-26', endDate: '2022-04-16' }
+  reward = { startDate: '2022-04-10', endDate: '2022-04-30' }
   subParams: Subscription;
 
   constructor(
@@ -33,6 +34,7 @@ export class RewardsComponent implements OnInit {
     private router: Router,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -67,11 +69,34 @@ export class RewardsComponent implements OnInit {
     this.router.navigateByUrl("/point/rewards/edit-reward/" + index);
   }
 
-  onDeleteReward(id: any) {
-    this.rewardsService.deleteReward(id)
-      .subscribe(res => {
-        this.getAllReward(this.reward);
-      })
+  async onDelete(reward) {
+    let control = await this.alertController.create({
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          console.log(' id ', reward.id);
+          this.deleteReward(reward.id);
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => { }
+      }],
+      message: 'Are you sure you want to delete ' + reward.name + ' ?',
+    });
+    control.present();
+  }
+  deleteReward(id) {
+    this.rewardsService.deleteReward(id).subscribe(async () => {
+      let alert = await this.alertController.create({
+        message: 'Reward deleted successfully',
+        buttons: ['OK']
+      });
+      alert.present();
+      this.isEdit = true;
+      this.getAllReward(this.reward);
+    });
   }
 
   iconDisabled(date) {

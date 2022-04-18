@@ -10,12 +10,13 @@
     </div>
     <div class="row mt-4">
       <div class="col-12">
-        <div class="col d-flex justify-content-end mb-4">
+        <div class="col d-flex justify-content-end mb-4 reward-button">
           <button type="button" class="btn btn-primary" routerLink="add-reward">
             New Reward
           </button>
         </div>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color mobile-table"
+          [width]="['100%']">
           <thead>
             <tr>
               <th>Name</th>
@@ -37,7 +38,7 @@
               <td (click)="onEditReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
                 <i class="icons icon-pencil text-primary pointer"></i>
               </td>
-              <td (click)="onDeleteReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
+              <td (click)="onDelete(data)" [class.icon-disabled]="iconDisabled(data.start_date)">
                 <i class="icons icon-bin text-danger ml-3 pointer"></i>
               </td>
             </tr>
