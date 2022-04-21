@@ -43,7 +43,7 @@ export class StudentWiseComponent implements OnInit {
     const modal = await this.modalController.create({
       component: StudentDetailsComponent,
       cssClass: 'modal-fullscreen',
-      componentProps: { studentId: data.id }
+      componentProps: { studentId: data.id, studentPoint: data.score }
     });
     await modal.present();
   }
