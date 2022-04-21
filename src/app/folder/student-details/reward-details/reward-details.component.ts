@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import { SharedService } from 'src/app/services/shared.service';
+import { RewardDetailsService } from './reward-details.service';
 
 @Component({
   selector: 'app-reward-details',
@@ -7,8 +11,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RewardDetailsComponent implements OnInit {
 
-  constructor() { }
+  rewads: FormGroup;
+  moment = moment;
+  allRewards = [];
+  reward = { startDate: '2021-09-28', endDate: '2022-04-30' }
+  data = {
+    user_id: null,
+    reward_id: null
+  }
 
-  ngOnInit() { }
+  constructor(
+    private rewardDetailsService: RewardDetailsService,
+    public sharedService: SharedService
+  ) { }
+  @Input() studentId;
+  @Input() studentPoint;
 
+  ngOnInit() {
+    this.allReward();
+    this.data.user_id = this.studentId
+  }
+
+  allReward() {
+    this.rewardDetailsService.getAllReward(this.reward)
+      .subscribe(res => {
+        this.allRewards = res['data'];
+      })
+  }
+
+  bookReward(id, point, name) {
+    this.data.reward_id = id
+
+    this.rewardDetailsService.bookReward(this.data)
+      .subscribe(res => {
+        this.removePoint(point, name)
+      })
+  }
+
+  removePoint(point, name) {
+    let obj = {
+      description: 'Book Reward: ' + name,
+      isPointAdded: false,
+      point: point,
+      user_id: this.data.user_id
+    }
+    this.rewardDetailsService.removePoint(obj)
+      .subscribe(res => {
+      })
+  }
 }

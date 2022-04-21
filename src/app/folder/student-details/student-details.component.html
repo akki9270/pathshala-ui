@@ -34,7 +34,8 @@
         [selectedYear]="selectedYear"></app-sutra-details>
       <app-summary-details *ngIf="selectedReport == SUMMARY_REPORTS.SUMMARY" [studentId]="studentId"
         [selectedYear]="selectedYear"></app-summary-details>
-      <app-reward-details *ngIf="selectedReport == SUMMARY_REPORTS.REWARD">
+      <app-reward-details *ngIf="selectedReport == SUMMARY_REPORTS.REWARD" [studentId]="studentId"
+        [studentPoint]="studentPoint">
       </app-reward-details>
     </ng-container>
   </ng-container>
