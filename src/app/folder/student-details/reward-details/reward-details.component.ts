@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { SharedService } from 'src/app/services/shared.service';
 import { RewardDetailsService } from './reward-details.service';
@@ -11,7 +10,6 @@ import { RewardDetailsService } from './reward-details.service';
 })
 export class RewardDetailsComponent implements OnInit {
 
-  rewads: FormGroup;
   moment = moment;
   allRewards = [];
   reward = { startDate: '2021-09-28', endDate: '2022-04-30' }

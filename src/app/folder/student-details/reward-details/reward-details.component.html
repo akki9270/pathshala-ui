@@ -1,16 +1,15 @@
 <ion-content>
-
   <div class="container">
     <div class="row">
-      <div class="col-12 point">
-        <p>Available Point: {{ studentPoint }} </p>
+      <div class="col-12 available-point">
+        <p>Your available point: {{ studentPoint }} </p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 mb-3" *ngFor="let data of allRewards">
         <div class="card h-100">
           <a href="#"><img src="https://picsum.photos/700/550" class="card-img-top" alt="Product"></a>
-          <div class="card-body px-2 pb-2 pt-1">
+          <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
                 <p class="h4 text-primary">Required Point: {{data.required_point}}</p>

@@ -30,7 +30,8 @@ export class StudentWiseComponent implements OnInit {
     this.loaderService.presentLoading();
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10
+      pageLength: 10,
+      columnDefs: [{ targets: 3, orderable: false }]
     };
     this.studentWiseService.studentSearch()
       .subscribe(res => {

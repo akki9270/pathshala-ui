@@ -14,6 +14,7 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./bonus-point.component.scss'],
 })
 export class BonusPointComponent implements OnInit {
+
   @ViewChild(DataTableDirective, { static: false }) datatableElement: DataTableDirective;
   dtElement: DataTableDirective;
 
@@ -61,7 +62,6 @@ export class BonusPointComponent implements OnInit {
         } else {
           this.dtTrigger.next();
         }
-
       })
   }
   savePoint() {

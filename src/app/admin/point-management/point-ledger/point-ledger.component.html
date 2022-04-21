@@ -16,7 +16,7 @@
                             <div class="form-group">
                                 <label for="sutra">Student ID</label>
                                 <input class="form-control" type="taxt" formControlName="id" />
-                                <!-- <span *ngIf="submited && dateSearch.get('date').errors?.['required']"
+                                <!-- <span *ngIf="submited && studentSearch.get('id').errors?.['required']"
                                     class="help-block error">ID is
                                     required!
                                 </span> -->
@@ -25,15 +25,13 @@
                         <div class="col-6 col-sm-6">
                             <div class="form-group">
                                 <label class="d-inline-block invisible">Points</label>
-                                <button type="button" class="btn btn-outline-info custom-btn"
-                                    (click)="onDateSearch()">Search</button>
+                                <button type="button" class="btn btn-outline-info custom-btn">Search</button>
                             </div>
                         </div>
                     </div>
                 </form>
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
                     <thead class="thead-color">
-                        <tr>
                         <tr>
                             <th>Student ID</th>
                             <th>Student Name</th>
@@ -46,8 +44,9 @@
                             <td>{{ data.id }}</td>
                             <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
                             <td>{{ data.score }}</td>
-                            <td><button type="button" class="btn btn-primary"
-                                    (click)="studentDetails(data)">View</button></td>
+                            <td><button type="button" class="btn btn-primary" (click)="studentDetails(data)">View
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
