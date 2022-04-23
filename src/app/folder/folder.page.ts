@@ -157,8 +157,10 @@ export class FolderPage implements OnInit {
   barcodeScan() {
     this.isScannig = true;
     this.barcodeScanner.scan().then(data => {
-      console.log(' barcode ', data);
+      data.text = data.text.replace('http://', '');
       if (data && data.text) {
+        let id = data.text;
+        
         this.getUserData(data.text);
       } else if (data.cancelled) {
 

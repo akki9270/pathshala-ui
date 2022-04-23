@@ -1,3 +1,9 @@
+
+$media-desktop: "only screen and (max-width : 1024px)";
+$media-tablet: "only screen and (max-width : 768px)";
+$media-mobile: "only screen and (max-width : 600px)";
+$media-mobile-sm: "only screen and (max-width : 480px)";
+
 ion-content {
     --background: white;
     --color: #434343;
@@ -12,6 +18,16 @@ ion-content {
             width: 20vh;
             font-size: x-large;
             margin: 15px;
+        }
+    }
+}
+
+@media #{$media-mobile-sm} {
+    ion-content {
+        ion-button {
+            &.action-btn {
+                font-size: 14px;
+            }
         }
     }
 }
