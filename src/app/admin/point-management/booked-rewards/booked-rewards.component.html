@@ -17,6 +17,7 @@
               <th>Booked ID</th>
               <th>User Name</th>
               <th>Reward Name</th>
+              <th>Redeem</th>
             </tr>
           </thead>
           <tbody>
@@ -24,6 +25,7 @@
               <td>{{ data.id }}</td>
               <td>{{ data.Student ? data.Student.display_name : '-' }} </td>
               <td>{{ data.Reward ? data.Reward.name : '-' }}</td>
+              <td>{{ data.isRedeem === 1 ? 'Yes' : 'No' }}</td>
             </tr>
           </tbody>
         </table>
