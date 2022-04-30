@@ -12,6 +12,20 @@ export class RewardDetailsService {
   private env = environment;
   private URL = this.env.server_url;
 
+  fetchBookedReward(id) {
+    return this.http.get(this.URL + '/getBookedReward/' + id)
+      .pipe(
+        tap(() => console.log('getBookedReward'))
+      );
+  }
+
+  onRedeem(id) {
+    return this.http.get(this.URL + '/redeemReward/' + id)
+      .pipe(
+        tap(() => console.log('redeemReward'))
+      );
+  }
+
   getAllReward(params) {
     return this.http.get(this.URL + '/getAllReward', { params })
       .pipe(

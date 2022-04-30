@@ -18,4 +18,11 @@ export class PointLedgerService {
         tap(() => console.log('getAllPoint'))
       )
   }
+
+  getUserPointHistory(id, params) {
+    return this.http.get(this.URL + '/getUserPointHistory/' + id, params)
+      .pipe(
+        tap(() => console.log('getUserPointHistory'))
+      )
+  }
 }

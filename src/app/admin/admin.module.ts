@@ -23,6 +23,8 @@ import { AddRewardComponent } from './point-management/rewards/add-reward/add-re
 import { PointManagementComponent } from './point-management/point-management.component';
 import { BookedRewardsComponent } from './point-management/booked-rewards/booked-rewards.component';
 import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
+import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
+PointRedemptionComponent
 
 @NgModule({
     declarations: [
@@ -41,7 +43,8 @@ import { PointLedgerComponent } from './point-management/point-ledger/point-ledg
         AddRewardComponent,
         PointManagementComponent,
         BookedRewardsComponent,
-        PointLedgerComponent
+        PointLedgerComponent,
+        PointRedemptionComponent
     ],
     imports: [
         BrowserModule,

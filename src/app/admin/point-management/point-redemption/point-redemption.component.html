@@ -15,18 +15,22 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
-                <p class="h4 text-primary">Required Point: 200</p>
+                <p class="h4 text-primary">Required Point: {{studentObj ? studentObj.data[0].Reward.required_point : ''}}</p>
               </div>
             </div>
             <div>
-              <label><strong>Name:</strong> TestName</label>
+              <label><strong>Name:</strong> {{studentObj ? studentObj.data[0].Student.display_name : ''}}</label>
             </div>
             <div>
-              <label><strong>Reward Name: </strong>TestName</label>
+              <label><strong>Reward Name: </strong>{{studentObj ? studentObj.data[0].Reward.name : ''}}</label>
             </div>
             <div class="d-flex justify-content-between">
               <div class="col px-0 mt-2">
-                <button class="btn btn-outline-primary btn-block">
+                <button class="btn btn-outline-primary btn-block" 
+                (click)="onRedeem(studentObj ? studentObj.data[0].id : '')"
+                [disabled]="studentObj ? studentObj.data[0].isRedeem === 1 : '' "
+                [ngStyle]="{'opacity': studentObj ? studentObj.data[0].isRedeem === 1 ? '0.3':'' : ''}"
+                >
                   Redeem
                 </button>
               </div>

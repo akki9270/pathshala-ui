@@ -17,6 +17,8 @@ export class RewardDetailsComponent implements OnInit {
     user_id: null,
     reward_id: null
   }
+  studentObj;
+  rewardId;
 
   constructor(
     private rewardDetailsService: RewardDetailsService,
@@ -27,7 +29,16 @@ export class RewardDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.allReward();
-    this.data.user_id = this.studentId
+    this.data.user_id = this.studentId;
+    this.fetchBookedReward(this.studentId);
+  }
+
+  fetchBookedReward(id) {
+    this.rewardDetailsService.fetchBookedReward(id)
+      .subscribe(res => {
+        this.studentObj = res;
+        this.rewardId = this.studentObj.data[0].reward_id || null
+      });
   }
 
   allReward() {
@@ -43,6 +54,7 @@ export class RewardDetailsComponent implements OnInit {
     this.rewardDetailsService.bookReward(this.data)
       .subscribe(res => {
         this.removePoint(point, name)
+        this.fetchBookedReward(this.studentId);
       })
   }
 

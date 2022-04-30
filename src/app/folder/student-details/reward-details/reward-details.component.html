@@ -26,15 +26,20 @@
               </div>
             </div>
             <strong>
-              <span class="massage-denger" *ngIf="studentPoint < data.required_point">Opps!, You missed by
-                {{data.required_point -
-                studentPoint}} points.</span>
-              <span class="massage" *ngIf="studentPoint > data.required_point">You are eligible for this reward</span>
+              <span class="massage-denger" *ngIf="rewardId === data.id; else loggedOut">You have already booked.</span>
+              <ng-template #loggedOut>
+                <span class="massage-denger" *ngIf="studentPoint < data.required_point">Opps!, You missed by
+                  {{data.required_point -
+                  studentPoint}} points.</span>
+                <span class="massage" *ngIf="studentPoint > data.required_point">You are eligible for this reward</span>
+              </ng-template>
             </strong>
             <div class="d-flex justify-content-between">
               <div class="col px-0 mt-2">
                 <button class="btn btn-outline-primary btn-block"
                   [disabled]="studentPoint < data.required_point ? true : false"
+                  [disabled]="rewardId"
+                  [ngStyle]="{'opacity': rewardId ? '0.3':''}"
                   [ngStyle]="{'opacity': studentPoint < data.required_point ? '0.3':''}"
                   (click)="bookReward(data.id,data.required_point,data.name)">
                   Book Reward

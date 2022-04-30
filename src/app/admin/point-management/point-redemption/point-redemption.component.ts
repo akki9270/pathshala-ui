@@ -4,6 +4,7 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { UserService } from 'src/app/services/user.service';
 import { Platform } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
+import { RewardDetailsService } from 'src/app/folder/student-details/reward-details/reward-details.service';
 
 @Component({
   selector: 'app-point-redemption',
@@ -14,6 +15,8 @@ export class PointRedemptionComponent implements OnInit {
 
   isScannig = true;
   studentData: any = {};
+  studentObj;
+  loginUser;
   @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
 
   constructor(
@@ -21,10 +24,26 @@ export class PointRedemptionComponent implements OnInit {
     public barcodeScanner: BarcodeScanner,
     private userService: UserService,
     public platform: Platform,
+    private rewardDetailsService: RewardDetailsService,
   ) { }
 
   ngOnInit() {
-    this.initPage()
+    this.initPage();
+  }
+
+  fetchBookedReward(id) {
+    this.rewardDetailsService.fetchBookedReward(id)
+      .subscribe(res => {
+        this.studentObj = res;
+      });
+  }
+
+  onRedeem (id) {
+    this.rewardDetailsService.onRedeem(id)
+      .subscribe(res => {
+        this.studentObj = res;
+        this.fetchBookedReward(this.loginUser.id)
+      });
   }
 
   initPage() {
@@ -34,7 +53,7 @@ export class PointRedemptionComponent implements OnInit {
         this.barcodeScan();
       } else {
         // this.webScanner();
-        this.getUserData(8);
+        this.getUserData(7);
       }
       //   if (this.mobileAndTabletCheck()) {
       //   } else {
@@ -64,7 +83,8 @@ export class PointRedemptionComponent implements OnInit {
       (response) => {
         this.studentData = {};
         if (response && response['data'] && response['data'].length) {
-          console.log('data :: ', response['data'])
+          this.loginUser = response['data'][0]
+          this.fetchBookedReward(this.loginUser.id);
         } else {
         }
       },
