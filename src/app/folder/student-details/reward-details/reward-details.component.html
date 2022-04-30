@@ -8,7 +8,8 @@
     <div class="row">
       <div class="col-md-4 mb-3" *ngFor="let data of allRewards">
         <div class="card h-100">
-          <a href="#"><img src="https://picsum.photos/700/550" class="card-img-top" alt="Product"></a>
+          <a href="#"><img src="{{data.item_image_url ? data.item_image_url : 'https://picsum.photos/id/1005/200/300'}}"
+              class="card-img-top" style="height: 300px;" alt="Product"></a>
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
@@ -37,8 +38,7 @@
             <div class="d-flex justify-content-between">
               <div class="col px-0 mt-2">
                 <button class="btn btn-outline-primary btn-block"
-                  [disabled]="studentPoint < data.required_point ? true : false"
-                  [disabled]="rewardId"
+                  [disabled]="studentPoint < data.required_point ? true : false" [disabled]="rewardId"
                   [ngStyle]="{'opacity': rewardId ? '0.3':''}"
                   [ngStyle]="{'opacity': studentPoint < data.required_point ? '0.3':''}"
                   (click)="bookReward(data.id,data.required_point,data.name)">

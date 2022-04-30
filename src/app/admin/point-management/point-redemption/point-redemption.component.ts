@@ -38,7 +38,7 @@ export class PointRedemptionComponent implements OnInit {
       });
   }
 
-  onRedeem (id) {
+  onRedeem(id) {
     this.rewardDetailsService.onRedeem(id)
       .subscribe(res => {
         this.studentObj = res;
@@ -53,7 +53,7 @@ export class PointRedemptionComponent implements OnInit {
         this.barcodeScan();
       } else {
         // this.webScanner();
-        this.getUserData(7);
+        this.getUserData(3);
       }
       //   if (this.mobileAndTabletCheck()) {
       //   } else {

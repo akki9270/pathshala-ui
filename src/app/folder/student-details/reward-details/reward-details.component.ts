@@ -37,8 +37,8 @@ export class RewardDetailsComponent implements OnInit {
     this.rewardDetailsService.fetchBookedReward(id)
       .subscribe(res => {
         this.studentObj = res;
-        this.rewardId = this.studentObj.data[0].reward_id || null
-      });
+        this.rewardId = this.studentObj.data ? this.studentObj.data[0].reward_id : {}
+      })
   }
 
   allReward() {
