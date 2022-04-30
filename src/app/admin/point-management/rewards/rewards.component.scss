@@ -17,6 +17,23 @@
     padding-right: 0px;
 }
 
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+}
+
+@media only screen and (max-width: 425px) {
+    .form-control {
+        width: 60% !important;
+        margin-bottom: 10px !important;
+    }
+
+    .btn-contain {
+        justify-content: space-around !important;
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .mobile-table {
         width: 100% !important;

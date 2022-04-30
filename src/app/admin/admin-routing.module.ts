@@ -11,6 +11,7 @@ import { RewardsComponent } from './point-management/rewards/rewards.component';
 import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
 import { AddRewardComponent } from './point-management/rewards/add-reward/add-reward.component';
 import { BookedRewardsComponent } from './point-management/booked-rewards/booked-rewards.component';
+import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
 
 const routes: Route[] = [
   {
@@ -54,8 +55,12 @@ const routes: Route[] = [
         ],
       },
       {
-        path: 'booked-point',
+        path: 'booked-reward',
         component: BookedRewardsComponent,
+      },
+      {
+        path: 'point-redemption',
+        component: PointRedemptionComponent,
       },
       {
         path: 'point-ledger',

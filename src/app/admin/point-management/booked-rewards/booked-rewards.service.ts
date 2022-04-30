@@ -12,10 +12,10 @@ export class BookedRewardsService {
   private env = environment;
   private URL = this.env.server_url;
 
-  bookRewards() {
-    return this.http.get(this.URL + '/getAllStudent')
+  getAllBookRewards() {
+    return this.http.get(this.URL + '/getAllBookedReward')
       .pipe(
-        tap(() => console.log('getAllStudent'))
+        tap(() => console.log('getAllBookRewards'))
       )
   }
 }

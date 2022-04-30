@@ -10,24 +10,30 @@
             </ng-template>
           </div>
           <div class="card-body">
-            <form autocomplete="off" class="form" role="form" [formGroup]="addReward">
+            <form [formGroup]="addReward">
               <fieldset>
                 <div class="row">
                   <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label>Name</label>
-                      <input type="text" class="form-control" formControlName="name">
+                      <input type="text" class="form-control" formControlName="name" pattern="[a-zA-Z ]*">
                       <div class="error" *ngIf="submitted && addReward.get('name')?.hasError('required')">Name
                         is required
+                      </div>
+                      <div class="error" *ngIf="submitted && addReward.get('name')?.hasError('pattern')">Enter
+                        only character
                       </div>
                     </div>
                   </div>
                   <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label>Reward Point</label>
-                      <input type="number" class="form-control" formControlName="required_point">
+                      <input type="number" class="form-control" formControlName="required_point" pattern="[0-9]*">
                       <div class="error" *ngIf="submitted && addReward.get('required_point')?.hasError('required')">
                         Reward Point is required
+                      </div>
+                      <div class="error" *ngIf="submitted && addReward.get('required_point')?.hasError('pattern')">Enter
+                        only digit
                       </div>
                     </div>
                   </div>

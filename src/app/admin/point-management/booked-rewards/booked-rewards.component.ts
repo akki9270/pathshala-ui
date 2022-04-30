@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 export class BookedRewardsComponent implements OnInit {
 
   studentSearch: FormGroup;
-  allStudents = [];
+  bookRewards = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
@@ -33,10 +33,10 @@ export class BookedRewardsComponent implements OnInit {
       pageLength: 10
     };
 
-    this.bookedRewardsService.bookRewards()
+    this.bookedRewardsService.getAllBookRewards()
       .subscribe(res => {
         this.loaderService.dismisLoading();
-        this.allStudents = res['data'];
+        this.bookRewards = res['data'];
         this.dtTrigger.next();
       })
   }

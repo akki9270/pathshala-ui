@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { StudentWiseService } from './student-wise.service';
@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { StudentDetailsComponent } from '../../student-details/student-details.component';
 import { Subject } from 'rxjs';
 import { LoaderService } from 'src/app/services/loader.service';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-student-wise',
@@ -13,6 +14,9 @@ import { LoaderService } from 'src/app/services/loader.service';
   styleUrls: ['./student-wise.component.scss'],
 })
 export class StudentWiseComponent implements OnInit {
+
+  @ViewChild(DataTableDirective, { static: false }) datatableElement: DataTableDirective;
+  dtElement: DataTableDirective;
 
   studentSearch: FormGroup;
   allStudents = [];
@@ -38,6 +42,7 @@ export class StudentWiseComponent implements OnInit {
         this.loaderService.dismisLoading();
         this.allStudents = res['data'];
         this.dtTrigger.next();
+        this.rerender();
       })
   }
   async studentDetails(data) {
@@ -54,5 +59,12 @@ export class StudentWiseComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
   }
 }

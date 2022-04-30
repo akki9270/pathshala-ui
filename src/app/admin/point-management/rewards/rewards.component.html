@@ -9,12 +9,33 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-12">
-        <div class="col d-flex justify-content-end mb-4 reward-button">
+      <div class="col-12 col-md-6 d-flex justify-content-start btn-contain">
+        <div class="form-inline">
+          <select class="form-control" [(ngModel)]="dateRange" [ngStyle]="{'border-color': isError ? 'red':'#ced4da'}">
+            <option *ngFor="let range of ranges" [ngValue]="range.value" [selected]="range.text === 'Today'">
+              {{range.text}}
+            </option>
+          </select>
+          <div class="">
+            <button type="button" class="btn btn-outline-info ml-2 " (click)="dateSearch() ">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class=" col-12 col-md-6 d-flex justify-content-end btn-contain">
+        <div class="form-group ">
+          <button type="button" class="btn btn-primary mr-2" [routerLink]="['/point/booked-reward']">
+            Booked Reward
+          </button>
           <button type="button" class="btn btn-primary" routerLink="add-reward">
             New Reward
           </button>
         </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 ">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped mobile-table"
           [width]="['100%']">
           <thead class="thead-color">
@@ -29,7 +50,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of allReward; let i = index;">
+            <tr *ngFor="let data of allReward;">
               <td>{{ data.name }}</td>
               <td>{{ data.required_point }}</td>
               <td>{{ moment(data.start_date).format('ll') }}</td>

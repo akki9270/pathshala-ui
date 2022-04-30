@@ -12,7 +12,7 @@ export class RewardDetailsComponent implements OnInit {
 
   moment = moment;
   allRewards = [];
-  reward = { startDate: '2021-09-28', endDate: '2022-04-30' }
+  reward = { startDate: '2021-09-28', endDate: '2022-12-30' }
   data = {
     user_id: null,
     reward_id: null
@@ -49,7 +49,7 @@ export class RewardDetailsComponent implements OnInit {
   removePoint(point, name) {
     let obj = {
       description: 'Book Reward: ' + name,
-      isPointAdded: false,
+      isPointAdded: 0,
       point: point,
       user_id: this.data.user_id
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { LoaderService } from 'src/app/services/loader.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -16,7 +16,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './rewards.component.html',
   styleUrls: ['./rewards.component.scss'],
 })
-export class RewardsComponent implements OnInit {
+export class RewardsComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false }) datatableElement: DataTableDirective;
   dtElement: DataTableDirective;
 
@@ -25,8 +25,12 @@ export class RewardsComponent implements OnInit {
   allReward;
   moment = moment;
   isEdit = false;
-  reward = { startDate: '2022-04-10', endDate: '2022-04-30' }
+  reward = { startDate: moment().format("YYYY/MM/DD"), endDate: moment().format("YYYY/MM/DD") }
   subParams: Subscription;
+  ranges;
+  dateRange;
+  isError = false;
+
 
   constructor(
     private loaderService: LoaderService,
@@ -34,20 +38,59 @@ export class RewardsComponent implements OnInit {
     private router: Router,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
-    public alertController: AlertController
+    public alertController: AlertController,
   ) { }
 
   ngOnInit() {
-    this.loaderService.presentLoading();
+    this.ranges = [
+      {
+        text: 'Today',
+        value: [moment().format("YYYY/MM/DD"), moment().format("YYYY/MM/DD")],
+        isSelected: true
+      },
+      {
+        text: 'Yesterday',
+        value: [moment().subtract(1, 'days').format("YYYY/MM/DD"), moment().subtract(1, 'days').format("YYYY/MM/DD")],
+        isSelected: false
+      },
+      {
+        text: 'Last 7 Days',
+        value: [moment().subtract(6, 'days').format("YYYY/MM/DD"), moment().format("YYYY/MM/DD")],
+        isSelected: false
+      },
+      {
+        text: 'Last 30 Days',
+        value: [moment().subtract(29, 'days').format("YYYY/MM/DD"), moment().format("YYYY/MM/DD")],
+        isSelected: false
+      },
+      {
+        text: 'This Month',
+        value: [moment().startOf('month').format("YYYY/MM/DD"), moment().endOf('month').format("YYYY/MM/DD")],
+        isSelected: false
+      },
+      {
+        text: 'Last Month',
+        value: [moment().subtract(1, 'month').startOf('month').format("YYYY/MM/DD"), moment().subtract(1, 'month').endOf('month').format("YYYY/MM/DD")],
+        isSelected: false
+      },
+      {
+        text: 'Last Three Month',
+        value: [moment().subtract(1, 'month').startOf('month').format("YYYY/MM/DD"), moment().subtract(3, 'month').endOf('month').format("YYYY/MM/DD")],
+        isSelected: false
+      },
+    ]
+
+    // this.loaderService.presentLoading();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       columnDefs: [{ targets: 5, orderable: false }, { targets: 6, orderable: false }]
     };
-
     this.isEdit = false;
     this.subParams = this.activeRoute.params.subscribe(params => {
-      this.getAllReward(this.reward);
+      if (this.reward.startDate && this.reward.endDate) {
+        this.getAllReward(this.reward);
+      }
     });
 
   }
@@ -69,34 +112,66 @@ export class RewardsComponent implements OnInit {
     this.router.navigateByUrl("/point/rewards/edit-reward/" + index);
   }
 
-  async onDelete(reward) {
-    let control = await this.alertController.create({
-      buttons: [{
-        text: 'OK',
-        handler: () => {
-          console.log(' id ', reward.id);
-          this.deleteReward(reward.id);
-        }
-      },
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => { }
-      }],
-      message: 'Are you sure you want to delete ' + reward.name + ' ?',
-    });
-    control.present();
-  }
-  deleteReward(id) {
-    this.rewardsService.deleteReward(id).subscribe(async () => {
-      let alert = await this.alertController.create({
-        message: 'Reward deleted successfully',
-        buttons: ['OK']
-      });
-      alert.present();
+  onDelete(reward) {
+    this.rewardsService.deleteReward(reward.id).subscribe(res => {
       this.isEdit = true;
       this.getAllReward(this.reward);
-    });
+    })
+  }
+  // async onDelete(reward) {
+  //   let control = await this.alertController.create({
+  //     buttons: [{
+  //       text: 'OK',
+  //       handler: () => {
+  //         console.log(' id ', reward.id);
+  //         this.deleteReward(reward.id);
+  //       }
+  //     },
+  //     {
+  //       text: 'Cancel',
+  //       role: 'cancel',
+  //       handler: () => { }
+  //     }],
+  //     message: 'Are you sure you want to delete ' + reward.name + ' ?',
+  //   });
+  //   control.present();
+  // }
+  // deleteReward(id) {
+  //   this.rewardsService.deleteReward(id).subscribe(async () => {
+  //     let alert = await this.alertController.create({
+  //       message: 'Reward deleted successfully',
+  //       buttons: [{
+  //         text: 'OK',
+  //         handler: () => {
+
+  //           setTimeout(() => {
+  //             this.isEdit = true;
+  //             this.getAllReward(this.reward);
+  //             console.log("Delayed for 1 second.");
+  //           }, 1000)
+  //         }
+  //       }]
+  //     });
+  //     alert.present();
+  //   });
+  // }
+
+
+  public trackItem(index: number, item: any) {
+    return item.id;
+  }
+
+  dateSearch() {
+    if (this.dateRange) {
+      this.isError = false;
+      this.loaderService.presentLoading();
+      this.reward.startDate = this.dateRange[0]
+      this.reward.endDate = this.dateRange[1]
+      this.isEdit = true;
+      this.getAllReward(this.reward);
+    } else {
+      this.isError = true;
+    }
   }
 
   iconDisabled(date) {

@@ -12,10 +12,10 @@ export class PointLedgerService {
   private env = environment;
   private URL = this.env.server_url;
 
-  studentSearch() {
-    return this.http.get(this.URL + '/getAllStudent')
+  studentPoint() {
+    return this.http.get(this.URL + '/getAllPoint')
       .pipe(
-        tap(() => console.log('getAllStudent'))
+        tap(() => console.log('getAllPoint'))
       )
   }
 }
