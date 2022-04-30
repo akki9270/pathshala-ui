@@ -21,6 +21,7 @@ export class AddRewardComponent implements OnInit {
   tommorow: Date = moment().toDate();
   minDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
   minEndDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
+  minAnnounceDate: String = formatDate(this.tommorow, 'yyyy-MM-dd', 'en');
 
   constructor(
     public sharedService: SharedService,
@@ -54,6 +55,9 @@ export class AddRewardComponent implements OnInit {
 
     this.addReward.get('start_date').valueChanges.subscribe(value => {
       this.minEndDate = formatDate(value, 'yyyy-MM-dd', 'en');
+    })
+    this.addReward.get('end_date').valueChanges.subscribe(value => {
+      this.minAnnounceDate = formatDate(value, 'yyyy-MM-dd', 'en');
     })
   }
 

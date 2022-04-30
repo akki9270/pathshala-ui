@@ -78,7 +78,8 @@
                   <div class="col-lg-4 col-sm-4 col-12">
                     <div class="form-group">
                       <label>Announcement Date</label>
-                      <input type="date" class="form-control" formControlName="announcement_date" [min]="minDate">
+                      <input type="date" class="form-control" formControlName="announcement_date"
+                        [min]="minAnnounceDate">
                       <div class="error" *ngIf="submitted && addReward.get('announcement_date')?.hasError('required')">
                         AnnouncementDate is required
                       </div>
