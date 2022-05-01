@@ -109,6 +109,9 @@
         </ng-container>
       </ng-container>
     </div>
+    <ng-container *ngIf="!!studentData && studentData.prevMonthAttendance < 10">
+      <p class="text-danger attendence-fields text-center text-capitalize h4 py-2">Total present days {{studentData.prevMonthAttendance}} for {{previousMonth}} month</p>
+    </ng-container>
   
     <div class="progress-details" *ngIf="!!studentData">
       <div class="gatha-details">
