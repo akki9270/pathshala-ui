@@ -11,8 +11,10 @@
     <div class="row mt-4 d-flex justify-content-center">
       <div class="col-md-4 mb-3">
         <div class="card h-100">
-          <a href="#"><img src="{{studentObj ? studentObj.data[0].Reward.item_image_url :
-            'https://picsum.photos/id/1005/200/300'}}" style="height: 300px;" class="card-img-top" alt="Product"></a>
+          <a href="#">
+            <img [src]="studentObj ? studentObj.data[0].Reward.item_image_url :
+            ''" (error)="imageLoadError($event)" class="card-img-top" height="300" alt="" />
+          </a>
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
@@ -28,8 +30,9 @@
             </div>
             <div class="d-flex justify-content-between">
               <div class="col px-0 mt-2">
-                <button class="btn btn-outline-primary btn-block"
-                  (click)="onRedeem(studentObj ? studentObj.data[0].id : '')"
+                <button class="btn btn-outline-primary btn-block" (click)="onRedeem(studentObj ? studentObj.data[0].id : '',
+                studentObj ? studentObj.data[0].Student.id : '',
+                studentObj ? studentObj.data[0].Reward.required_point :'')"
                   [disabled]="studentObj ? studentObj.data[0].isRedeem === 1 : '' "
                   [ngStyle]="{'opacity': studentObj ? studentObj.data[0].isRedeem === 1 ? '0.3':'' : ''}">
                   Redeem

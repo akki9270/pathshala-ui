@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { LoaderService } from 'src/app/services/loader.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -27,9 +27,6 @@ export class RewardsComponent implements OnInit, OnDestroy {
   isEdit = false;
   reward = { startDate: moment().format("YYYY/MM/DD"), endDate: moment().format("YYYY/MM/DD") }
   subParams: Subscription;
-  ranges;
-  dateRange;
-  isError = false;
 
 
   constructor(
@@ -42,43 +39,6 @@ export class RewardsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.ranges = [
-      {
-        text: 'Today',
-        value: [moment().format("YYYY/MM/DD"), moment().format("YYYY/MM/DD")],
-        isSelected: true
-      },
-      {
-        text: 'Yesterday',
-        value: [moment().subtract(1, 'days').format("YYYY/MM/DD"), moment().subtract(1, 'days').format("YYYY/MM/DD")],
-        isSelected: false
-      },
-      {
-        text: 'Last 7 Days',
-        value: [moment().subtract(6, 'days').format("YYYY/MM/DD"), moment().format("YYYY/MM/DD")],
-        isSelected: false
-      },
-      {
-        text: 'Last 30 Days',
-        value: [moment().subtract(29, 'days').format("YYYY/MM/DD"), moment().format("YYYY/MM/DD")],
-        isSelected: false
-      },
-      {
-        text: 'This Month',
-        value: [moment().startOf('month').format("YYYY/MM/DD"), moment().endOf('month').format("YYYY/MM/DD")],
-        isSelected: false
-      },
-      {
-        text: 'Last Month',
-        value: [moment().subtract(1, 'month').startOf('month').format("YYYY/MM/DD"), moment().subtract(1, 'month').endOf('month').format("YYYY/MM/DD")],
-        isSelected: false
-      },
-      {
-        text: 'Last Three Month',
-        value: [moment().subtract(1, 'month').startOf('month').format("YYYY/MM/DD"), moment().subtract(3, 'month').endOf('month').format("YYYY/MM/DD")],
-        isSelected: false
-      },
-    ]
 
     // this.loaderService.presentLoading();
     this.dtOptions = {
@@ -88,9 +48,7 @@ export class RewardsComponent implements OnInit, OnDestroy {
     };
     this.isEdit = false;
     this.subParams = this.activeRoute.params.subscribe(params => {
-      if (this.reward.startDate && this.reward.endDate) {
-        this.getAllReward(this.reward);
-      }
+      this.getAllReward(this.reward);
     });
 
   }
@@ -159,19 +117,6 @@ export class RewardsComponent implements OnInit, OnDestroy {
 
   public trackItem(index: number, item: any) {
     return item.id;
-  }
-
-  dateSearch() {
-    if (this.dateRange) {
-      this.isError = false;
-      this.loaderService.presentLoading();
-      this.reward.startDate = this.dateRange[0]
-      this.reward.endDate = this.dateRange[1]
-      this.isEdit = true;
-      this.getAllReward(this.reward);
-    } else {
-      this.isError = true;
-    }
   }
 
   iconDisabled(date) {
