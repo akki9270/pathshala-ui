@@ -18,17 +18,18 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
-                <p class="h4 text-primary">Required Point: {{studentObj ? studentObj.data[0].Reward.required_point :
-                  ''}}</p>
+                <p class="h4 text-primary">{{studentObj ? studentObj.data[0].Reward.name : ''}} </p>
               </div>
+            </div>
+            <div>
+              <label><strong>Required Point: </strong>{{studentObj ? studentObj.data[0].Reward.required_point
+                :''}}</label>
             </div>
             <div class="mt-2">
               <label> <strong> {{studentObj ? studentObj.data[0].Student.display_name : ''}}</strong> Current available
-                point<strong> {{studentObj ? studentObj.data[0].Student.score : ''}}</strong></label>
+                point is<strong> {{studentObj ? studentObj.data[0].Student.score : ''}}</strong></label>
             </div>
-            <div>
-              <label><strong>Reward Name: </strong>{{studentObj ? studentObj.data[0].Reward.name : ''}}</label>
-            </div>
+
             <div class="d-flex justify-content-between">
               <div class="col px-0 mt-2">
                 <button class="btn btn-outline-primary btn-block" (click)="onRedeem(studentObj ? studentObj.data[0].id : '',
