@@ -10,18 +10,6 @@
     </div>
     <div class="row mt-4">
       <div class="col-12 col-md-6 d-flex justify-content-start btn-contain">
-        <div class="form-inline">
-          <select class="form-control" [(ngModel)]="dateRange" [ngStyle]="{'border-color': isError ? 'red':'#ced4da'}">
-            <option *ngFor="let range of ranges" [ngValue]="range.value" [selected]="range.text === 'Today'">
-              {{range.text}}
-            </option>
-          </select>
-          <div class="">
-            <button type="button" class="btn btn-outline-info ml-2 " (click)="dateSearch() ">
-              Search
-            </button>
-          </div>
-        </div>
       </div>
       <div class=" col-12 col-md-6 d-flex justify-content-end btn-contain">
         <div class="form-group ">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { UserService } from 'src/app/services/user.service';
@@ -17,6 +17,9 @@ export class PointRedemptionComponent implements OnInit {
   studentData: any = {};
   studentObj;
   loginUser;
+  data = {
+    user_id: null
+  }
   @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
 
   constructor(
@@ -38,12 +41,28 @@ export class PointRedemptionComponent implements OnInit {
       });
   }
 
-  onRedeem(id) {
+  onRedeem(id, user_id, point) {
     this.rewardDetailsService.onRedeem(id)
       .subscribe(res => {
         this.studentObj = res;
+        this.removePoint(user_id, point)
         this.fetchBookedReward(this.loginUser.id)
       });
+  }
+
+  removePoint(user_id, point) {
+    let obj = {
+      description: 'redeem Reward ',
+      isPointAdded: 0,
+      point: point,
+      user_id: user_id
+    }
+    this.rewardDetailsService.removePoint(obj)
+      .subscribe(res => {
+      })
+  }
+  imageLoadError(event) {
+    event.target.src = 'https://via.placeholder.com/300';
   }
 
   initPage() {
@@ -53,7 +72,7 @@ export class PointRedemptionComponent implements OnInit {
         this.barcodeScan();
       } else {
         // this.webScanner();
-        this.getUserData(3);
+        this.getUserData(19);
       }
       //   if (this.mobileAndTabletCheck()) {
       //   } else {

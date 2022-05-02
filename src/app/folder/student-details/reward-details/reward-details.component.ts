@@ -48,25 +48,16 @@ export class RewardDetailsComponent implements OnInit {
       })
   }
 
-  bookReward(id, point, name) {
+  imageLoadError(event) {
+    event.target.src = 'https://via.placeholder.com/300';
+  }
+
+  bookReward(id) {
     this.data.reward_id = id
 
     this.rewardDetailsService.bookReward(this.data)
       .subscribe(res => {
-        this.removePoint(point, name)
         this.fetchBookedReward(this.studentId);
-      })
-  }
-
-  removePoint(point, name) {
-    let obj = {
-      description: 'Book Reward: ' + name,
-      isPointAdded: 0,
-      point: point,
-      user_id: this.data.user_id
-    }
-    this.rewardDetailsService.removePoint(obj)
-      .subscribe(res => {
       })
   }
 }
