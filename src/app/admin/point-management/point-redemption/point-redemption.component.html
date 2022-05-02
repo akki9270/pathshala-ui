@@ -22,8 +22,9 @@
                   ''}}</p>
               </div>
             </div>
-            <div>
-              <label><strong>Name:</strong> {{studentObj ? studentObj.data[0].Student.display_name : ''}}</label>
+            <div class="mt-2">
+              <label> <strong> {{studentObj ? studentObj.data[0].Student.display_name : ''}}</strong> Current available
+                point<strong> {{studentObj ? studentObj.data[0].Student.score : ''}}</strong></label>
             </div>
             <div>
               <label><strong>Reward Name: </strong>{{studentObj ? studentObj.data[0].Reward.name : ''}}</label>
