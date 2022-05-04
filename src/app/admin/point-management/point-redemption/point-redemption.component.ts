@@ -15,7 +15,7 @@ export class PointRedemptionComponent implements OnInit {
 
   isScannig = true;
   studentData: any = {};
-  studentObj;
+  studentObj = [];
   loginUser;
   data = {
     user_id: null
@@ -37,14 +37,13 @@ export class PointRedemptionComponent implements OnInit {
   fetchBookedReward(id) {
     this.rewardDetailsService.fetchBookedReward(id)
       .subscribe(res => {
-        this.studentObj = res;
+        this.studentObj = res['data'];
       });
   }
 
   onRedeem(id, user_id, point) {
     this.rewardDetailsService.onRedeem(id)
       .subscribe(res => {
-        this.studentObj = res;
         this.removePoint(user_id, point)
         this.fetchBookedReward(this.loginUser.id)
       });
@@ -72,7 +71,7 @@ export class PointRedemptionComponent implements OnInit {
         this.barcodeScan();
       } else {
         // this.webScanner();
-        this.getUserData(19);
+        this.getUserData(16);
       }
       //   if (this.mobileAndTabletCheck()) {
       //   } else {

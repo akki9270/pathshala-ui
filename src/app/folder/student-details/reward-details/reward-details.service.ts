@@ -39,6 +39,13 @@ export class RewardDetailsService {
         tap(() => console.log('bookReward'))
       )
   }
+
+  cancleReward(reward) {
+    return this.http.post(this.URL + '/cancleReward', reward)
+      .pipe(
+        tap(() => console.log('cancleReward'))
+      )
+  }
   removePoint(point) {
     return this.http.post(this.URL + '/addPoint', point)
       .pipe(

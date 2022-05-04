@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 available-point">
-        <p>Your available point: {{ studentPoint }} </p>
+        <p>Your available point: {{ studentPoint-usePoint }} </p>
       </div>
     </div>
     <div class="row">
@@ -29,23 +29,29 @@
               </div>
             </div>
             <strong>
-              <span class="massage-denger" *ngIf="rewardId === data.id; else loggedOut">You have already booked.</span>
+              <span class="massage-denger" *ngIf="isBookedReward(data.id); else loggedOut">
+                You have already booked.</span>
               <ng-template #loggedOut>
                 <span class="massage-denger" *ngIf="studentPoint < data.required_point">Opps!, You missed by
-                  {{data.required_point -
-                  studentPoint}} points.</span>
-                <span class="massage" *ngIf="studentPoint > data.required_point">You are eligible for this reward</span>
+                  {{data.required_point - studentPoint}} points.</span>
+                <span class="massage" *ngIf="studentPoint > data.required_point">You are eligible for this
+                  reward</span>
               </ng-template>
             </strong>
             <div class="d-flex justify-content-between">
               <div class="col px-0 mt-2">
                 <button class="btn btn-outline-primary btn-block"
-                  [disabled]="studentPoint < data.required_point ? true : false" [disabled]="rewardId"
-                  [ngStyle]="{'opacity': rewardId ? '0.3':''}"
+                  [disabled]="studentPoint < data.required_point ? true : false"
                   [ngStyle]="{'opacity': studentPoint < data.required_point ? '0.3':''}"
-                  (click)="bookReward(data.id,data.required_point,data.name)">
+                  (click)="bookReward(data.id,data.required_point,data.name)"
+                  *ngIf="!isBookedReward(data.id); else changeBtn">
                   Book Reward
                 </button>
+                <ng-template #changeBtn>
+                  <button class="btn btn-outline-primary btn-block" (click)="cancleReward(data.id)">
+                    Cancle Reward
+                  </button>
+                </ng-template>
               </div>
             </div>
           </div>

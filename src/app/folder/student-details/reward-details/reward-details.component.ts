@@ -19,6 +19,9 @@ export class RewardDetailsComponent implements OnInit {
   }
   studentObj;
   rewardId;
+  allbookRewards = [];
+  usePoint;
+  cancleBtn: Boolean;
 
   constructor(
     private rewardDetailsService: RewardDetailsService,
@@ -30,15 +33,7 @@ export class RewardDetailsComponent implements OnInit {
   ngOnInit() {
     this.allReward();
     this.data.user_id = this.studentId;
-    this.fetchBookedReward(this.studentId);
-  }
-
-  fetchBookedReward(id) {
-    this.rewardDetailsService.fetchBookedReward(id)
-      .subscribe(res => {
-        this.studentObj = res;
-        this.rewardId = this.studentObj.data ? this.studentObj.data[0].reward_id : {}
-      })
+    this.getBookReward(this.studentId);
   }
 
   allReward() {
@@ -46,6 +41,24 @@ export class RewardDetailsComponent implements OnInit {
       .subscribe(res => {
         this.allRewards = res['data'];
       })
+  }
+  getBookReward(id) {
+    this.rewardDetailsService.fetchBookedReward(id)
+      .subscribe(res => {
+        this.allbookRewards = res['data'];
+        this.usePoint = this.allbookRewards.map(item => item.Reward.required_point).reduce((prev, curr) => prev + curr, 0);
+
+        this.rewardId = this.allbookRewards.map(item => item.reward_id);
+      })
+  }
+
+  isBookedReward(id) {
+    if (this.rewardId) {
+      let flag = this.rewardId.find(bookId => bookId === id);
+      return flag ? true : false
+    } else {
+      return false;
+    }
   }
 
   imageLoadError(event) {
@@ -57,7 +70,19 @@ export class RewardDetailsComponent implements OnInit {
 
     this.rewardDetailsService.bookReward(this.data)
       .subscribe(res => {
-        this.fetchBookedReward(this.studentId);
+        this.getBookReward(this.studentId);
+        this.cancleBtn = true;
+      })
+  }
+
+  cancleReward(reward_id) {
+    let data = {
+      reward_id: reward_id,
+      user_id: this.studentId
+    }
+    this.rewardDetailsService.cancleReward(data)
+      .subscribe(res => {
+        this.getBookReward(this.studentId);
       })
   }
 }
