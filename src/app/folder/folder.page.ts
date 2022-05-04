@@ -65,6 +65,7 @@ export class FolderPage implements OnInit {
   sutraCategory;
   selectedSutraCategory;
   terminatedSutraList = [];
+  previousMonth = moment().subtract(1 ,'month').format('MMMM');
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -144,7 +145,7 @@ export class FolderPage implements OnInit {
       } else {
         this.webScanner();
         // if (!this.teacherData) {
-        this.getUserData(1001);
+        // this.getUserData(1001);
         //   this.getUserData(153);
         // }
         // this.getUserData(1001);
@@ -303,6 +304,7 @@ export class FolderPage implements OnInit {
           } else {
             this.studentData = (response['data'])[0];
             this.studentData['presentDays'] = response['presentDays']
+            this.studentData['prevMonthAttendance'] = response['prevMonthAttendance']
             // console.log(' student Data ', this.studentData);
             this.clearInput();
             if (this.teacherData && this.teacherData.id) {
