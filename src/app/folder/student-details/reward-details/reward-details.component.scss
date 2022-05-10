@@ -13,3 +13,10 @@
 .massage-denger {
     color: red;
 }
+
+.des {
+    white-space: nowrap;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

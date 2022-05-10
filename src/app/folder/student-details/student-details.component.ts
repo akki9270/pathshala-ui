@@ -14,6 +14,7 @@ export class StudentDetailsComponent implements OnInit {
 
   @Input() studentId;
   @Input() studentPoint;
+  @Input() rewardName;
 
   YEARS = ['2022', '2021', '2020', '2019', '2018'];
   selectedYear = '2022';
@@ -26,6 +27,9 @@ export class StudentDetailsComponent implements OnInit {
     REWARD: 'reward'
   }
   ngOnInit() {
+    if (this.rewardName) {
+      this.selectedReport = 'reward'
+    }
   }
 
   closeModal() {

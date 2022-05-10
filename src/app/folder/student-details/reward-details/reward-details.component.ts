@@ -12,7 +12,6 @@ export class RewardDetailsComponent implements OnInit {
 
   moment = moment;
   allRewards = [];
-  reward = { startDate: '2021-09-28', endDate: '2022-12-30' }
   data = {
     user_id: null,
     reward_id: null
@@ -37,7 +36,7 @@ export class RewardDetailsComponent implements OnInit {
   }
 
   allReward() {
-    this.rewardDetailsService.getAllReward(this.reward)
+    this.rewardDetailsService.getAllReward()
       .subscribe(res => {
         this.allRewards = res['data'];
       })

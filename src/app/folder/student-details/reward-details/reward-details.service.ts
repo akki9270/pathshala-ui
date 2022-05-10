@@ -26,8 +26,8 @@ export class RewardDetailsService {
       );
   }
 
-  getAllReward(params) {
-    return this.http.get(this.URL + '/getAllReward', { params })
+  getAllReward() {
+    return this.http.get(this.URL + '/getAllReward')
       .pipe(
         tap(() => console.log('getAllReward'))
       )

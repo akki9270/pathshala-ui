@@ -1,5 +1,6 @@
 <ion-content [fullscreen]="true">
-  <div class="p-3 text-uppercase bg-white text-dark" *ngIf="teacherData.display_name">{{teacherData?.display_name}}</div>
+  <div class="p-3 text-uppercase bg-white text-dark" *ngIf="teacherData.display_name">{{teacherData?.display_name}}
+  </div>
 
   <div class="d-flex justify-content-between align-items-center p-3 bg-darkgrey" *ngIf="teacherData && teacherData.id">
     <div *ngIf="teacherData && teacherData.id" class="custom-id">
@@ -14,25 +15,20 @@
     <ion-button class="back-to-home" (click)="backToHome()">Back To Home</ion-button>
   </div>
   <!-- <div *ngIf="isScannig && !platform.is('capacitor')"> -->
-    <qr-scanner
-    #qrScanner
-    [debug]="false"
-    [canvasHeight]="300"
-    [canvasWidth]="300"
-    *ngIf="isScannig"
-    ></qr-scanner>
+  <qr-scanner #qrScanner [debug]="false" [canvasHeight]="300" [canvasWidth]="300" *ngIf="isScannig"></qr-scanner>
   <!-- </div> -->
   <div class="content-container" *ngIf="!isScannig">
+
+    <div class="scroll-left" *ngIf="reawrds">
+      <h1>Your today rewards is {{reawrds}}
+        <p class="btn btn-info reward-btn" (click)="onDetailsClick('reward')">View Reward</p>
+      </h1>
+    </div>
+
     <div class="student-details" *ngIf="!!studentData">
       <div class="profile-image-container">
-        <img
-          [src]="studentData.profile_image"
-          (error)="imageLoadError($event)"
-          class="img-thumbnail st-image mt-2"
-          height="200"
-          width="100"
-          alt=""
-        />
+        <img [src]="studentData.profile_image" (error)="imageLoadError($event)" class="img-thumbnail st-image mt-2"
+          height="200" width="100" alt="" />
       </div>
       <div id="details" *ngIf="!isEditing">
         <table class="table table-responsive student-table">
@@ -45,22 +41,13 @@
       <div id="details" *ngIf="isEditing">
         <div class="form-group mb-4 mt-4">
           <div class="fields">
-            <input 
-              type="text" 
-              [(ngModel)]="studentData.id" 
-              placeholder="id" 
-              />
+            <input type="text" [(ngModel)]="studentData.id" placeholder="id" />
             <label>Id</label>
           </div>
         </div>
         <div class="form-group mb-4 mt-4">
           <div class="fields">
-            <input
-              type="text"
-              #nameInput
-              [(ngModel)]="studentData.display_name"
-              placeholder="Name"
-            />
+            <input type="text" #nameInput [(ngModel)]="studentData.display_name" placeholder="Name" />
             <label>Name</label>
           </div>
         </div>
@@ -78,11 +65,7 @@
         </div>
         <div class="form-group mb-4">
           <div class="fields">
-            <input
-              type="text"
-              [(ngModel)]="studentData.mobile"
-              placeholder="Contact No"
-            />
+            <input type="text" [(ngModel)]="studentData.mobile" placeholder="Contact No" />
             <label>Contact No</label>
           </div>
         </div>
@@ -110,9 +93,10 @@
       </ng-container>
     </div>
     <ng-container *ngIf="!!studentData && studentData.prevMonthAttendance < 10">
-      <p class="text-danger attendence-fields text-center text-capitalize h4 py-2">Total present days {{studentData.prevMonthAttendance}} for {{previousMonth}} month</p>
+      <p class="text-danger attendence-fields text-center text-capitalize h4 py-2">Total present days
+        {{studentData.prevMonthAttendance}} for {{previousMonth}} month</p>
     </ng-container>
-  
+
     <div class="progress-details" *ngIf="!!studentData">
       <div class="gatha-details">
         <div class="form-group my-4">
@@ -121,7 +105,7 @@
               <ion-item>
                 <ion-label>Category</ion-label>
                 <ion-select placeholder="Category" [disabled]="teacherData && !teacherData.id"
-                [(ngModel)]="selectedSutraCategory" (ngModelChange)="onCategoryChange()">
+                  [(ngModel)]="selectedSutraCategory" (ngModelChange)="onCategoryChange()">
                   <ion-select-option *ngFor="let op of sutraCategory" [value]="op">{{op.name}}</ion-select-option>
                   <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
                 </ion-select>
@@ -131,27 +115,16 @@
         </div>
         <div class="form-group mb-4 mt-4">
           <div class="fields" *ngIf="userGathaDetails && userGathaDetails?.Sutra?.name; else sutraDropDown">
-            <input
-              type="text"
-              placeholder="Sutra"
-              [value]="userGathaDetails.Sutra.name"
-            />
+            <input type="text" placeholder="Sutra" [value]="userGathaDetails.Sutra.name" />
             <label>Sutra</label>
           </div>
           <ng-template #sutraDropDown>
             <div class="fields">
               <ion-item>
                 <ion-label>Sutra</ion-label>
-                <ionic-selectable
-                [canSearch]="true"
-                [items]="allSutra"
-                [(ngModel)]="selectedSutra"
-                itemTextField="name"
-                itemValueField="id"
-                (onChange)="getGathaCount()"
-                [disabled]="teacherData && !teacherData.id"
-                placeholder="Select Sutra"
-                ></ionic-selectable>
+                <ionic-selectable [canSearch]="true" [items]="allSutra" [(ngModel)]="selectedSutra" itemTextField="name"
+                  itemValueField="id" (onChange)="getGathaCount()" [disabled]="teacherData && !teacherData.id"
+                  placeholder="Select Sutra"></ionic-selectable>
                 <!-- <ion-select placeholder="Select Sutra" [disabled]="teacherData && !teacherData.id"
                 [(ngModel)]="selectedSutra" (ngModelChange)="getGathaCount()">
                   <ion-select-option *ngFor="let op of allSutra" [value]="op">{{op.name}}</ion-select-option>
@@ -168,11 +141,8 @@
         </div>
         <div class="form-group mb-4" *ngIf="userGathaDetails && userGathaDetails.Sutra else sutraGathaCount">
           <div class="fields">
-            <input
-              type="text"
-              placeholder="Gatha"
-              value="{{userGathaDetails.current_gatha_count}} / {{userGathaDetails.Sutra.gatha_count}}"
-            />
+            <input type="text" placeholder="Gatha"
+              value="{{userGathaDetails.current_gatha_count}} / {{userGathaDetails.Sutra.gatha_count}}" />
             <label>Gatha</label>
           </div>
         </div>
@@ -182,8 +152,10 @@
               <div class="fields">
                 <ion-item>
                   <ion-label>Current Gatha</ion-label>
-                  <ion-select placeholder="Current Gatha" [(ngModel)]="currentGathaCount" [disabled]="teacherData && !teacherData.id">
-                    <ion-select-option *ngFor="let i of (totalGathaCount); let id = index" [value]="i">{{i}}</ion-select-option>
+                  <ion-select placeholder="Current Gatha" [(ngModel)]="currentGathaCount"
+                    [disabled]="teacherData && !teacherData.id">
+                    <ion-select-option *ngFor="let i of (totalGathaCount); let id = index" [value]="i">{{i}}
+                    </ion-select-option>
                     <!-- <ion-select-option value="hawaii">Hawaii</ion-select-option> -->
                   </ion-select>
                 </ion-item>
@@ -195,14 +167,10 @@
             </div>
           </ng-container>
         </ng-template>
-        
+
         <div class="form-group mb-4 mt-4" *ngIf="userGathaDetails">
           <div class="fields">
-            <input
-              type="text"
-              placeholder="Started on"
-              value="{{userGathaDetails.createdAt | date:'d MMMM'}}"
-            />
+            <input type="text" placeholder="Started on" value="{{userGathaDetails.createdAt | date:'d MMMM'}}" />
             <label>Started on</label>
           </div>
         </div>
@@ -213,22 +181,26 @@
       </div>
       <div class="action-buttons" *ngIf="userGathaDetails">
         <!-- <div> -->
-          <ng-container *ngIf="teacherData && teacherData.id">
-            <ion-button class="continue" *ngIf="userGathaDetails.current_gatha_count < userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Continue</ion-button>
-            <ion-button class="finish" *ngIf="userGathaDetails.current_gatha_count == userGathaDetails.Sutra.gatha_count" (click)="getNextGatha()">Finish</ion-button>
-          </ng-container>
-          <ion-button class="details" (click)="onDetailsClick()">Details</ion-button>
+        <ng-container *ngIf="teacherData && teacherData.id">
+          <ion-button class="continue" *ngIf="userGathaDetails.current_gatha_count < userGathaDetails.Sutra.gatha_count"
+            (click)="getNextGatha()">Continue</ion-button>
+          <ion-button class="finish" *ngIf="userGathaDetails.current_gatha_count == userGathaDetails.Sutra.gatha_count"
+            (click)="getNextGatha()">Finish</ion-button>
+        </ng-container>
+        <ion-button class="details" (click)="onDetailsClick()">Details</ion-button>
         <!-- </div> -->
       </div>
       <div class="action-buttons" *ngIf="!userGathaDetails">
-        <ion-button class="continue" [disabled]="!selectedSutra || (teacherData && !teacherData.id)" (click)="updateUserSutra()">Update Sutra</ion-button>
+        <ion-button class="continue" [disabled]="!selectedSutra || (teacherData && !teacherData.id)"
+          (click)="updateUserSutra()">Update Sutra</ion-button>
         <ion-button class="details" (click)="onDetailsClick()">Details</ion-button>
       </div>
     </div>
 
     <div class="next-action">
       <ion-button class="new-scan" (click)="newScan()">{{ !!studentData ? 'New Scan' : 'Start Scan'}}</ion-button>
-      <ion-button class="back-to-home" (click)="backToHome()" *ngIf="teacherData && teacherData.id">Back To Home</ion-button>
+      <ion-button class="back-to-home" (click)="backToHome()" *ngIf="teacherData && teacherData.id">Back To Home
+      </ion-button>
     </div>
   </div>
 

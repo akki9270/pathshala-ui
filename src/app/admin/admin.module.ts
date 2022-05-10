@@ -24,7 +24,6 @@ import { PointManagementComponent } from './point-management/point-management.co
 import { BookedRewardsComponent } from './point-management/booked-rewards/booked-rewards.component';
 import { PointLedgerComponent } from './point-management/point-ledger/point-ledger.component';
 import { PointRedemptionComponent } from './point-management/point-redemption/point-redemption.component';
-PointRedemptionComponent
 
 @NgModule({
     declarations: [

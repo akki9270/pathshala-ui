@@ -1,27 +1,23 @@
+$linear-present: linear-gradient(45deg,
+    rgba(64, 120, 255, 0.8099614845938375) 30%,
+    rgba(255, 255, 255, 0.5018382352941176) 50%,
+    rgba(64, 120, 255, 0.8407738095238095) 70%);
 
-$linear-present: linear-gradient(
-  45deg,
-  rgba(64, 120, 255, 0.8099614845938375) 30%,
-  rgba(255, 255, 255, 0.5018382352941176) 50%,
-  rgba(64, 120, 255, 0.8407738095238095) 70%
-);
-
-$linear-absent: linear-gradient(
-  45deg,
-  rgba(176, 36, 255, 0.6446953781512605) 30%,
-  rgba(255, 255, 255, 0.5018382352941176) 50%,
-  rgba(176, 36, 255, 0.6587009803921569) 70%
-);
+$linear-absent: linear-gradient(45deg,
+    rgba(176, 36, 255, 0.6446953781512605) 30%,
+    rgba(255, 255, 255, 0.5018382352941176) 50%,
+    rgba(176, 36, 255, 0.6587009803921569) 70%);
 
 $bg-orange: #ff6900;
+
 .bg-darkgrey {
   background: darkgrey;
 }
 
 @mixin shadow {
-    -moz-box-shadow:    inset 0 0 10px #000000;
-    -webkit-box-shadow: inset 0 0 10px #000000;
-    box-shadow:         inset 0 0 10px #000000;
+  -moz-box-shadow: inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow: inset 0 0 10px #000000;
 }
 
 ion-menu-button {
@@ -31,6 +27,7 @@ ion-menu-button {
 ion-content {
   margin-top: 1px;
 }
+
 .content-container {
   background: #fff;
   height: 100%;
@@ -38,28 +35,33 @@ ion-content {
 
 input {
   pointer-events: none;
+
   &.active {
     pointer-events: all;
   }
 }
+
 .custom-id {
   display: flex;
   align-items: center;
   background: darkgrey;
   height: 80px;
+
   .form-group {
     .fields {
       input {
-        &:not(:placeholder-shown) + label {
+        &:not(:placeholder-shown)+label {
           top: -22px;
           color: white;
         }
       }
+
       label {
         left: 20px;
       }
     }
   }
+
   .id-input {
     margin-left: 10px;
     background: white !important;
@@ -82,8 +84,10 @@ input {
     min-height: 180px;
   }
 }
+
 .attendence-fields {
   background-color: #d9f5fc;
+
   div {
     display: flex;
     justify-content: space-evenly;
@@ -92,15 +96,18 @@ input {
     margin-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
+
     span {
       display: block;
       width: 20px;
       height: 20px;
       margin-right: 10px;
+
       &.present {
         // background: $linear-present;
         @include shadow()
       }
+
       &.absent {
         // background: $linear-absent;
         @include shadow();
@@ -109,6 +116,7 @@ input {
     }
   }
 }
+
 .attendence-details {
   display: flex;
   justify-content: center;
@@ -116,6 +124,7 @@ input {
   min-height: 100px;
   background-color: #d9f5fc;
   color: #434343;
+
   .at-box {
     height: 50px;
     width: 50px;
@@ -126,6 +135,7 @@ input {
     align-items: center;
     justify-content: center;
     font-weight: 800;
+
     span {
       line-height: 16px;
     }
@@ -139,22 +149,26 @@ input {
   color: #434343;
   display: flex;
   justify-content: space-between;
-  .gatha-details {
-  }
+
+  .gatha-details {}
+
   .days-till-now {
     align-self: flex-end;
     margin-bottom: 20px;
+
     .dtn-box {
       border: 1px solid #434343;
       padding: 5px 8px;
     }
   }
+
   .action-buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 25%;
+
     ion-button {
       display: block;
     }
@@ -193,11 +207,11 @@ input {
   text-transform: uppercase;
 }
 
-.form-group .fields select ~ label {
+.form-group .fields select~label {
   top: -25px;
 }
 
-.form-group .fields input:not(:placeholder-shown) + label {
+.form-group .fields input:not(:placeholder-shown)+label {
   top: -15px;
   font-size: 12px;
 }
@@ -211,6 +225,7 @@ input {
   .student-details {
     flex-direction: column;
     align-items: center;
+
     table {
       tr {
         td {
@@ -220,13 +235,16 @@ input {
         }
       }
     }
+
     .student-table {
       font-size: 1rem;
       // font-weight: bold;
     }
+
     #details {
       width: 100%;
     }
+
     .profile-image-container {
       img {
         width: 300px;
@@ -234,86 +252,105 @@ input {
       }
     }
   }
+
   .attendence-details {
     justify-content: space-evenly;
     min-height: 130px;
+
     .at-box {
       width: 8vh;
       height: 8vh;
       font-size: 1rem;
+
       &.present {
         // background: $linear-present;
         @include shadow();
       }
+
       &.absent {
-       // background: rgb(176, 36, 255);
-       // background: $linear-absent;
-       background-color: $bg-orange;
-       @include shadow();
+        // background: rgb(176, 36, 255);
+        // background: $linear-absent;
+        background-color: $bg-orange;
+        @include shadow();
       }
-      &.holiday {
-      }
+
+      &.holiday {}
 
       span {
         line-height: 24px;
       }
     }
   }
+
   .progress-details {
     flex-direction: column;
     align-items: center;
+
     .gatha-details {
       width: 100%;
     }
+
     .days-till-now {
       width: 30%;
       align-self: baseline;
+
       .dtn-box {
         width: 100px;
       }
     }
+
     .action-buttons {
       justify-content: space-evenly;
       flex-direction: row;
+
       ion-button {
         min-width: 150px;
+
         &.continue {
           --background: #00ff00;
           color: #434343;
         }
+
         &.finish {
           --background: #ff6900;
         }
+
         &.details {
           --background: #162f49;
         }
       }
     }
   }
+
   .next-action {
     height: 100px;
     justify-content: center;
     display: flex;
     align-items: center;
     background-color: white;
+
     ion-button {
       height: 60px;
       margin: 0 15px;
       min-width: 150px;
       font-size: 18px;
+
       &.new-scan {
         --background: #00ff00;
         color: #434343;
       }
+
       &.back-to-home {
         --background: #162f49;
       }
     }
   }
+
   ion-item::part(native) {
     background-color: white;
     color: #434343;
   }
+
   ion-item::part(native).item-inner {
     --border-color: white;
     border-color: transparent;
@@ -324,6 +361,7 @@ input {
 // tablet
 @media only screen and (min-width: 766px) {
   .student-details {
+
     // flex-direction: column;
     // align-items: center;
     table {
@@ -334,99 +372,121 @@ input {
         }
       }
     }
+
     .student-table {
       font-size: 24px;
       font-weight: bold;
     }
+
     #details {
       width: 100%;
     }
+
     .profile-image-container {
       width: 70%;
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         width: 300px;
         height: 300px;
       }
     }
   }
+
   .attendence-details {
     justify-content: space-evenly;
     min-height: 130px;
+
     .at-box {
       width: 8vh;
       height: 8vh;
       font-size: 1rem;
+
       &.present {
         // background: $linear-present;
         @include shadow();
       }
+
       &.absent {
-       // background: rgb(176, 36, 255);
-       // background: $linear-absent;
-       background-color: $bg-orange;
-       @include shadow();
+        // background: rgb(176, 36, 255);
+        // background: $linear-absent;
+        background-color: $bg-orange;
+        @include shadow();
       }
-      &.holiday {
-      }
+
+      &.holiday {}
 
       span {
         line-height: 24px;
       }
     }
   }
+
   .progress-details {
     .gatha-details {
       width: 40%;
     }
+
     .days-till-now {
       width: 30%;
+
       .dtn-box {
         width: 100px;
       }
     }
+
     .action-buttons {
       justify-content: space-evenly;
+
       ion-button {
         min-width: 150px;
+
         &.continue {
           --background: #00ff00;
           color: #434343;
         }
+
         &.finish {
           --background: #ff6900;
         }
+
         &.details {
           --background: #162f49;
         }
       }
     }
   }
+
   .next-action {
     height: 100px;
     justify-content: center;
     display: flex;
     align-items: center;
+
     ion-button {
       height: 60px;
       margin: 0 15px;
       min-width: 150px;
       font-size: 18px;
+
       &.new-scan {
         --background: #00ff00;
         color: #434343;
       }
+
       &.back-to-home {
         --background: #162f49;
       }
     }
   }
+
   ion-item::part(native) {
     background-color: white;
     color: #434343;
   }
+
   ion-item::part(native).item-inner {
     --border-color: white;
     border-color: transparent;
@@ -442,6 +502,7 @@ input {
     #details {
       width: 60%;
     }
+
     .profile-image-container {
       img {
         width: 300px;
@@ -449,24 +510,30 @@ input {
       }
     }
   }
+
   .attendence-details {
     .at-box {
       width: 20vh;
       height: 20vh;
     }
   }
+
   .progress-details {
     flex-direction: row;
+
     .gatha-details {
       width: 40%;
     }
+
     .days-till-now {
       width: 30%;
       align-self: flex-end;
+
       .dtn-box {
         width: 100px;
       }
     }
+
     .action-buttons {
       flex-direction: column;
     }
@@ -475,12 +542,12 @@ input {
 
 ::ng-deep .modal-fullscreen {
   .modal-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -489,5 +556,81 @@ input {
     &:focus {
       outline: none;
     }
+  }
+}
+
+.reward-btn {
+  margin-bottom: 4px;
+  height: 30px;
+  padding-bottom: 23px;
+  padding-top: 3px;
+  background: transparent;
+  border: none;
+  text-decoration: underline;
+}
+
+.scroll-left {
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background-color: teal;
+  color: white;
+}
+
+.scroll-left h1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 50px;
+  text-align: right;
+  font-size: 20px;
+
+  /* Starting position */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  /* Apply animation to this element */
+  -moz-animation: scroll-left 20s linear infinite;
+  -webkit-animation: scroll-left 20s linear infinite;
+  animation: scroll-left 20s linear infinite;
+}
+
+/* Move it (define the animation) */
+@-moz-keyframes scroll-left {
+  0% {
+    -moz-transform: translateX(100%);
+  }
+
+  100% {
+    -moz-transform: translateX(-100%);
+  }
+}
+
+@-webkit-keyframes scroll-left {
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+
+  100% {
+    -webkit-transform: translateX(-100%);
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    -moz-transform: translateX(0%);
+    /* Browser bug fix */
+    -webkit-transform: translateX(0%);
+    /* Browser bug fix */
+    transform: translateX(0%);
+  }
+
+  100% {
+    -moz-transform: translateX(-100%);
+    /* Browser bug fix */
+    -webkit-transform: translateX(-100%);
+    /* Browser bug fix */
+    transform: translateX(-100%);
   }
 }
