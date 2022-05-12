@@ -92,10 +92,23 @@
         </ng-container>
       </ng-container>
     </div>
-    <ng-container *ngIf="!!studentData && studentData.prevMonthAttendance < 10">
-      <p class="text-danger attendence-fields text-center text-capitalize h4 py-2">Total present days
-        {{studentData.prevMonthAttendance}} for {{previousMonth}} month</p>
-    </ng-container>
+    <div class="d-flex justify-content-center massage-background">
+      <ng-container>
+        <span class="massage-denger attendence-fields text-center text-capitalize h4 py-2"
+          *ngIf="!!studentData && studentData.prevMonthAttendance <= 9"> your last month's total attendence
+          {{studentData.prevMonthAttendance}}
+        </span>
+        <span class="massage-progress attendence-fields text-center text-capitalize h4 py-2"
+          *ngIf="!!studentData && studentData.prevMonthAttendance >= 10 && studentData.prevMonthAttendance <= 18 ">your
+          last month's total attendence
+          {{studentData.prevMonthAttendance}}
+        </span>
+        <span class="massage attendence-fields text-center text-capitalize h4 py-2"
+          *ngIf="!!studentData && studentData.prevMonthAttendance > 18">your last month's total attendence
+          {{studentData.prevMonthAttendance}}
+        </span>
+      </ng-container>
+    </div>
 
     <div class="progress-details" *ngIf="!!studentData">
       <div class="gatha-details">
