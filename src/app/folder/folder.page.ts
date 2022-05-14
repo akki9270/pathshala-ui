@@ -526,7 +526,7 @@ export class FolderPage implements OnInit {
   }
 
   getRewardByDate() {
-    this.userService.getRewardByDate({ start_date: this.startDate, end_date: this.startDate })
+    this.userService.getRewardByDate()
       .subscribe(res => {
         this.dateReward = res['dateReward'];
         this.reawrds = '';

@@ -73,8 +73,8 @@ export class UserService {
             )
     }
 
-    getRewardByDate(params) {
-        return this.http.get(this.URL + '/getRewardByDate', { params })
+    getRewardByDate() {
+        return this.http.get(this.URL + '/getRewardByDate')
             .pipe(
                 tap(() => console.log('getRewardByDate'))
             )
