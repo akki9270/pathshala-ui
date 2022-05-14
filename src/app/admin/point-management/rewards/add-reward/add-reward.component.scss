@@ -1,0 +1,30 @@
+.back-btn {
+    height: 38px;
+    padding-top: 5px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+input[type="date"]:after {
+    content: "\1F4C6";
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    height: 30px;
+    margin-top: 1px;
+    position: absolute;
+}

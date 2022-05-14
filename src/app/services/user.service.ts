@@ -52,7 +52,7 @@ export class UserService {
             )
     }
 
-    updateUserSutra(data: {sutraId, gathaCount, teacherId, studentId}) {
+    updateUserSutra(data: { sutraId, gathaCount, teacherId, studentId }) {
         return this.http.post(this.URL + '/updateUserSutra', data)
             .pipe(
                 tap(() => console.log('updateUserSutra'))
@@ -61,15 +61,22 @@ export class UserService {
 
     saveUserAndGatha(data) {
         return this.http.post(this.URL + '/saveUserAndGatha', data)
-        .pipe(
-            tap(() => console.log('saveUserAndGatha'))
-        );   
+            .pipe(
+                tap(() => console.log('saveUserAndGatha'))
+            );
     }
 
     updateUser(user) {
         return this.http.post(this.URL + '/updateUser', user)
-        .pipe(
-            tap(() => console.log('updateUser'))
-        )
+            .pipe(
+                tap(() => console.log('updateUser'))
+            )
+    }
+
+    getRewardByDate() {
+        return this.http.get(this.URL + '/getRewardByDate')
+            .pipe(
+                tap(() => console.log('getRewardByDate'))
+            )
     }
 }

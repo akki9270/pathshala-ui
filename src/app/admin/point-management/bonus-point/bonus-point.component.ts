@@ -14,6 +14,7 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./bonus-point.component.scss'],
 })
 export class BonusPointComponent implements OnInit {
+
   @ViewChild(DataTableDirective, { static: false }) datatableElement: DataTableDirective;
   dtElement: DataTableDirective;
 
@@ -37,7 +38,8 @@ export class BonusPointComponent implements OnInit {
     this.loaderService.presentLoading();
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10
+      pageLength: 10,
+      columnDefs: [{ targets: 3, orderable: false }]
     };
     this.fatchAllStudent(false);
 
@@ -60,7 +62,6 @@ export class BonusPointComponent implements OnInit {
         } else {
           this.dtTrigger.next();
         }
-
       })
   }
   savePoint() {

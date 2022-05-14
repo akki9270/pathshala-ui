@@ -1,43 +1,45 @@
 <ion-content>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-12 d-flex justify-content-between">
-        <h2>Point Redemption</h2>
-        <button type="button" class="btn btn-primary back-btn" (click)="backClicked()">
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0 mt-0"> Point Redemption</h2>
+        <button type="button" class="btn btn-outline-info" (click)="backClicked()">
           Back
         </button>
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-12">
-        <div class="col d-flex justify-content-start mb-4">
-          <button type="button" class="btn btn-primary" routerLink="add-reward">
-            New Reward
-          </button>
+      <div class="col-md-4 mb-3" *ngFor="let data of studentObj">
+        <div class="card h-100">
+          <a href="#">
+            <img [src]=" data.Reward.item_image_url" (error)="imageLoadError($event)" class="card-img-top" height="300"
+              alt="" />
+          </a>
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="h4 text-primary">{{data.Reward.name}} </p>
+              </div>
+            </div>
+            <div>
+              <label><strong>Required Point: </strong>{{data.Reward.required_point}}</label>
+            </div>
+            <div class="mt-2">
+              <label> <strong> {{data.Student.display_name}}</strong> Current available
+                point is<strong> {{data.Student.score}}</strong></label>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <div class="col px-0 mt-2">
+                <button class="btn btn-outline-primary btn-block"
+                  (click)="onRedeem(data.id,data.Student.id, data.Reward.required_point)"
+                  [disabled]="data.isRedeem === 1" [ngStyle]="{'opacity': data.isRedeem === 1 ? '0.3':''}">
+                  Redeem
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table thead-color">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Require Point</th>
-              <th>Reward StartDate</th>
-              <th>Reward EndDate</th>
-              <th>Reward AnnouncementDate</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allStudents; let i = index;">
-              <td>{{ data.id }}</td>
-              <td>{{ data.first_name }} {{ data.middle_name }} {{ data.last_name }}</td>
-              <td>{{ data.score }}</td>
-              <td>{{ data.score }}</td>
-              <td>
-                <button type="button" class="btn btn-primary mr-2" (click)="onEditReward(i)">Edit</button>
-                <button type="button" class="btn btn-primary" (click)="onDeleteReward(i)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>

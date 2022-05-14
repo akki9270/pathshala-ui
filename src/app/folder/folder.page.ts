@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { IonContent, LoadingController, Platform, ModalController, AlertController } from '@ionic/angular';
@@ -19,6 +19,10 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
+
+  dateReward = [];
+  reawrds;
+  startDate = moment().format('YYYY-MM-DD');
   public title: string;
   studentData: any = {};
   teacherData: any = {};
@@ -64,6 +68,7 @@ export class FolderPage implements OnInit {
   sutraCategory;
   selectedSutraCategory;
   terminatedSutraList = [];
+  previousMonth = moment().subtract(1, 'month').format('MMMM');
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -137,16 +142,16 @@ export class FolderPage implements OnInit {
     // this.getAllSutra(1);
     this.getSutraCategory();
     setTimeout(() => {
-      // this.getUserData(1001);
+      this.getUserData(1001);
       if (this.platform.is('capacitor')) {
         this.barcodeScan();
       } else {
         this.webScanner();
-        //  if (!this.teacherData) {
-        //  this.getUserData(1001);
-        //  this.getUserData(153);
-        //  }
-        //  this.getUserData(3);
+        // if (!this.teacherData) {
+        // this.getUserData(1001);
+        //   this.getUserData(153);
+        // }
+        // this.getUserData(1001);
       }
       //   if (this.mobileAndTabletCheck()) {
       //   } else {
@@ -173,7 +178,7 @@ export class FolderPage implements OnInit {
   }
 
   getAllSutra(id) {
-    this.sutraSerice.getAllSutra({categoryId: id, studentId: this.studentData.id})
+    this.sutraSerice.getAllSutra({ categoryId: id, studentId: this.studentData.id })
       .subscribe(res => {
         console.log(' getAll Sutra ', res);
         this.allSutra = res['data'];
@@ -290,6 +295,7 @@ export class FolderPage implements OnInit {
     this.presentLoading();
     this.userService.getUserData({ id }).subscribe(
       (response) => {
+        this.getRewardByDate();
         this.studentData = {};
         this.dismisLoading();
         if (response && response['data'] && response['data'].length) {
@@ -304,6 +310,7 @@ export class FolderPage implements OnInit {
           } else {
             this.studentData = (response['data'])[0];
             this.studentData['presentDays'] = response['presentDays']
+            this.studentData['prevMonthAttendance'] = response['prevMonthAttendance']
             // console.log(' student Data ', this.studentData);
             this.clearInput();
             if (this.teacherData && this.teacherData.id) {
@@ -475,11 +482,11 @@ export class FolderPage implements OnInit {
     }
   }
 
-  async onDetailsClick() {
+  async onDetailsClick(rewards) {
     const modal = await this.modalController.create({
       component: StudentDetailsComponent,
       cssClass: 'modal-fullscreen',
-      componentProps: { studentId: this.studentData.id }
+      componentProps: { studentId: this.studentData.id, studentPoint: this.studentData.score, rewardName: rewards ? rewards : '' }
     });
     await modal.present();
   }
@@ -518,5 +525,20 @@ export class FolderPage implements OnInit {
       buttons: ['OK']
     });
     await toast.present();
+  }
+
+  getRewardByDate() {
+    this.userService.getRewardByDate()
+      .subscribe(res => {
+        this.dateReward = res['dateReward'];
+        this.reawrds = '';
+        for (let i = 0; i < this.dateReward.length; i++) {
+          if (!this.reawrds) {
+            this.reawrds = this.dateReward[i].name;
+          } else {
+            this.reawrds = this.reawrds + ', ' + this.dateReward[i].name;
+          }
+        }
+      })
   }
 }

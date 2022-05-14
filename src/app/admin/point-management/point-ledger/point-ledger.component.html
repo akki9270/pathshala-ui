@@ -1,3 +1,59 @@
-<p>
-  point-ledger works!
-</p>
+<ion-content>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 mt-0">Student Ledger</h2>
+                <button type="button" class="btn btn-outline-info" (click)="backClicked()">
+                    Back
+                </button>
+            </div>
+        </div>
+        <form [formGroup]="studentSearch" class="mt-4">
+            <div class="row ion-align-items-center">
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <label>Student ID</label>
+                        <input class="form-control" type="taxt" formControlName="id" pattern="[0-9]*" />
+                        <div class="error" *ngIf="submitted && studentSearch.get('id')?.hasError('required')">ID
+                            is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <label>Select Range</label>
+                        <select class="form-control" formControlName="dateRange">
+                            <option *ngFor="let range of ranges" [ngValue]=" range.value ">{{range.text}}</option>
+                        </select>
+                        <div class="error" *ngIf="submitted && studentSearch.get('dateRange')?.hasError('required')">
+                            Range is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <button type="button" class="btn btn-outline-info custom-btn mt-2 mt-sm-0" (click)="dateSearch() ">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped mobile-table">
+            <thead class="thead-color">
+                <tr>
+                    <th>Name</th>
+                    <th>Point</th>
+                    <th>Description</th>
+                    <th>Approved_by</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of allPoint">
+                    <td>{{ data.Student.display_name }}</td>
+                    <td>{{ data.point }}</td>
+                    <td>{{ data.description }}</td>
+                    <td>{{ data.Teacher ? data.Teacher.display_name : '-' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ion-content>

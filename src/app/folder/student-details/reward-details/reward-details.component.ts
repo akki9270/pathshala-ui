@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { SharedService } from 'src/app/services/shared.service';
 import { RewardDetailsService } from './reward-details.service';
@@ -11,14 +10,17 @@ import { RewardDetailsService } from './reward-details.service';
 })
 export class RewardDetailsComponent implements OnInit {
 
-  rewads: FormGroup;
   moment = moment;
   allRewards = [];
-  reward = { startDate: '2021-09-28', endDate: '2022-04-30' }
   data = {
     user_id: null,
     reward_id: null
   }
+  studentObj;
+  rewardId;
+  allbookRewards = [];
+  usePoint;
+  cancleBtn: Boolean;
 
   constructor(
     private rewardDetailsService: RewardDetailsService,
@@ -29,34 +31,57 @@ export class RewardDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.allReward();
-    this.data.user_id = this.studentId
+    this.data.user_id = this.studentId;
+    this.getBookReward(this.studentId);
   }
 
   allReward() {
-    this.rewardDetailsService.getAllReward(this.reward)
+    this.rewardDetailsService.getAllReward()
       .subscribe(res => {
         this.allRewards = res['data'];
       })
   }
+  getBookReward(id) {
+    this.rewardDetailsService.fetchBookedReward(id)
+      .subscribe(res => {
+        this.allbookRewards = res['data'];
+        this.usePoint = this.allbookRewards.map(item => item.Reward.required_point).reduce((prev, curr) => prev + curr, 0);
 
-  bookReward(id, point, name) {
+        this.rewardId = this.allbookRewards.map(item => item.reward_id);
+      })
+  }
+
+  isBookedReward(id) {
+    if (this.rewardId) {
+      let flag = this.rewardId.find(bookId => bookId === id);
+      return flag ? true : false
+    } else {
+      return false;
+    }
+  }
+
+  imageLoadError(event) {
+    event.target.src = 'https://via.placeholder.com/300';
+  }
+
+  bookReward(id) {
     this.data.reward_id = id
 
     this.rewardDetailsService.bookReward(this.data)
       .subscribe(res => {
-        this.removePoint(point, name)
+        this.getBookReward(this.studentId);
+        this.cancleBtn = true;
       })
   }
 
-  removePoint(point, name) {
-    let obj = {
-      description: 'Book Reward: ' + name,
-      isPointAdded: false,
-      point: point,
-      user_id: this.data.user_id
+  cancleReward(reward_id) {
+    let data = {
+      reward_id: reward_id,
+      user_id: this.studentId
     }
-    this.rewardDetailsService.removePoint(obj)
+    this.rewardDetailsService.cancleReward(data)
       .subscribe(res => {
+        this.getBookReward(this.studentId);
       })
   }
 }

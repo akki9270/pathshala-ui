@@ -1,23 +1,29 @@
 <ion-content>
-
   <div class="container">
     <div class="row">
-      <div class="col-12 point">
-        <p>Available Point: {{ studentPoint }} </p>
+      <div class="col-12 available-point">
+        <p>Your available point: {{ studentPoint-usePoint }} </p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 mb-3" *ngFor="let data of allRewards">
         <div class="card h-100">
-          <a href="#"><img src="https://picsum.photos/700/550" class="card-img-top" alt="Product"></a>
-          <div class="card-body px-2 pb-2 pt-1">
+          <a href="#">
+            <img [src]="data.item_image_url ? data.item_image_url : ''" (error)="imageLoadError($event)"
+              class="card-img-top" height="300" alt="" />
+          </a>
+          <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
                 <p class="h4 text-primary">Required Point: {{data.required_point}}</p>
               </div>
             </div>
-            <strong><label>{{ data.name }}</label></strong>
-            <p>{{ data.description }}</p>
+            <div class="des" data-title="{{ data.name }}">
+              <strong><label>{{ data.name }}</label></strong>
+            </div>
+
+            <div class="des" data-title="{{ data.description }}">{{ data.description }}</div>
+
             <div class="d-flex mb-3 justify-content-between">
               <div>
                 <p class="small"><b>StartDate: </b> {{ moment(data.start_date).format('ll') }}</p>
@@ -26,13 +32,30 @@
                 <p class="small"><b>EndtDate: </b> {{ moment(data.end_date).format('ll') }}</p>
               </div>
             </div>
-            <strong><label>Massages</label></strong>
+            <strong>
+              <span class="massage-denger" *ngIf="isBookedReward(data.id); else loggedOut">
+                You have already booked.</span>
+              <ng-template #loggedOut>
+                <span class="massage-denger" *ngIf="studentPoint-usePoint < data.required_point">Opps!, You missed by
+                  {{data.required_point - (studentPoint-usePoint)}} points.</span>
+                <span class="massage" *ngIf="studentPoint-usePoint > data.required_point">You are eligible for this
+                  reward</span>
+              </ng-template>
+            </strong>
             <div class="d-flex justify-content-between">
-              <div class="col px-0">
+              <div class="col px-0 mt-2">
                 <button class="btn btn-outline-primary btn-block"
-                  (click)="bookReward(data.id,data.required_point,data.name)">
+                  [disabled]="studentPoint-usePoint < data.required_point ? true : false"
+                  [ngStyle]="{'opacity': studentPoint-usePoint < data.required_point ? '0.3':''}"
+                  (click)="bookReward(data.id,data.required_point,data.name)"
+                  *ngIf="!isBookedReward(data.id); else changeBtn">
                   Book Reward
                 </button>
+                <ng-template #changeBtn>
+                  <button class="btn btn-outline-primary btn-block" (click)="cancleReward(data.id)">
+                    Cancel Reward
+                  </button>
+                </ng-template>
               </div>
             </div>
           </div>

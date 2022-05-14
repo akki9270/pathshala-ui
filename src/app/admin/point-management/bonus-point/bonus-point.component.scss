@@ -10,13 +10,6 @@
   position: absolute;
 }
 
-.back-btn {
-  height: 38px;
-  padding-top: 5px;
-  font-size: 18px;
-  margin-top: 10px;
-}
-
 ::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
   color: #333;
@@ -132,4 +125,11 @@ input:checked+.slider .off {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.point-button {
+  margin-bottom: -19px;
+  margin-top: 19px;
+  margin-left: 10px;
+  margin-right: -12px;
 }

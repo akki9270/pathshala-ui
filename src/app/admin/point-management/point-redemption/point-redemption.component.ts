@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { BonusPointService } from '../bonus-point/bonus-point.service';
-import { LoaderService } from 'src/app/services/loader.service';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+import { UserService } from 'src/app/services/user.service';
+import { Platform } from '@ionic/angular';
+import { QrScannerComponent } from 'angular2-qrscanner';
+import { RewardDetailsService } from 'src/app/folder/student-details/reward-details/reward-details.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-point-redemption',
@@ -15,47 +14,139 @@ import { Router } from '@angular/router';
 })
 export class PointRedemptionComponent implements OnInit {
 
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
-  allStudents = [];
-  addReward: any;
+  isScannig = true;
+  studentData: any = {};
+  studentObj = [];
+  loginUser;
+  data = {
+    user_id: null
+  }
+  added_by;
+  @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
 
   constructor(
     private _location: Location,
-    private bonusPointService: BonusPointService,
-    private loaderService: LoaderService,
-    public sharedService: SharedService,
-    private router: Router
+    public barcodeScanner: BarcodeScanner,
+    private userService: UserService,
+    public platform: Platform,
+    private rewardDetailsService: RewardDetailsService,
+    public sharedService: SharedService
   ) { }
 
   ngOnInit() {
-    this.loaderService.presentLoading();
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10
-    };
-    this.bonusPointService.bonusPoint()
+    this.initPage();
+    this.sharedService.getTeacher.subscribe((data: any) => {
+      this.added_by = data.id
+    });
+  }
+
+  fetchBookedReward(id) {
+    this.rewardDetailsService.fetchBookedReward(id)
       .subscribe(res => {
-        this.loaderService.dismisLoading();
-        this.allStudents = res['data'];
-        this.dtTrigger.next();
+        this.studentObj = res['data'];
+      });
+  }
+
+  onRedeem(id, user_id, point) {
+    this.rewardDetailsService.onRedeem(id)
+      .subscribe(res => {
+        this.removePoint(user_id, point)
+        this.fetchBookedReward(this.loginUser.id)
+      });
+  }
+
+  removePoint(user_id, point) {
+    let obj = {
+      description: 'redeem Reward ',
+      isPointAdded: 0,
+      point: point,
+      user_id: user_id,
+      added_by: this.added_by
+    }
+    this.rewardDetailsService.removePoint(obj)
+      .subscribe(res => {
       })
   }
-  onEditReward(index: any) {
-    this.sharedService.setStudent(this.allStudents[index]);
-    this.router.navigateByUrl("/point/point-redepmtion/edit-reward/" + index);
-    // this.router.navigate(['/point/point-redepmtion/edit-reward']);
+  imageLoadError(event) {
+    event.target.src = 'https://via.placeholder.com/300';
   }
 
-  onDeleteReward(index: any) {
-    this.allStudents.splice(index, 1);
+  initPage() {
+    setTimeout(() => {
+      // this.getUserData(1001);
+      if (this.platform.is('capacitor')) {
+        this.barcodeScan();
+      } else {
+        this.webScanner();
+        // this.getUserData(3);
+      }
+      //   if (this.mobileAndTabletCheck()) {
+      //   } else {
+      //   }
+    }, 100);
   }
 
+  barcodeScan() {
+    this.isScannig = true;
+    this.barcodeScanner.scan().then(data => {
+      console.log(' barcode ', data);
+      if (data && data.text) {
+        this.getUserData(data.text);
+      } else if (data.cancelled) {
+
+      }
+      this.isScannig = false;
+    }).catch(e => {
+      console.log(' barcode error ', e);
+      this.isScannig = false;
+    })
+  }
+
+  getUserData(id) {
+    // this.presentLoading();
+    this.userService.getUserData({ id }).subscribe(
+      (response) => {
+        this.studentData = {};
+        if (response && response['data'] && response['data'].length) {
+          this.loginUser = response['data'][0]
+          this.fetchBookedReward(this.loginUser.id);
+        } else {
+        }
+      },
+      (error) => { }
+    )
+  }
+
+  webScanner() {
+    this.qrScannerComponent.getMediaDevices().then(devices => {
+      // console.log(devices);
+      const videoDevices: MediaDeviceInfo[] = [];
+      for (const device of devices) {
+        if (device.kind.toString() === 'videoinput') {
+          videoDevices.push(device);
+        }
+      }
+      // alert(' devices Length ' + videoDevices.length);
+      if (videoDevices.length > 0) {
+        let choosenDev;
+        for (const dev of videoDevices) {
+          if (dev.label.includes('front')) {
+            choosenDev = dev;
+            break;
+          }
+        }
+        if (choosenDev) {
+          this.qrScannerComponent.chooseCamera.next(choosenDev);
+        } else {
+          this.qrScannerComponent.chooseCamera.next(videoDevices[0]);
+        }
+      }
+    });
+  }
   backClicked() {
     this._location.back();
   }
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
+
 
 }
+

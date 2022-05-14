@@ -1,7 +1,22 @@
-.point {
+.available-point {
     text-align: center;
     font-size: 25px;
     margin-bottom: 10px;
     margin-top: 10px;
     color: #3880ff;
+}
+
+.massage {
+    color: green;
+}
+
+.massage-denger {
+    color: red;
+}
+
+.des {
+    white-space: nowrap;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

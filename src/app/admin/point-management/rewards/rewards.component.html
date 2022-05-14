@@ -1,0 +1,59 @@
+<ion-content>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0 mt-0">Rewards</h2>
+        <button type="button" class="btn btn-outline-info" (click)="goBack()">
+          Back
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 col-md-6 d-flex justify-content-start btn-contain">
+      </div>
+      <div class=" col-12 col-md-6 d-flex justify-content-end btn-contain">
+        <div class="form-group ">
+          <button type="button" class="btn btn-primary mr-2" [routerLink]="['/point/booked-reward']">
+            Booked Reward
+          </button>
+          <button type="button" class="btn btn-primary" routerLink="add-reward">
+            New Reward
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 ">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped mobile-table"
+          [width]="['100%']">
+          <thead class="thead-color">
+            <tr>
+              <th>Name</th>
+              <th>Require Point</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Announcement Date</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of allReward;">
+              <td>{{ data.name }}</td>
+              <td>{{ data.required_point }}</td>
+              <td>{{ moment(data.start_date).format('ll') }}</td>
+              <td>{{ moment(data.end_date).format('ll') }}</td>
+              <td>{{ moment(data.announcement_date).format('ll') }}</td>
+              <td (click)="onEditReward(data.id)" [class.icon-disabled]="iconDisabled(data.start_date)">
+                <i class="icons icon-pencil text-primary pointer"></i>
+              </td>
+              <td (click)="onDelete(data)" [class.icon-disabled]="iconDisabled(data.start_date)">
+                <i class="icons icon-bin text-danger ml-3 pointer"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ion-content>

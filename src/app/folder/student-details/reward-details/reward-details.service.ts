@@ -12,8 +12,22 @@ export class RewardDetailsService {
   private env = environment;
   private URL = this.env.server_url;
 
-  getAllReward(params) {
-    return this.http.get(this.URL + '/getAllReward', { params })
+  fetchBookedReward(id) {
+    return this.http.get(this.URL + '/getBookedReward/' + id)
+      .pipe(
+        tap(() => console.log('getBookedReward'))
+      );
+  }
+
+  onRedeem(id) {
+    return this.http.get(this.URL + '/redeemReward/' + id)
+      .pipe(
+        tap(() => console.log('redeemReward'))
+      );
+  }
+
+  getAllReward() {
+    return this.http.get(this.URL + '/getAllReward')
       .pipe(
         tap(() => console.log('getAllReward'))
       )
@@ -23,6 +37,13 @@ export class RewardDetailsService {
     return this.http.post(this.URL + '/bookReward', reward)
       .pipe(
         tap(() => console.log('bookReward'))
+      )
+  }
+
+  cancleReward(reward) {
+    return this.http.post(this.URL + '/cancleReward', reward)
+      .pipe(
+        tap(() => console.log('cancleReward'))
       )
   }
   removePoint(point) {

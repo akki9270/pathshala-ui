@@ -58,15 +58,18 @@ export class SutraWiseComponent implements OnInit {
     this.statusData = [
       {
         id: 1,
-        name: 'In Progress'
+        name: 'In Progress',
+        value: 'inProgress'
       },
       {
         id: 2,
-        name: 'Completed'
+        name: 'Completed',
+        value: 'completed'
       },
       {
         id: 3,
-        name: 'Both'
+        name: 'Both',
+        value: 'both'
       },
     ]
   }
@@ -94,7 +97,7 @@ export class SutraWiseComponent implements OnInit {
       let status = this.sutraWise.controls['status'].value
       this.isStatus = status.id === 3 ? true : false
       let sutraId = this.sutraWise.controls['sutra'].value
-      this.sutraService.getAllSutraWiseStudent({ sutraId: sutraId.id })
+      this.sutraService.getAllSutraWiseStudent({ sutraId: sutraId.id, status: status.value })
         .subscribe(res => {
           this.loaderService.dismisLoading();
           if (res['sutraData']) {

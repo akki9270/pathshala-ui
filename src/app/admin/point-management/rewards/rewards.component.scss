@@ -2,17 +2,36 @@
     background-color: #4ff3b269;
 }
 
-.custom-btn {
-    width: 76.7px;
-    display: inherit;
+.back-btn {
+    height: 38px;
+    padding-top: 5px;
+    font-size: 18px;
+    margin-top: 10px;
 }
 
-.error {
-    color: red;
-    font-size: 12px;
-    height: 30px;
-    margin-top: 1px;
-    position: absolute;
+.pointer {
+    cursor: pointer;
+}
+
+.reward-button {
+    padding-right: 0px;
+}
+
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+}
+
+@media only screen and (max-width: 425px) {
+    .form-control {
+        width: 60% !important;
+        margin-bottom: 10px !important;
+    }
+
+    .btn-contain {
+        justify-content: space-around !important;
+    }
 }
 
 @media only screen and (max-width: 1024px) {

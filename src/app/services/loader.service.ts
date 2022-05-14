@@ -30,7 +30,8 @@ export class LoaderService {
 
   dismisLoading() {
     of([]).pipe(delay(1000)).subscribe(() => {
-      this.loading.dismiss();
+      if (this.loading)
+        this.loading.dismiss();
       this.loading = null;
     })
   }
