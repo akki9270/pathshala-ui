@@ -72,7 +72,7 @@
               <th>Student Name</th>
               <th>Teacher Name</th>
               <th>Days</th>
-              <th [hidden]="!isStatus">Status</th>
+              <th>status</th>
             </tr>
           </thead>
           <tbody>
@@ -81,7 +81,7 @@
               <td>{{ data.studentName }}</td>
               <td>{{ data.teacherName }}</td>
               <td>{{ data.days }}</td>
-              <td [hidden]="!isStatus">{{statusData[2].name}}</td>
+              <td>{{ data.status }}</td>
             </tr>
           </tbody>
         </table>
