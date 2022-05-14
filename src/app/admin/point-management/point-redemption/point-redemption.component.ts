@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Platform } from '@ionic/angular';
 import { QrScannerComponent } from 'angular2-qrscanner';
 import { RewardDetailsService } from 'src/app/folder/student-details/reward-details/reward-details.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-point-redemption',
@@ -20,6 +21,7 @@ export class PointRedemptionComponent implements OnInit {
   data = {
     user_id: null
   }
+  added_by;
   @ViewChild('qrScanner', { static: false }) qrScannerComponent: QrScannerComponent;
 
   constructor(
@@ -28,10 +30,14 @@ export class PointRedemptionComponent implements OnInit {
     private userService: UserService,
     public platform: Platform,
     private rewardDetailsService: RewardDetailsService,
+    public sharedService: SharedService
   ) { }
 
   ngOnInit() {
     this.initPage();
+    this.sharedService.getTeacher.subscribe((data: any) => {
+      this.added_by = data.id
+    });
   }
 
   fetchBookedReward(id) {
@@ -54,7 +60,8 @@ export class PointRedemptionComponent implements OnInit {
       description: 'redeem Reward ',
       isPointAdded: 0,
       point: point,
-      user_id: user_id
+      user_id: user_id,
+      added_by: this.added_by
     }
     this.rewardDetailsService.removePoint(obj)
       .subscribe(res => {
