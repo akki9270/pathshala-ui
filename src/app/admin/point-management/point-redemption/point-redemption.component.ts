@@ -70,8 +70,8 @@ export class PointRedemptionComponent implements OnInit {
       if (this.platform.is('capacitor')) {
         this.barcodeScan();
       } else {
-        // this.webScanner();
-        this.getUserData(16);
+        this.webScanner();
+        // this.getUserData(3);
       }
       //   if (this.mobileAndTabletCheck()) {
       //   } else {
