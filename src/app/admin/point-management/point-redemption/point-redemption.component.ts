@@ -90,6 +90,7 @@ export class PointRedemptionComponent implements OnInit {
     this.isScannig = true;
     this.barcodeScanner.scan().then(data => {
       console.log(' barcode ', data);
+      data.text = data.text.replace('http://', '');
       if (data && data.text) {
         this.getUserData(data.text);
       } else if (data.cancelled) {

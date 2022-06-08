@@ -50,6 +50,7 @@ export class EventsComponent implements OnInit {
   startScan(id) {
     this.barcodeScanner.scan().then(
       ({ text, cancelled }) => {
+        text = text.replace('http://', '');
         if (text && !cancelled) {
           this.startScan(id);
           this.eventAttendanceService.saveEventAttendance({
