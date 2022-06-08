@@ -5,8 +5,8 @@
         <p>Your available point: {{ studentPoint-usePoint }} </p>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let data of allRewards">
+    <div class="row flex-column">
+      <div class="mb-3" *ngFor="let data of allRewards">
         <div class="card h-100">
           <a href="#">
             <img [src]="data.item_image_url ? data.item_image_url : ''" (error)="imageLoadError($event)"
@@ -47,7 +47,7 @@
                 <button class="btn btn-outline-primary btn-block"
                   [disabled]="studentPoint-usePoint < data.required_point ? true : false"
                   [ngStyle]="{'opacity': studentPoint-usePoint < data.required_point ? '0.3':''}"
-                  (click)="bookReward(data.id,data.required_point,data.name)"
+                  (click)="bookReward(data.id)"
                   *ngIf="!isBookedReward(data.id); else changeBtn">
                   Book Reward
                 </button>

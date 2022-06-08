@@ -16,8 +16,13 @@ ion-content {
         &.action-btn {
             height: 20vh;
             width: 20vh;
-            font-size: initial;
+            font-size: 14px;
             margin: 15px;
+        }
+    }
+    ::ng-deep ion-content {
+        .container {
+            margin-bottom: 150px;
         }
     }
 }

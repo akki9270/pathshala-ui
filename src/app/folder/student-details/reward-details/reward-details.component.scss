@@ -15,8 +15,12 @@
 }
 
 .des {
-    white-space: nowrap;
+    white-space: pre-line;
     width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.card-img-top {
+    object-fit: contain;
 }

@@ -17,6 +17,8 @@ export class BookedRewardsComponent implements OnInit {
   bookRewards = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  rewardCount: any;
+  isShowCount = false;
 
   constructor(
     private bookedRewardsService: BookedRewardsService,
@@ -37,10 +39,23 @@ export class BookedRewardsComponent implements OnInit {
       .subscribe(res => {
         this.loaderService.dismisLoading();
         this.bookRewards = res['data'];
+        this.filterRewards();
         this.dtTrigger.next();
       })
   }
 
+  filterRewards() {
+    let rewards = {};
+    this.bookRewards.forEach(i => {
+      if (!rewards[i.Reward.name]) { rewards[i.Reward.name] = 1}
+      else { rewards[i.Reward.name] += 1}
+    });
+    this.rewardCount = rewards;
+  }
+
+  onShowCountclick() {
+    this.isShowCount = !this.isShowCount;
+  }
   backClicked() {
     this._location.back();
   }

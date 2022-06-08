@@ -38,7 +38,7 @@ export class RewardDetailsComponent implements OnInit {
   allReward() {
     this.rewardDetailsService.getAllReward()
       .subscribe(res => {
-        this.allRewards = res['data'];
+        this.allRewards = res['data'].filter( (i:any) => moment(i.end_date).isSameOrAfter(moment()));
       })
   }
   getBookReward(id) {
